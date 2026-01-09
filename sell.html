@@ -60,16 +60,25 @@
     <style>
         * { transition: none !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .brutalist-nav-link:hover { background-color: black; color: #FFD600; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; }
+        .brutalist-card { border: 3px solid black; background: white; }
+        .brutalist-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px 0px black; }
+        .brutalist-btn:active { transform: translate(4px, 4px) !important; box-shadow: none !important; }
+        
+        /* SCROLL ANIMATION CLASS */
+        .reveal-on-scroll { opacity: 0; }
+        .reveal-on-scroll.is-visible { opacity: 1; animation: hard-slide 0.15s linear forwards; }
+        @keyframes hard-slide { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* MENU DRAWER ANIMATION */
+        @keyframes slide-in-from-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .drawer-open { animation: slide-in-from-right 0.15s linear forwards; }
+
         .brutalist-input:focus { outline: none; border-color: #FFD600; box-shadow: 4px 4px 0px black; }
         .condition-option:checked + label { background-color: #FFD600; border-color: black; box-shadow: 4px 4px 0px black; }
-        
-        /* Custom Checkbox/Radio Styles */
-        input[type="radio"]:checked + div {
-            background-color: black;
-            color: white;
-            box-shadow: 4px 4px 0px #FFD600;
-        }
+        input[type="radio"]:checked + div { background-color: black; color: white; box-shadow: 4px 4px 0px #FFD600; }
     </style>
 </head>
 <body class="bg-background-light font-display text-black antialiased selection:bg-black selection:text-primary relative overflow-x-hidden">
@@ -125,7 +134,7 @@
             </header>
 
             <!-- Hero -->
-            <section class="bg-hero-gradient border-b-[3px] border-black p-12 min-h-[500px] flex flex-col justify-center text-center relative overflow-hidden">
+            <section class="reveal-on-scroll bg-hero-gradient border-b-[3px] border-black p-12 min-h-[500px] flex flex-col justify-center text-center relative overflow-hidden">
                 <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter mb-4 text-white hover:animate-glitch drop-shadow-[4px_4px_0px_black]">Turn Your Old Tech<br>Into Cash</h1>
                 <p class="text-xl md:text-2xl font-bold uppercase mb-8 text-white drop-shadow-[2px_2px_0px_black]">Get instant quotes and top dollar for phones, tablets & laptops</p>
                 <div class="flex justify-center mb-8">
@@ -133,126 +142,335 @@
                 </div>
                 <p class="text-white font-bold uppercase tracking-widest text-sm drop-shadow-[1px_1px_0px_black]">• Same-Day Payment • Top Prices • No Hidden Fees •</p>
             </section>
-
-            <!-- Instant Quote Calculator -->
-            <section id="calculator" class="p-4 md:p-12 border-b-[3px] border-black bg-white">
-                <div class="max-w-4xl mx-auto border-[3px] border-black p-6 md:p-12 shadow-[12px_12px_0px_0px_black]">
-                    <h2 class="text-4xl font-black uppercase text-center mb-8">What's Your Device Worth?</h2>
+            <!-- Enhanced Device Value Calculator -->
+            <section id="enhanced-calculator" class="reveal-on-scroll p-4 md:p-12 border-b-[3px] border-black bg-gray-50">
+                <div class="max-w-4xl mx-auto border-[4px] border-black bg-white shadow-[16px_16px_0px_0px_black] overflow-hidden">
+                    <div class="bg-black p-6 text-white text-center">
+                        <h2 class="text-3xl font-black uppercase tracking-tighter">AI Value Calculator v2.0</h2>
+                        <p class="font-bold uppercase text-primary tracking-widest text-sm">Instant quotes • Price History • AI analysis</p>
+                    </div>
                     
-                    <!-- Step 1: Type -->
-                    <div class="mb-8">
-                        <h3 class="font-bold uppercase mb-4 text-xl">1. Select Device Type</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <label class="cursor-pointer">
-                                <input type="radio" name="device_type" class="hidden" checked>
-                                <div class="border-[3px] border-black p-4 text-center hover:bg-gray-100 h-full flex flex-col items-center justify-center gap-2">
-                                    <span class="material-symbols-outlined text-4xl">smartphone</span>
-                                    <span class="font-bold uppercase">Phone</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="device_type" class="hidden">
-                                <div class="border-[3px] border-black p-4 text-center hover:bg-gray-100 h-full flex flex-col items-center justify-center gap-2">
-                                    <span class="material-symbols-outlined text-4xl">tablet_mac</span>
-                                    <span class="font-bold uppercase">Tablet</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="device_type" class="hidden">
-                                <div class="border-[3px] border-black p-4 text-center hover:bg-gray-100 h-full flex flex-col items-center justify-center gap-2">
-                                    <span class="material-symbols-outlined text-4xl">laptop_mac</span>
-                                    <span class="font-bold uppercase">Laptop</span>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="device_type" class="hidden">
-                                <div class="border-[3px] border-black p-4 text-center hover:bg-gray-100 h-full flex flex-col items-center justify-center gap-2">
-                                    <span class="material-symbols-outlined text-4xl">watch</span>
-                                    <span class="font-bold uppercase">Watch</span>
-                                </div>
-                            </label>
-                        </div>
+                    <!-- Quote Methods Tabs -->
+                    <div class="flex border-b-[3px] border-black">
+                        <button onclick="switchTab('quick')" id="tab-quick" class="calc-tab flex-1 p-4 font-black uppercase text-sm md:text-base bg-primary border-r-[3px] border-black hover:bg-black hover:text-white transition-none active">📝 Quick Quote</button>
+                        <button onclick="switchTab('ai')" id="tab-ai" class="calc-tab flex-1 p-4 font-black uppercase text-sm md:text-base border-r-[3px] border-black hover:bg-black hover:text-white transition-none">📸 AI Photo Quote</button>
+                        <button onclick="switchTab('detailed')" id="tab-detailed" class="calc-tab flex-1 p-4 font-black uppercase text-sm md:text-base hover:bg-black hover:text-white transition-none">🔍 Detailed</button>
                     </div>
 
-                    <!-- Step 2: Details -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div>
-                            <h3 class="font-bold uppercase mb-4 text-xl">2. Model</h3>
-                            <select class="w-full border-[3px] border-black p-4 font-bold uppercase bg-white focus:outline-none focus:ring-0 focus:border-primary focus:shadow-[4px_4px_0px_black]">
-                                <option>Select Model...</option>
-                                <option>iPhone 14 Pro Max</option>
-                                <option>iPhone 14 Pro</option>
-                                <option>iPhone 13 Pro</option>
-                                <option>Samsung S23 Ultra</option>
-                            </select>
-                        </div>
-                        <div>
-                            <h3 class="font-bold uppercase mb-4 text-xl">3. Storage & Carrier</h3>
-                             <div class="flex gap-4">
-                                <select class="w-1/2 border-[3px] border-black p-4 font-bold uppercase bg-white">
-                                    <option>128GB</option>
-                                    <option>256GB</option>
-                                    <option>512GB</option>
-                                </select>
-                                <select class="w-1/2 border-[3px] border-black p-4 font-bold uppercase bg-white">
-                                    <option>Unlocked</option>
-                                    <option>Verizon</option>
-                                    <option>T-Mobile</option>
-                                    <option>AT&T</option>
-                                </select>
+                    <!-- Quick Quote Tab Content -->
+                    <div id="quick-tab" class="tab-pane p-6 md:p-10 active">
+                        <form id="calculatorForm">
+                            <!-- Step 1: Device Type -->
+                            <div class="calc-step active" data-step="1">
+                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-2">
+                                    <span class="bg-black text-white px-2 py-1 text-xs">01</span> Select Device Type
+                                </h3>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <button type="button" onclick="selectDevice('phone')" class="device-type-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-2">
+                                        <span class="material-symbols-outlined text-4xl">smartphone</span>
+                                        <span class="font-black uppercase text-sm">Phone</span>
+                                    </button>
+                                    <button type="button" onclick="selectDevice('laptop')" class="device-type-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-2">
+                                        <span class="material-symbols-outlined text-4xl">laptop_mac</span>
+                                        <span class="font-black uppercase text-sm">Laptop</span>
+                                    </button>
+                                    <button type="button" onclick="selectDevice('tablet')" class="device-type-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-2">
+                                        <span class="material-symbols-outlined text-4xl">tablet_mac</span>
+                                        <span class="font-black uppercase text-sm">Tablet</span>
+                                    </button>
+                                    <button type="button" onclick="selectDevice('watch')" class="device-type-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-2">
+                                        <span class="material-symbols-outlined text-4xl">watch</span>
+                                        <span class="font-black uppercase text-sm">Watch</span>
+                                    </button>
+                                </div>
                             </div>
+
+                            <!-- Step 2: Brand & Model -->
+                            <div class="calc-step hidden" data-step="2">
+                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-2">
+                                    <button type="button" onclick="prevCalcStep()" class="hover:underline">← BACK</button>
+                                    <span class="bg-black text-white px-2 py-1 text-xs">02</span> Select Brand & Model
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                    <div>
+                                        <label class="font-black uppercase text-xs mb-2 block">Brand</label>
+                                        <select id="brandSelect" onchange="loadModels()" class="w-full border-[3px] border-black p-4 font-bold uppercase bg-white focus:shadow-[4px_4px_0px_black] outline-none">
+                                            <option value="">Choose brand...</option>
+                                            <option value="apple">Apple</option>
+                                            <option value="samsung">Samsung</option>
+                                            <option value="google">Google</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="font-black uppercase text-xs mb-2 block">Model</label>
+                                        <select id="modelSelect" class="w-full border-[3px] border-black p-4 font-bold uppercase bg-white focus:shadow-[4px_4px_0px_black] outline-none">
+                                            <option value="">Select brand first...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h4 class="font-black uppercase text-xs mb-4">Storage Capacity</h4>
+                                <div class="flex flex-wrap gap-2 mb-8" id="storageGrid">
+                                    <button type="button" onclick="selectStorage('128')" class="storage-btn border-[2px] border-black px-4 py-2 font-bold uppercase text-sm hover:bg-black hover:text-white transition-none">128GB</button>
+                                    <button type="button" onclick="selectStorage('256')" class="storage-btn border-[2px] border-black px-4 py-2 font-bold uppercase text-sm hover:bg-black hover:text-white transition-none">256GB</button>
+                                    <button type="button" onclick="selectStorage('512')" class="storage-btn border-[2px] border-black px-4 py-2 font-bold uppercase text-sm hover:bg-black hover:text-white transition-none">512GB</button>
+                                    <button type="button" onclick="selectStorage('1024')" class="storage-btn border-[2px] border-black px-4 py-2 font-bold uppercase text-sm hover:bg-black hover:text-white transition-none">1TB</button>
+                                </div>
+                                <button type="button" onclick="nextCalcStep()" class="w-full bg-black text-white p-4 font-black uppercase hover:bg-primary hover:text-black transition-none border-[3px] border-black shadow-[6px_6px_0px_black] active:shadow-none active:translate-x-1 active:translate-y-1">Continue →</button>
+                            </div>
+
+                            <!-- Step 3: Condition -->
+                            <div class="calc-step hidden" data-step="3">
+                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-2">
+                                    <button type="button" onclick="prevCalcStep()" class="hover:underline">← BACK</button>
+                                    <span class="bg-black text-white px-2 py-1 text-xs">03</span> Overall Condition
+                                </h3>
+                                <input type="range" id="conditionSlider" min="0" max="4" value="3" oninput="updateConditionUI(this.value)" class="w-full h-8 appearance-none bg-primary border-[3px] border-black cursor-pointer mb-2">
+                                <div class="flex justify-between font-black uppercase text-[10px] mb-8">
+                                    <span>Poor</span>
+                                    <span>Fair</span>
+                                    <span>Good</span>
+                                    <span>Best</span>
+                                </div>
+                                <div id="conditionStatus" class="bg-black text-primary p-4 text-center font-black uppercase text-xl mb-8 border-[3px] border-black">Very Good 😊</div>
+                                
+                                <h4 class="font-black uppercase text-xs mb-4">Functional Checklist</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                                    <label class="flex items-center gap-3 border-[2px] border-black p-3 hover:bg-primary/20 cursor-pointer">
+                                        <input type="checkbox" checked class="form-checkbox border-2 border-black rounded-none">
+                                        <span class="font-bold uppercase text-sm">Powers On</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 border-[2px] border-black p-3 hover:bg-primary/20 cursor-pointer">
+                                        <input type="checkbox" checked class="form-checkbox border-2 border-black rounded-none">
+                                        <span class="font-bold uppercase text-sm">Screen Intact</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 border-[2px] border-black p-3 hover:bg-primary/20 cursor-pointer">
+                                        <input type="checkbox" checked class="form-checkbox border-2 border-black rounded-none">
+                                        <span class="font-bold uppercase text-sm">Unlocked</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 border-[2px] border-black p-3 hover:bg-primary/20 cursor-pointer">
+                                        <input type="checkbox" checked class="form-checkbox border-2 border-black rounded-none">
+                                        <span class="font-bold uppercase text-sm">No Water Damage</span>
+                                    </label>
+                                </div>
+                                <button type="button" onclick="calculateFinalOffer()" class="w-full bg-black text-white p-4 font-black uppercase hover:bg-primary hover:text-black transition-none border-[3px] border-black shadow-[6px_6px_0px_black]">Get Offer Now</button>
+                            </div>
+
+                            <!-- Step 4: Results -->
+                            <div class="calc-step hidden" data-step="4">
+                                <div class="text-center mb-8">
+                                    <h3 class="text-3xl font-black uppercase mb-2">Your Instant Offer</h3>
+                                    <div id="finalOfferPrice" class="text-7xl md:text-8xl font-black text-primary text-stroke tracking-tighter">$480</div>
+                                    <p id="resultDeviceName" class="font-black uppercase tracking-widest mt-2">iPhone 14 Pro • 256GB • Good</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                    <!-- Price History -->
+                                    <div class="border-[3px] border-black p-4 bg-white">
+                                        <h4 class="font-black uppercase text-sm mb-4 border-b-2 border-black pb-2">📊 Price History (12 Months)</h4>
+                                        <div class="h-48">
+                                            <canvas id="priceHistoryChart"></canvas>
+                                        </div>
+                                        <div id="priceInsight" class="mt-4 p-2 bg-yellow-100 border-2 border-black text-xs font-black uppercase text-center">
+                                            📉 Value dropped 12% recently! Trade in now.
+                                        </div>
+                                    </div>
+                                    <!-- Actions -->
+                                    <div class="flex flex-col gap-4 justify-center">
+                                        <button type="button" class="bg-primary border-[3px] border-black p-4 font-black uppercase shadow-[6px_6px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none">Lock In Offer (48 Hours)</button>
+                                        <button type="button" class="bg-black text-white border-[3px] border-black p-4 font-black uppercase shadow-[6px_6px_0px_black] hover:translate-x-1 hover:translate-y-1 hover:shadow-none">Email This Quote</button>
+                                        <div class="text-[10px] font-bold text-center uppercase text-gray-400">Time remaining: <span id="offerCountdown" class="text-black">47:59:59</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- AI Photo Quote Tab Content -->
+                    <div id="ai-tab" class="tab-pane p-6 md:p-10 hidden">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-black uppercase mb-2">AI Condition Analysis</h3>
+                            <p class="font-bold uppercase text-xs opacity-60">Upload photos for an instant robotic inspection</p>
                         </div>
-                    </div>
-
-                    <!-- Step 3: Condition -->
-                    <div class="mb-12">
-                         <h3 class="font-bold uppercase mb-4 text-xl">4. Condition</h3>
-                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                             <label class="cursor-pointer">
-                                 <input type="radio" name="condition" class="hidden" checked>
-                                 <div class="border-[3px] border-black p-4 hover:bg-green-50">
-                                     <div class="font-black uppercase text-green-600 mb-1">Excellent</div>
-                                     <div class="text-xs font-bold leading-tight">Like new, no scratches, fully functional.</div>
-                                 </div>
-                             </label>
-                             <label class="cursor-pointer">
-                                 <input type="radio" name="condition" class="hidden">
-                                 <div class="border-[3px] border-black p-4 hover:bg-yellow-50">
-                                     <div class="font-black uppercase text-yellow-600 mb-1">Good</div>
-                                     <div class="text-xs font-bold leading-tight">Minor scratches/wear, fully functional.</div>
-                                 </div>
-                             </label>
-                             <label class="cursor-pointer">
-                                 <input type="radio" name="condition" class="hidden">
-                                 <div class="border-[3px] border-black p-4 hover:bg-orange-50">
-                                     <div class="font-black uppercase text-orange-600 mb-1">Fair</div>
-                                     <div class="text-xs font-bold leading-tight">Visible dents/scratches, no cracks.</div>
-                                 </div>
-                             </label>
-                             <label class="cursor-pointer">
-                                 <input type="radio" name="condition" class="hidden">
-                                 <div class="border-[3px] border-black p-4 hover:bg-red-50">
-                                     <div class="font-black uppercase text-red-600 mb-1">Poor</div>
-                                     <div class="text-xs font-bold leading-tight">Cracked screen or body damage.</div>
-                                 </div>
-                             </label>
-                         </div>
-                    </div>
-
-                    <!-- Calculator Result -->
-                    <div class="bg-primary border-[3px] border-black p-8 text-center animate-pop-in">
-                        <h3 class="text-2xl font-black uppercase mb-2">Your Estimated Value</h3>
-                        <div class="text-6xl md:text-8xl font-black mb-4 tracking-tighter">$480.00</div>
-                        <div class="flex flex-col md:flex-row gap-4 justify-center">
-                            <button class="bg-black text-white border-[3px] border-black px-8 py-4 font-bold uppercase hover:bg-white hover:text-black">Accept Offer & Sell Now</button>
-                            <button class="bg-transparent border-[3px] border-black px-8 py-4 font-bold uppercase hover:bg-white">Save Quote For Later</button>
+                        <div id="uploadZone" class="border-[4px] border-dashed border-black p-12 text-center bg-gray-50 hover:bg-primary/10 cursor-pointer mb-8 animate-pulse" onclick="document.getElementById('photoInput').click()">
+                            <input type="file" id="photoInput" class="hidden" multiple onchange="handleFiles(this.files)">
+                            <span class="material-symbols-outlined text-6xl mb-4">add_a_photo</span>
+                            <h4 class="font-black uppercase">Drag or Click to Upload</h4>
+                            <p class="text-[10px] font-bold uppercase opacity-50">Upload Front, Back, and Sides for 99% accuracy</p>
+                        </div>
+                        <div id="photoPreviewGrid" class="grid grid-cols-4 gap-4 mb-8"></div>
+                        <button id="analyzeBtn" onclick="analyzePhotos()" disabled class="w-full bg-black text-white p-6 font-black uppercase border-[3px] border-black shadow-[6px_6px_0px_black] disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="analyzeText">🤖 RUN AI ANALYSIS</span>
+                        </button>
+                        
+                        <!-- AI Result Display -->
+                        <div id="aiResults" class="hidden border-[4px] border-black p-6 mt-8 bg-black text-white">
+                            <div class="flex justify-between items-center mb-6 border-b border-white/20 pb-4">
+                                <h4 class="font-black uppercase text-xl text-primary">Analysis Complete</h4>
+                                <span class="bg-green-600 px-2 py-1 text-[10px] font-black">95% CONFIDENT</span>
+                            </div>
+                            <div class="space-y-4 mb-8">
+                                <div class="flex justify-between font-bold uppercase text-sm"><span>Screen</span><span class="text-primary">Perfect Condition</span></div>
+                                <div class="flex justify-between font-bold uppercase text-sm"><span>Body</span><span class="text-yellow-400">Minor Scratches</span></div>
+                                <div class="flex justify-between font-bold uppercase text-sm"><span>Logic</span><span class="text-primary">Verified Clean</span></div>
+                            </div>
+                            <div class="bg-white text-black p-6 text-center">
+                                <div class="text-xs font-black uppercase mb-1">AI Verified Value</div>
+                                <div id="aiPriceValue" class="text-6xl font-black tracking-tighter text-stroke-sm">$425</div>
+                                <button class="mt-4 w-full bg-black text-white p-3 font-black uppercase text-sm">Accept AI Quote</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Price History Script -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                // Calculator State
+                let calcState = { step: 1, type: '', brand: '', model: '', storage: '', condition: 3 };
+                const deviceDb = {
+                    'apple': ['iPhone 14 Pro Max', 'iPhone 14 Pro', 'iPhone 13', 'iPad Pro M2'],
+                    'samsung': ['S23 Ultra', 'S22 Ultra', 'Z Fold 5'],
+                    'google': ['Pixel 7 Pro', 'Pixel 6']
+                };
+
+                const pricing = {
+                    'iPhone 14 Pro Max': 700,
+                    'iPhone 14 Pro': 600,
+                    'iPhone 13': 400,
+                    'S23 Ultra': 550
+                };
+
+                function switchTab(tab) {
+                    document.querySelectorAll('.calc-tab').forEach(t => t.classList.remove('bg-primary'));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+                    document.getElementById('tab-' + tab).classList.add('bg-primary');
+                    document.getElementById(tab + '-tab').classList.remove('hidden');
+                }
+
+                function selectDevice(type) {
+                    calcState.type = type;
+                    nextCalcStep();
+                }
+
+                function loadModels() {
+                    const brand = document.getElementById('brandSelect').value;
+                    const select = document.getElementById('modelSelect');
+                    select.innerHTML = '<option>Select Model...</option>';
+                    if (brand && deviceDb[brand]) {
+                        deviceDb[brand].forEach(m => select.innerHTML += `<option value="${m}">${m}</option>`);
+                    }
+                }
+
+                function selectStorage(val) {
+                    calcState.storage = val;
+                    document.querySelectorAll('.storage-btn').forEach(b => b.classList.remove('bg-black', 'text-white'));
+                    event.target.classList.add('bg-black', 'text-white');
+                }
+
+                function nextCalcStep() {
+                    document.querySelector(`.calc-step[data-step="${calcState.step}"]`).classList.add('hidden');
+                    calcState.step++;
+                    document.querySelector(`.calc-step[data-step="${calcState.step}"]`).classList.remove('hidden');
+                }
+
+                function prevCalcStep() {
+                    document.querySelector(`.calc-step[data-step="${calcState.step}"]`).classList.add('hidden');
+                    calcState.step--;
+                    document.querySelector(`.calc-step[data-step="${calcState.step}"]`).classList.remove('hidden');
+                }
+
+                function updateConditionUI(val) {
+                    const labels = ["Scrap 💀", "Poor 🤕", "Fair 😐", "Good 🙂", "Best 🤩"];
+                    document.getElementById('conditionStatus').textContent = labels[val];
+                    calcState.condition = val;
+                }
+
+                function calculateFinalOffer() {
+                    const model = document.getElementById('modelSelect').value;
+                    const base = pricing[model] || 300;
+                    const multipliers = [0.2, 0.4, 0.7, 0.9, 1.0];
+                    const final = Math.round(base * multipliers[calcState.condition]);
+                    
+                    document.getElementById('finalOfferPrice').textContent = '$' + final;
+                    document.getElementById('resultDeviceName').textContent = `${model} • ${calcState.storage}GB`;
+                    nextCalcStep();
+                    renderChart();
+                    startCountdown();
+                    
+                    // Store for exit intent
+                    localStorage.setItem('pendingQuote', JSON.stringify({ device: model, price: final }));
+                }
+
+                function renderChart() {
+                    const ctx = document.getElementById('priceHistoryChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['J','F','M','A','M','J','J','A','S','O','N','D'],
+                            datasets: [{
+                                label: 'Value',
+                                data: [650, 630, 620, 600, 580, 550, 540, 520, 500, 490, 485, 480],
+                                borderColor: '#FFD600',
+                                borderWidth: 4,
+                                tension: 0,
+                                fill: false,
+                                pointBackgroundColor: 'black'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { 
+                                x: { grid: { display: false }, ticks: { font: { weight: 'bold' } } },
+                                y: { grid: { color: '#eee' }, ticks: { font: { weight: 'bold' } } }
+                            }
+                        }
+                    });
+                }
+
+                function startCountdown() {
+                    let time = 172800; // 48 hours
+                    setInterval(() => {
+                        time--;
+                        const h = Math.floor(time / 3600);
+                        const m = Math.floor((time % 3600) / 60);
+                        const s = time % 60;
+                        document.getElementById('offerCountdown').textContent = `${h}:${m}:${s}`;
+                    }, 1000);
+                }
+
+                // AI ANALYSIS MOCK
+                function handleFiles(files) {
+                    const grid = document.getElementById('photoPreviewGrid');
+                    grid.innerHTML = '';
+                    Array.from(files).forEach(f => {
+                        const reader = new FileReader();
+                        reader.onload = e => grid.innerHTML += `<div class="border-2 border-black aspect-square bg-cover bg-center" style="background-image: url(${e.target.result})"></div>`;
+                        reader.readAsDataURL(f);
+                    });
+                    document.getElementById('analyzeBtn').disabled = files.length < 2;
+                }
+
+                async function analyzePhotos() {
+                    document.getElementById('analyzeText').textContent = "🤖 THINKING...";
+                    await new Promise(r => setTimeout(r, 2000));
+                    document.getElementById('aiResults').classList.remove('hidden');
+                    document.getElementById('analyzeBtn').classList.add('hidden');
+                    document.getElementById('uploadZone').classList.add('hidden');
+                    document.getElementById('photoPreviewGrid').classList.add('hidden');
+                }
+            </script>
+
+            <style>
+                .calc-step { animation: brutalSlide 0.2s linear forwards; }
+                @keyframes brutalSlide { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+                .text-stroke-sm { -webkit-text-stroke: 1.5px black; }
+            </style>
+
             <!-- Trade In Values Table -->
-            <section class="border-b-[3px] border-black bg-white p-8 md:p-12">
+            <section class="reveal-on-scroll border-b-[3px] border-black bg-white p-8 md:p-12">
                 <h2 class="text-3xl font-black uppercase text-center mb-8">Current Trade-In Prices</h2>
                  <div class="overflow-x-auto">
                     <table class="w-full min-w-[600px] border-collapse border-[3px] border-black text-center font-bold uppercase">
@@ -295,7 +513,7 @@
             </section>
 
              <!-- How It Works Timeline -->
-             <section class="border-b-[3px] border-black bg-primary p-12">
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-primary p-12">
                 <h2 class="text-4xl font-black uppercase text-center mb-12">3 Easy Steps To Get Paid</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">
                     <!-- Connector line -->
@@ -328,7 +546,7 @@
             </section>
 
             <!-- Payment Options -->
-            <section class="grid grid-cols-1 md:grid-cols-3 border-b-[3px] border-black bg-white">
+            <section class="reveal-on-scroll grid grid-cols-1 md:grid-cols-3 border-b-[3px] border-black bg-white">
                 <div class="p-12 border-b-[3px] md:border-b-0 md:border-r-[3px] border-black text-center hover:bg-gray-50">
                     <span class="material-symbols-outlined text-6xl mb-4">attach_money</span>
                     <h3 class="text-2xl font-black uppercase mb-2">Instant Cash</h3>
@@ -347,7 +565,7 @@
             </section>
 
             <!-- FAQ -->
-            <section class="bg-primary p-12 border-b-[3px] border-black">
+            <section class="reveal-on-scroll bg-primary p-12 border-b-[3px] border-black">
                 <h2 class="text-3xl font-black uppercase text-center mb-8">Selling FAQs</h2>
                  <div class="max-w-3xl mx-auto space-y-4">
                     <div class="bg-white border-[3px] border-black p-4">
@@ -381,7 +599,7 @@
             </section>
 
              <!-- Footer CTA -->
-             <section class="bg-hot-pink p-12 text-center border-b-[3px] border-black">
+             <section class="reveal-on-scroll bg-hot-pink p-12 text-center border-b-[3px] border-black">
                 <h2 class="text-4xl font-black uppercase mb-8 text-white tracking-tighter drop-shadow-[4px_4px_0px_black]">Ready to Sell?</h2>
                 <div class="flex flex-col md:flex-row justify-center gap-6">
                     <button onclick="document.getElementById('calculator').scrollIntoView()" class="bg-black text-white px-12 py-6 text-xl font-black uppercase hover:bg-white hover:text-black border-[3px] border-black shadow-[8px_8px_0px_0px_white]">Get Instant Quote</button>
@@ -396,26 +614,125 @@
         </div>
     </div>
 
+    <!-- EXIT INTENT MODAL -->
+    <div id="exitModal" class="exit-modal-overlay">
+      <div class="exit-modal-box">
+        <button class="exit-close" onclick="closeExitModal()">×</button>
+        <div class="exit-content">
+          <div class="exit-emoji">🎁</div>
+          <h2>Wait! Before you go...</h2>
+          <p class="exit-text">Get your quote emailed + <strong>$10 OFF</strong> your first repair!</p>
+          <form id="exitForm" onsubmit="submitExitEmail(event)">
+            <input type="email" placeholder="Enter your email" required class="exit-email-input">
+            <button type="submit" class="exit-submit-btn">📧 Send My Quote + $10 Coupon</button>
+          </form>
+          <p class="exit-trust">✓ No spam • ✓ Instant delivery • ✓ Unsubscribe anytime</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHATBOT WIDGET -->
+    <div id="chatWidget" class="chat-widget">
+      <button class="chat-bubble" id="chatBubble" onclick="openChat()">💬</button>
+      <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+          <span class="font-black italic">TECHBOT 🤖</span>
+          <div class="flex gap-2">
+            <button onclick="closeChat()">×</button>
+          </div>
+        </div>
+        <div class="chat-messages-area" id="chatMessagesArea">
+          <div class="msg-bubble border-2 border-black p-2 bg-white text-xs font-bold mb-2">👋 I'm TechBot. How can I help you sell or repair today?</div>
+        </div>
+        <div class="p-2 border-t-2 border-black flex">
+          <input type="text" id="chatInput" onkeypress="chatKeyPress(event)" class="flex-1 p-1 text-xs border-2 border-black" placeholder="Type here...">
+          <button onclick="sendChatMessage()" class="bg-primary px-2 border-2 border-l-0 border-black font-bold text-xs">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+    .exit-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
+    .exit-modal-box { background: white; padding: 40px; border: 4px solid black; max-width: 450px; position: relative; box-shadow: 12px 12px 0px black; }
+    .exit-close { position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; }
+    .exit-email-input { width: 100%; padding: 12px; border: 3px solid black; margin-bottom: 10px; font-weight: 900; }
+    .exit-submit-btn { width: 100%; padding: 15px; background: #FFD600; border: 3px solid black; font-weight: 900; box-shadow: 4px 4px 0px black; }
+    
+    .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 99; }
+    .chat-bubble { width: 50px; height: 50px; border-radius: 50%; border: 3px solid black; background: #ffd400; box-shadow: 4px 4px 0px black; cursor: pointer; font-size: 20px; }
+    .chat-window { position: fixed; bottom: 20px; right: 20px; width: 300px; height: 400px; background: white; border: 4px solid black; display: none; flex-direction: column; box-shadow: 10px 10px 0px black; }
+    .chat-header { background: #ffd400; padding: 10px; border-bottom: 3px solid black; display: flex; justify-content: space-between; font-weight: 900; }
+    .chat-messages-area { flex: 1; overflow-y: auto; padding: 10px; background: #f0f0f0; }
+    </style>
+
     <script>
-        const menuBtn = document.getElementById('open-menu');
-        const closeBtn = document.getElementById('close-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
+    const GROQ_KEY = ""; // Placeholder - Add your API key here
+    
+    // MOBILE MENU
+    const openMenuBtn = document.getElementById('open-menu');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    function toggleMenu(show) {
+      if (show) { mobileMenu.classList.remove('translate-x-full'); mobileMenu.classList.add('drawer-open'); menuOverlay.classList.remove('hidden'); }
+      else { mobileMenu.classList.add('translate-x-full'); mobileMenu.classList.remove('drawer-open'); menuOverlay.classList.add('hidden'); }
+    }
+    openMenuBtn.onclick = () => toggleMenu(true);
+    closeMenuBtn.onclick = () => toggleMenu(false);
+    menuOverlay.onclick = () => toggleMenu(false);
 
-        function toggleMenu() {
-            const isClosed = mobileMenu.classList.contains('translate-x-full');
-            if (isClosed) {
-                mobileMenu.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
+    // SCROLL ANIMATIONS
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-        menuBtn.addEventListener('click', toggleMenu);
-        closeBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
+    // EXIT INTENT
+    let exitShown = false;
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY < 10 && !exitShown && !sessionStorage.getItem('exitShown')) {
+        document.getElementById('exitModal').style.display = 'flex';
+        exitShown = true;
+        sessionStorage.setItem('exitShown', 'true');
+      }
+    });
+    function closeExitModal() { document.getElementById('exitModal').style.display = 'none'; }
+
+    // CHATBOT
+    function openChat() { document.getElementById('chatWindow').style.display = 'flex'; }
+    function closeChat() { document.getElementById('chatWindow').style.display = 'none'; }
+    function chatKeyPress(e) { if(e.key === 'Enter') sendChatMessage(); }
+    
+    async function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      
+      const area = document.getElementById('chatMessagesArea');
+      area.innerHTML += `<div class="bg-primary p-2 border-2 border-black text-xs font-bold mb-2 ml-4 shadow-[2px_2px_0px_black]">${text}</div>`;
+      input.value = '';
+      area.scrollTop = area.scrollHeight;
+
+      try {
+        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_KEY}` },
+          body: JSON.stringify({
+            messages: [
+              { role: "system", content: "You are TechBot, a helpful assistant for Mobile Experts Brooklyn. Style: Brutalist, high-energy, direct." },
+              { role: "user", content: text }
+            ],
+            model: "llama3-8b-8192"
+          })
+        });
+        const data = await res.json();
+        const reply = data.choices[0].message.content;
+        area.innerHTML += `<div class="bg-white p-2 border-2 border-black text-xs font-bold mb-2 mr-4 shadow-[2px_2px_0px_black]">🤖 ${reply}</div>`;
+      } catch (e) {
+        area.innerHTML += `<div class="bg-white p-2 border-2 border-black text-xs font-bold mb-2 mr-4 shadow-[2px_2px_0px_black]">🤖 Working on it! Call us at (347) 555-0199 for an instant answer.</div>`;
+      }
+      area.scrollTop = area.scrollHeight;
+    }
     </script>
 </body>
 </html>

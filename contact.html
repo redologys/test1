@@ -56,9 +56,21 @@
     <style>
         * { transition: none !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .brutalist-nav-link:hover { background-color: black; color: #FFD600; }
-        .brutalist-input:focus { outline: none; border-color: #FFD600; box-shadow: 4px 4px 0px black; }
-        .brutalist-card:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0px 0px black; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; }
+        .brutalist-card { border: 3px solid black; background: white; }
+        .brutalist-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px 0px black; }
+        .brutalist-btn:active { transform: translate(4px, 4px) !important; box-shadow: none !important; }
+        
+        /* SCROLL ANIMATION CLASS */
+        .reveal-on-scroll { opacity: 0; }
+        .reveal-on-scroll.is-visible { opacity: 1; animation: hard-slide 0.15s linear forwards; }
+        @keyframes hard-slide { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* MENU DRAWER ANIMATION */
+        @keyframes slide-in-from-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .drawer-open { animation: slide-in-from-right 0.15s linear forwards; }
     </style>
 </head>
 <body class="bg-background-light font-display text-black antialiased selection:bg-black selection:text-primary relative overflow-x-hidden">
@@ -116,7 +128,7 @@
             </header>
 
             <!-- Hero -->
-            <section class="bg-primary border-b-[3px] border-black p-12 min-h-[400px] flex flex-col justify-center text-center">
+            <section class="reveal-on-scroll bg-primary border-b-[3px] border-black p-12 min-h-[400px] flex flex-col justify-center text-center">
                 <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter mb-4 hover:animate-glitch">We're Here To Help</h1>
                 <p class="text-xl md:text-2xl font-bold uppercase mb-12">Visit us, call us, or send a message</p>
                 <div class="flex flex-wrap justify-center gap-6 md:gap-12">
@@ -127,7 +139,7 @@
             </section>
 
              <!-- Contact Methods Grid -->
-             <section class="grid grid-cols-1 md:grid-cols-3 border-b-[3px] border-black">
+             <section class="reveal-on-scroll grid grid-cols-1 md:grid-cols-3 border-b-[3px] border-black">
                  <!-- Card 1 -->
                  <div class="brutalist-card p-12 border-b-[3px] md:border-b-0 md:border-r-[3px] border-black relative group">
                     <div class="absolute top-4 right-4 bg-primary border-[2px] border-black px-2 py-1 text-xs font-bold uppercase">Walk-ins Welcome</div>
@@ -174,7 +186,7 @@
             </section>
 
             <!-- Map Section -->
-            <section id="map" class="h-[600px] border-b-[3px] border-black relative bg-[#e5e3df] group">
+            <section id="map" class="reveal-on-scroll h-[600px] border-b-[3px] border-black relative bg-[#e5e3df] group">
                 <!-- Static Google Map Placeholder using Image for Reliability in HTML Preview -->
                 <div class="absolute inset-0 bg-cover bg-center grayscale group-hover:grayscale-0 transition-none" 
                      style='background-image: url("https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyb8hzZLE9eVAR2LtjS8kT5gCxZ9_H9aFfqqXnebd3PiM6p1xmWtVV1b5aI_0Wjy9lZWb6T99oxDc_jPaenANw0hIYgyMWwr1ps2XqvRCGa8QCELT3vud2Hf314ORHgzBlHC2wji36keFqz=s1600");'>
@@ -195,7 +207,7 @@
             </section>
 
             <!-- Contact Form -->
-            <section id="contact-form" class="bg-gray-light p-8 md:p-16 border-b-[3px] border-black">
+            <section id="contact-form" class="reveal-on-scroll bg-gray-light p-8 md:p-16 border-b-[3px] border-black">
                 <div class="max-w-4xl mx-auto">
                     <h2 class="text-4xl font-black uppercase text-center mb-2">Send Us A Message</h2>
                     <p class="text-center font-bold mb-12">We'll respond within 2 hours during business hours</p>
@@ -244,7 +256,7 @@
             </section>
 
             <!-- Open Hours Visual -->
-            <section class="border-b-[3px] border-black bg-white p-12">
+            <section class="reveal-on-scroll border-b-[3px] border-black bg-white p-12">
                 <div class="max-w-4xl mx-auto">
                     <div class="flex justify-between items-end mb-8">
                         <h2 class="text-3xl font-black uppercase">When We're Open</h2>
@@ -306,7 +318,7 @@
             </section>
 
             <!-- Emergency Contact -->
-            <section class="bg-hot-pink border-b-[3px] border-black p-8 text-center">
+            <section class="reveal-on-scroll bg-hot-pink border-b-[3px] border-black p-8 text-center">
                 <div class="inline-flex items-center justify-center gap-4 bg-white border-[3px] border-black p-6 shadow-[8px_8px_0px_0px_black] animate-shake">
                     <span class="material-symbols-outlined text-4xl text-hot-pink">notification_important</span>
                     <div class="text-left">
@@ -352,26 +364,94 @@
         </div>
     </div>
 
+    <!-- EXIT INTENT MODAL -->
+    <div id="exitModal" class="exit-modal-overlay">
+      <div class="exit-modal-box">
+        <button class="exit-close" onclick="closeExitModal()">×</button>
+        <div class="exit-content">
+          <div class="exit-emoji">📞</div>
+          <h2>Need a fast answer?</h2>
+          <p class="exit-text">Call us now and mention this popup for <strong>PRIORITY SERVICE</strong>!</p>
+          <a href="tel:3475550199" class="block w-full text-center bg-primary p-4 border-[3px] border-black font-black uppercase shadow-[6px_6px_0px_black] text-2xl">Call (347) 555-0199</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHATBOT WIDGET -->
+    <div id="chatWidget" class="chat-widget">
+      <button class="chat-bubble" onclick="openChat()">💬</button>
+      <div id="chatWindow" class="chat-window">
+        <div class="chat-header">
+          <span class="font-black">TECHBOT 🤖</span>
+          <button onclick="closeChat()">×</button>
+        </div>
+        <div id="chatMessagesArea" class="chat-messages-area">
+          <div class="msg-bubble border-2 border-black p-2 bg-white text-xs font-bold mb-2">👋 How can I help you today?</div>
+        </div>
+        <div class="p-2 border-t-2 border-black flex">
+          <input type="text" id="chatInput" class="flex-1 p-1 text-xs border-2 border-black" placeholder="Type here...">
+          <button onclick="sendChatMessage()" class="bg-primary px-2 border-2 border-l-0 border-black font-bold text-xs">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+    .exit-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
+    .exit-modal-box { background: white; padding: 40px; border: 4px solid black; max-width: 450px; position: relative; box-shadow: 12px 12px 0px black; }
+    .exit-close { position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; }
+    .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 99; }
+    .chat-bubble { width: 50px; height: 50px; border-radius: 50%; border: 3px solid black; background: #ffd400; box-shadow: 4px 4px 0px black; cursor: pointer; font-size: 20px; }
+    .chat-window { position: fixed; bottom: 20px; right: 20px; width: 300px; height: 400px; background: white; border: 4px solid black; display: none; flex-direction: column; box-shadow: 10px 10px 0px black; }
+    .chat-header { background: #ffd400; padding: 10px; border-bottom: 3px solid black; display: flex; justify-content: space-between; }
+    .chat-messages-area { flex: 1; overflow-y: auto; padding: 10px; background: #f0f0f0; }
+    </style>
+
     <script>
-        const menuBtn = document.getElementById('open-menu');
-        const closeBtn = document.getElementById('close-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
+    // MOBILE MENU
+    const openMenuBtn = document.getElementById('open-menu');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    function toggleMenu(show) {
+      if (show) { mobileMenu.classList.remove('translate-x-full'); mobileMenu.classList.add('drawer-open'); menuOverlay.classList.remove('hidden'); }
+      else { mobileMenu.classList.add('translate-x-full'); mobileMenu.classList.remove('drawer-open'); menuOverlay.classList.add('hidden'); }
+    }
+    openMenuBtn.onclick = () => toggleMenu(true);
+    closeMenuBtn.onclick = () => toggleMenu(false);
+    menuOverlay.onclick = () => toggleMenu(false);
 
-        function toggleMenu() {
-            const isClosed = mobileMenu.classList.contains('translate-x-full');
-            if (isClosed) {
-                mobileMenu.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
+    // SCROLL ANIMATIONS
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-        menuBtn.addEventListener('click', toggleMenu);
-        closeBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
+    // EXIT INTENT
+    let exitShown = false;
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY < 10 && !exitShown && !sessionStorage.getItem('exitShown')) {
+        document.getElementById('exitModal').style.display = 'flex';
+        exitShown = true;
+        sessionStorage.setItem('exitShown', 'true');
+      }
+    });
+    function closeExitModal() { document.getElementById('exitModal').style.display = 'none'; }
+
+    // CHATBOT
+    function openChat() { document.getElementById('chatWindow').style.display = 'flex'; }
+    function closeChat() { document.getElementById('chatWindow').style.display = 'none'; }
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      const area = document.getElementById('chatMessagesArea');
+      area.innerHTML += `<div class="bg-primary p-2 border-2 border-black text-xs font-bold mb-2 ml-4">${text}</div>`;
+      input.value = '';
+      setTimeout(() => {
+        area.innerHTML += `<div class="bg-white p-2 border-2 border-black text-xs font-bold mb-2 mr-4">🤖 Message received! We'll reply shortly.</div>`;
+        area.scrollTop = area.scrollHeight;
+      }, 500);
+    }
     </script>
 </body>
 </html>

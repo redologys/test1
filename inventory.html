@@ -64,11 +64,20 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        .brutalist-nav-link:hover { background-color: black; color: #FFD600; }
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; }
         .brutalist-card { border: 3px solid black; background: white; }
-        .brutalist-card:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0px 0px black; border-color: #FFD600; }
+        .brutalist-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px 0px black; }
         .brutalist-btn:active { transform: translate(4px, 4px) !important; box-shadow: none !important; }
         
+        /* SCROLL ANIMATION CLASS */
+        .reveal-on-scroll { opacity: 0; }
+        .reveal-on-scroll.is-visible { opacity: 1; animation: hard-slide 0.15s linear forwards; }
+        @keyframes hard-slide { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* MENU DRAWER ANIMATION */
+        @keyframes slide-in-from-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .drawer-open { animation: slide-in-from-right 0.15s linear forwards; }
+
         /* Sticky Filter Bar */
         .sticky-filters { position: sticky; top: 0; z-index: 30; }
     </style>
@@ -134,7 +143,7 @@
             </header>
 
             <!-- Hero -->
-            <section class="bg-primary border-b-[3px] border-black p-12 min-h-[500px] flex flex-col justify-center text-center relative overflow-hidden">
+            <section class="reveal-on-scroll bg-primary border-b-[3px] border-black p-12 min-h-[500px] flex flex-col justify-center text-center relative overflow-hidden">
                 <div class="absolute top-4 left-0 w-full text-center">
                      <p class="text-xs font-black uppercase tracking-widest bg-black text-white inline-block px-3 py-1">Last Updated: Today 3:45 PM</p>
                 </div>
@@ -180,7 +189,7 @@
             </div>
 
             <!-- Featured Stock Banner -->
-            <section class="bg-hot-pink border-b-[3px] border-black p-8">
+            <section class="reveal-on-scroll bg-hot-pink border-b-[3px] border-black p-8">
                 <div class="flex justify-between items-center mb-8">
                      <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white drop-shadow-[4px_4px_0px_black]">Just Arrived This Week</h2>
                      <a href="#" class="hidden md:block text-white font-bold uppercase underline hover:text-black">See All New Stock →</a>
@@ -203,7 +212,7 @@
             </section>
 
             <!-- Main Inventory Grid -->
-            <section class="p-8 border-b-[3px] border-black bg-white relative">
+            <section class="reveal-on-scroll p-8 border-b-[3px] border-black bg-white relative">
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Item 1 -->
                     <div class="brutalist-card p-4 group relative">
@@ -296,7 +305,7 @@
             </section>
 
             <!-- How To Purchase -->
-            <section class="border-b-[3px] border-black bg-primary py-16 px-4 md:px-12">
+            <section class="reveal-on-scroll border-b-[3px] border-black bg-primary py-16 px-4 md:px-12">
                 <h2 class="text-4xl font-black uppercase text-center mb-12 tracking-tighter">How To Get These Items</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Option 1 -->
@@ -327,7 +336,7 @@
             </section>
 
              <!-- Pricing Transparency -->
-             <section class="border-b-[3px] border-black bg-white p-12 text-center">
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-white p-12 text-center">
                  <h2 class="text-3xl font-black uppercase mb-8">Why Our Prices Are Fair</h2>
                  <div class="flex flex-col md:flex-row justify-center gap-8 md:gap-16 font-bold uppercase">
                      <div class="flex items-center justify-center gap-2"><span class="material-symbols-outlined text-primary">verified</span> Certified Refurbished Quality</div>
@@ -338,7 +347,7 @@
              </section>
 
              <!-- Coming Soon -->
-             <section class="bg-black text-white p-12 border-b-[3px] border-black">
+             <section class="reveal-on-scroll bg-black text-white p-12 border-b-[3px] border-black">
                  <h2 class="text-3xl font-black uppercase text-center mb-8 text-primary">Expected This Week</h2>
                  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                      <div class="border border-white/20 p-4">
@@ -375,32 +384,105 @@
                  <p class="mt-8 font-bold uppercase text-lg">Or call: <a href="tel:9297892786" class="underline hover:no-underline">(929) 789-2786</a></p>
             </footer>
 
-            <div class="bg-black text-white p-4 text-center">
+             <div class="bg-black text-white p-4 text-center">
                  <p class="text-xs font-bold uppercase tracking-widest text-white/40">© 2026 MOBILE EXPERTS INC.</p>
             </div>
         </div>
     </div>
 
+    <!-- EXIT INTENT MODAL -->
+    <div id="exitModal" class="exit-modal-overlay">
+      <div class="exit-modal-box">
+        <button class="exit-close" onclick="closeExitModal()">×</button>
+        <div class="exit-content">
+          <div class="exit-emoji">🎁</div>
+          <h2>Wait! Special Deal...</h2>
+          <p class="exit-text">Get <strong>10% Off</strong> any inventory item when you join our list.</p>
+          <form onsubmit="event.preventDefault(); alert('Discount code sent!'); closeExitModal();">
+            <input type="email" placeholder="YOUR EMAIL" required class="w-full p-4 border-[3px] border-black mb-4 font-black">
+            <button class="w-full bg-primary p-4 border-[3px] border-black font-black uppercase shadow-[6px_6px_0px_black]">Get My Code</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHATBOT WIDGET -->
+    <div id="chatWidget" class="chat-widget">
+      <button class="chat-bubble" onclick="openChat()">💬</button>
+      <div id="chatWindow" class="chat-window">
+        <div class="chat-header">
+          <span class="font-black">TECHBOT 🤖</span>
+          <button onclick="closeChat()">×</button>
+        </div>
+        <div id="chatMessagesArea" class="chat-messages-area">
+          <div class="msg-bubble border-2 border-black p-2 bg-white text-xs font-bold mb-2">👋 Looking for a specific phone? Type a model!</div>
+        </div>
+        <div class="p-2 border-t-2 border-black flex">
+          <input type="text" id="chatInput" class="flex-1 p-1 text-xs border-2 border-black" placeholder="Type here..." onkeypress="if(e.key==='Enter')sendChatMessage()">
+          <button onclick="sendChatMessage()" class="bg-primary px-2 border-2 border-l-0 border-black font-bold text-xs">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+    .exit-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
+    .exit-modal-box { background: white; padding: 40px; border: 4px solid black; max-width: 450px; position: relative; box-shadow: 12px 12px 0px black; }
+    .exit-close { position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; }
+    .exit-emoji { font-size: 60px; text-align: center; }
+    
+    .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 99; }
+    .chat-bubble { width: 50px; height: 50px; border-radius: 50%; border: 3px solid black; background: #ffd400; box-shadow: 4px 4px 0px black; cursor: pointer; font-size: 20px; }
+    .chat-window { position: fixed; bottom: 20px; right: 20px; width: 300px; height: 400px; background: white; border: 4px solid black; display: none; flex-direction: column; box-shadow: 10px 10px 0px black; }
+    .chat-header { background: #ffd400; p: 10px; border-bottom: 3px solid black; display: flex; justify-content: space-between; }
+    .chat-messages-area { flex: 1; overflow-y: auto; p: 10px; background: #f0f0f0; }
+    </style>
+
     <script>
-        const menuBtn = document.getElementById('open-menu');
-        const closeBtn = document.getElementById('close-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('menu-overlay');
+    // MOBILE MENU
+    const openMenuBtn = document.getElementById('open-menu');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    function toggleMenu(show) {
+      if (show) { mobileMenu.classList.remove('translate-x-full'); mobileMenu.classList.add('drawer-open'); menuOverlay.classList.remove('hidden'); }
+      else { mobileMenu.classList.add('translate-x-full'); mobileMenu.classList.remove('drawer-open'); menuOverlay.classList.add('hidden'); }
+    }
+    openMenuBtn.onclick = () => toggleMenu(true);
+    closeMenuBtn.onclick = () => toggleMenu(false);
+    menuOverlay.onclick = () => toggleMenu(false);
 
-        function toggleMenu() {
-            const isClosed = mobileMenu.classList.contains('translate-x-full');
-            if (isClosed) {
-                mobileMenu.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
+    // SCROLL ANIMATIONS
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-        menuBtn.addEventListener('click', toggleMenu);
-        closeBtn.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
+    // EXIT INTENT
+    let exitShown = false;
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY < 10 && !exitShown && !sessionStorage.getItem('exitShown')) {
+        document.getElementById('exitModal').style.display = 'flex';
+        exitShown = true;
+        sessionStorage.setItem('exitShown', 'true');
+      }
+    });
+    function closeExitModal() { document.getElementById('exitModal').style.display = 'none'; }
+
+    // CHATBOT
+    function openChat() { document.getElementById('chatWindow').style.display = 'flex'; }
+    function closeChat() { document.getElementById('chatWindow').style.display = 'none'; }
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      const area = document.getElementById('chatMessagesArea');
+      area.innerHTML += `<div class="bg-primary p-2 border-2 border-black text-xs font-bold mb-2 ml-4">${text}</div>`;
+      input.value = '';
+      setTimeout(() => {
+        area.innerHTML += `<div class="bg-white p-2 border-2 border-black text-xs font-bold mb-2 mr-4">🤖 Checking stock for "${text}"... One moment!</div>`;
+        area.scrollTop = area.scrollHeight;
+      }, 500);
+    }
     </script>
 </body>
 </html>
