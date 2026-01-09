@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair Estimate Calculator - Mobile Experts Inc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FFD700",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: all 300ms ease; }
+        html { scroll-behavior: smooth; }
+
+        .device-card {
+            cursor: pointer;
+            border: 3px solid black;
+            background: #FFD700;
+        }
+        .device-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .device-card.selected {
+            border-width: 5px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+        }
+
+        .repair-checkbox {
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 200ms ease;
+        }
+        .repair-checkbox:hover {
+            background-color: #FFF9E6;
+            border-color: #FFD700;
+        }
+        .repair-checkbox.selected {
+            background-color: #FFD700;
+            border-color: black;
+            border-width: 3px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .loading-dots { animation: pulse 1.5s infinite; }
+
+        @keyframes countUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .price-reveal { animation: countUp 0.5s ease-out; }
+
+        @keyframes checkPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .check-pulse { animation: checkPulse 0.6s ease-in-out; }
+    </style>
+</head>
+<body class="bg-white font-display text-black">
+    
+    <div class="min-h-screen p-4 md:p-8">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Header -->
+            <div class="bg-primary border-4 border-black p-8 mb-8 text-center">
+                <a href="index.html" class="inline-flex items-center gap-2 text-2xl font-black uppercase mb-4 hover:opacity-80">
+                    <span class="material-symbols-outlined text-4xl">bolt</span>
+                    MOBILE EXPERTS
+                </a>
+                <h1 class="text-4xl md:text-6xl font-black uppercase mb-2">REPAIR ESTIMATE CALCULATOR</h1>
+                <p class="text-lg md:text-xl font-bold">GET YOUR INSTANT QUOTE IN 3 STEPS</p>
+            </div>
+
+            <!-- Main Calculator -->
+            <div class="bg-white border-4 border-black p-6 md:p-10 shadow-[8px_8px_0px_0px_black]">
+                
+                <!-- Step 1: Choose Device -->
+                <div id="step1" class="mb-8">
+                    <h2 class="text-2xl md:text-3xl font-black uppercase mb-6">STEP 1: CHOOSE YOUR DEVICE</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="device-card p-8 text-center" onclick="selectDevice('iPhone')">
+                            <div class="text-6xl mb-3">📱</div>
+                            <div class="text-2xl font-black">IPHONE</div>
+                        </div>
+                        <div class="device-card p-8 text-center" onclick="selectDevice('Samsung')">
+                            <div class="text-6xl mb-3">📱</div>
+                            <div class="text-2xl font-black">SAMSUNG</div>
+                        </div>
+                        <div class="device-card p-8 text-center" onclick="selectDevice('GooglePixel')">
+                            <div class="text-6xl mb-3">📱</div>
+                            <div class="text-2xl font-black">GOOGLE PIXEL</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Select Model -->
+                <div id="step2" class="mb-8 opacity-50 pointer-events-none">
+                    <h2 class="text-2xl md:text-3xl font-black uppercase mb-6">STEP 2: SELECT MODEL</h2>
+                    <select id="modelSelect" class="w-full border-4 border-black p-4 text-lg font-bold bg-white focus:outline-none focus:ring-4 focus:ring-primary">
+                        <option value="">-- Choose a model --</option>
+                    </select>
+                </div>
+
+                <!-- Step 3: What Needs Repair? -->
+                <div id="step3" class="mb-8 opacity-50 pointer-events-none">
+                    <h2 class="text-2xl md:text-3xl font-black uppercase mb-6">STEP 3: WHAT NEEDS REPAIR?</h2>
+                    <div id="repairOptions" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Calculate Button -->
+                <button id="calculateBtn" onclick="calculate()" disabled class="w-full bg-primary border-4 border-black py-5 text-2xl font-black uppercase hover:bg-black hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary disabled:hover:text-black">
+                    CALCULATE MY ESTIMATE
+                </button>
+
+                <!-- Loading State -->
+                <div id="loading" class="hidden text-center py-12">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <div class="text-2xl font-black loading-dots" id="loadingText">Analyzing repair costs...</div>
+                </div>
+
+                <!-- Results -->
+                <div id="results" class="hidden mt-8">
+                    <div class="bg-primary border-4 border-black p-8 mb-6 text-center">
+                        <div class="text-sm font-bold mb-2 uppercase">YOUR ESTIMATE</div>
+                        <div id="priceDisplay" class="text-5xl md:text-7xl font-black mb-2 price-reveal">$0 - $0</div>
+                        <div class="text-lg font-bold">Estimated Time: 45-60 minutes</div>
+                    </div>
+
+                    <div class="border-3 border-black p-6 mb-6">
+                        <div class="text-xl font-black mb-4 uppercase">Breakdown:</div>
+                        <div id="breakdown" class="space-y-2 font-bold text-lg">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="text-center p-4 border-2 border-black">
+                            <div class="text-3xl mb-2 check-pulse">✓</div>
+                            <div class="text-sm font-black">90-DAY WARRANTY</div>
+                        </div>
+                        <div class="text-center p-4 border-2 border-black">
+                            <div class="text-3xl mb-2 check-pulse">✓</div>
+                            <div class="text-sm font-black">SAME-DAY SERVICE</div>
+                        </div>
+                        <div class="text-center p-4 border-2 border-black">
+                            <div class="text-3xl mb-2 check-pulse">✓</div>
+                            <div class="text-sm font-black">ORIGINAL PARTS</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="window.location.href='contact.html'" class="bg-black text-white border-4 border-black py-4 text-xl font-black uppercase hover:bg-primary hover:text-black">
+                            BOOK APPOINTMENT
+                        </button>
+                        <button onclick="window.location.href='tel:9297892786'" class="bg-white border-4 border-black py-4 text-xl font-black uppercase hover:bg-primary">
+                            CALL NOW
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // STATE
+        let selectedBrand = '';
+        let selectedModel = '';
+        let selectedRepairs = [];
+
+        // PRICING DATA
+        const repairPrices = {
+            iPhone: {
+                '15 Pro Max': { screen: 379, battery: 99, charging: 89, water: 149, backGlass: 169, camera: 129, speaker: 79 },
+                '15 Pro': { screen: 349, battery: 99, charging: 89, water: 149, backGlass: 149, camera: 119, speaker: 79 },
+                '15': { screen: 279, battery: 89, charging: 79, water: 129, backGlass: 129, camera: 99, speaker: 69 },
+                '14 Pro Max': { screen: 329, battery: 89, charging: 79, water: 129, backGlass: 149, camera: 109, speaker: 69 },
+                '14 Pro': { screen: 299, battery: 89, charging: 79, water: 129, backGlass: 129, camera: 99, speaker: 69 },
+                '14': { screen: 249, battery: 79, charging: 69, water: 109, backGlass: 109, camera: 89, speaker: 59 },
+                '13 Pro Max': { screen: 279, battery: 79, charging: 69, water: 109, backGlass: 129, camera: 99, speaker: 59 },
+                '13 Pro': { screen: 249, battery: 79, charging: 69, water: 109, backGlass: 109, camera: 89, speaker: 59 },
+                '13': { screen: 219, battery: 69, charging: 59, water: 99, backGlass: 99, camera: 79, speaker: 49 },
+                '12 Pro Max': { screen: 249, battery: 69, charging: 59, water: 99, backGlass: 109, camera: 89, speaker: 49 },
+                '12 Pro': { screen: 219, battery: 69, charging: 59, water: 99, backGlass: 99, camera: 79, speaker: 49 },
+                '12': { screen: 199, battery: 69, charging: 59, water: 89, backGlass: 89, camera: 69, speaker: 49 },
+                '11 Pro Max': { screen: 219, battery: 69, charging: 59, water: 89, backGlass: 99, camera: 79, speaker: 49 },
+                '11 Pro': { screen: 199, battery: 69, charging: 59, water: 89, backGlass: 89, camera: 69, speaker: 49 },
+                '11': { screen: 169, battery: 59, charging: 49, water: 79, backGlass: 79, camera: 59, speaker: 49 },
+                'XS Max': { screen: 199, battery: 69, charging: 59, water: 89, backGlass: 89, camera: 69, speaker: 49 },
+                'XS': { screen: 179, battery: 59, charging: 49, water: 79, backGlass: 79, camera: 59, speaker: 49 },
+                'XR': { screen: 149, battery: 59, charging: 49, water: 79, backGlass: 79, camera: 59, speaker: 49 },
+                'X': { screen: 169, battery: 59, charging: 49, water: 79, backGlass: 79, camera: 59, speaker: 49 },
+                '8 Plus': { screen: 129, battery: 49, charging: 49, water: 69, backGlass: 69, camera: 49, speaker: 39 },
+                '8': { screen: 109, battery: 49, charging: 49, water: 69, backGlass: 69, camera: 49, speaker: 39 },
+            },
+            Samsung: {
+                'S24 Ultra': { screen: 359, battery: 99, charging: 89, water: 139, backGlass: 149, camera: 119, speaker: 79 },
+                'S24+': { screen: 299, battery: 89, charging: 79, water: 129, backGlass: 129, camera: 99, speaker: 69 },
+                'S24': { screen: 259, battery: 89, charging: 79, water: 119, backGlass: 109, camera: 89, speaker: 69 },
+                'S23 Ultra': { screen: 329, battery: 89, charging: 79, water: 129, backGlass: 139, camera: 109, speaker: 69 },
+                'S23+': { screen: 279, battery: 79, charging: 69, water: 119, backGlass: 119, camera: 89, speaker: 59 },
+                'S23': { screen: 239, battery: 79, charging: 69, water: 109, backGlass: 99, camera: 79, speaker: 59 },
+                'S22 Ultra': { screen: 299, battery: 79, charging: 69, water: 119, backGlass: 129, camera: 99, speaker: 69 },
+                'S22+': { screen: 249, battery: 79, charging: 69, water: 109, backGlass: 109, camera: 89, speaker: 59 },
+                'S22': { screen: 219, battery: 69, charging: 59, water: 99, backGlass: 89, camera: 69, speaker: 49 },
+                'S21 Ultra': { screen: 289, battery: 79, charging: 69, water: 109, backGlass: 119, camera: 89, speaker: 59 },
+                'S21+': { screen: 239, battery: 69, charging: 59, water: 99, backGlass: 99, camera: 79, speaker: 49 },
+                'S21': { screen: 199, battery: 69, charging: 59, water: 89, backGlass: 89, camera: 69, speaker: 49 },
+                'Note 20 Ultra': { screen: 279, battery: 79, charging: 69, water: 109, backGlass: 109, camera: 89, speaker: 59 },
+                'Note 20': { screen: 229, battery: 69, charging: 59, water: 99, backGlass: 89, camera: 69, speaker: 49 },
+            },
+            GooglePixel: {
+                'Pixel 8 Pro': { screen: 279, battery: 89, charging: 79, water: 119, backGlass: 129, camera: 99, speaker: 69 },
+                'Pixel 8': { screen: 239, battery: 79, charging: 69, water: 109, backGlass: 109, camera: 89, speaker: 59 },
+                'Pixel 7 Pro': { screen: 249, battery: 79, charging: 69, water: 109, backGlass: 119, camera: 89, speaker: 59 },
+                'Pixel 7': { screen: 219, battery: 69, charging: 59, water: 99, backGlass: 99, camera: 79, speaker: 49 },
+                'Pixel 6 Pro': { screen: 229, battery: 69, charging: 59, water: 99, backGlass: 99, camera: 79, speaker: 49 },
+                'Pixel 6': { screen: 199, battery: 69, charging: 59, water: 89, backGlass: 89, camera: 69, speaker: 49 },
+                'Pixel 5': { screen: 179, battery: 59, charging: 49, water: 79, backGlass: 79, camera: 59, speaker: 49 },
+                'Pixel 4a': { screen: 149, battery: 49, charging: 49, water: 69, backGlass: 69, camera: 49, speaker: 39 },
+            }
+        };
+
+        const repairTypes = [
+            { id: 'screen', label: 'Screen Replacement', base: 49 },
+            { id: 'battery', label: 'Battery Replacement', base: 59 },
+            { id: 'charging', label: 'Charging Port', base: 79 },
+            { id: 'water', label: 'Water Damage', base: 99 },
+            { id: 'backGlass', label: 'Back Glass', base: 89 },
+            { id: 'camera', label: 'Camera', base: 89 },
+            { id: 'speaker', label: 'Speaker/Microphone', base: 69 },
+        ];
+
+        function selectDevice(brand) {
+            selectedBrand = brand;
+            selectedModel = '';
+            selectedRepairs = [];
+            
+            // Update UI
+            document.querySelectorAll('.device-card').forEach(card => card.classList.remove('selected'));
+            event.target.closest('.device-card').classList.add('selected');
+            
+            // Enable step 2
+            document.getElementById('step2').classList.remove('opacity-50', 'pointer-events-none');
+            
+            // Populate models
+            const select = document.getElementById('modelSelect');
+            select.innerHTML = '<option value="">-- Choose a model --</option>';
+            Object.keys(repairPrices[brand]).forEach(model => {
+                const option = document.createElement('option');
+                option.value = model;
+                option.textContent = model;
+                select.appendChild(option);
+            });
+            
+            // Reset step 3
+            document.getElementById('step3').classList.add('opacity-50', 'pointer-events-none');
+            document.getElementById('calculateBtn').disabled = true;
+        }
+
+        document.getElementById('modelSelect').addEventListener('change', function() {
+            selectedModel = this.value;
+            
+            if (selectedModel) {
+                // Enable step 3
+                document.getElementById('step3').classList.remove('opacity-50', 'pointer-events-none');
+                
+                // Populate repair options
+                const container = document.getElementById('repairOptions');
+                container.innerHTML = '';
+                
+                repairTypes.forEach(repair => {
+                    const price = repairPrices[selectedBrand][selectedModel][repair.id];
+                    const div = document.createElement('div');
+                    div.className = 'repair-checkbox p-4 flex items-center justify-between';
+                    div.onclick = () => toggleRepair(repair.id, div);
+                    div.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 border-2 border-black flex items-center justify-center font-black text-primary">
+                                <span class="hidden checkmark">✓</span>
+                            </div>
+                            <span class="font-bold text-lg">${repair.label}</span>
+                        </div>
+                        <span class="font-black text-lg">Starting at $${price}</span>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        });
+
+        function toggleRepair(repairId, element) {
+            const index = selectedRepairs.indexOf(repairId);
+            const checkmark = element.querySelector('.checkmark');
+            
+            if (index > -1) {
+                selectedRepairs.splice(index, 1);
+                element.classList.remove('selected');
+                checkmark.classList.add('hidden');
+            } else {
+                selectedRepairs.push(repairId);
+                element.classList.add('selected');
+                checkmark.classList.remove('hidden');
+            }
+            
+            // Enable calculate button if at least one repair selected
+            document.getElementById('calculateBtn').disabled = selectedRepairs.length === 0;
+        }
+
+        function calculate() {
+            // Hide calculator, show loading
+            document.getElementById('calculateBtn').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            
+            // Loading sequence
+            setTimeout(() => {
+                document.getElementById('loadingText').textContent = 'Checking parts availability...';
+            }, 1000);
+            
+            setTimeout(() => {
+                document.getElementById('loadingText').textContent = 'Calculating total...';
+            }, 2000);
+            
+            setTimeout(() => {
+                showResults();
+            }, 3000);
+        }
+
+        function showResults() {
+            // Calculate total
+            let total = 0;
+            const breakdown = [];
+            
+            selectedRepairs.forEach(repairId => {
+                const price = repairPrices[selectedBrand][selectedModel][repairId];
+                total += price;
+                const repairName = repairTypes.find(r => r.id === repairId).label;
+                breakdown.push({ name: repairName, price });
+            });
+            
+            const minPrice = Math.floor(total * 0.92);
+            const maxPrice = Math.ceil(total * 1.08);
+            
+            // Hide loading, show results
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Animate price
+            animatePrice(minPrice, maxPrice);
+            
+            // Show breakdown
+            const breakdownEl = document.getElementById('breakdown');
+            let breakdownHTML = '';
+            breakdown.forEach(item => {
+                breakdownHTML += `<div class="flex justify-between"><span>• ${item.name}:</span><span>$${item.price}</span></div>`;
+            });
+            breakdownHTML += `<div class="flex justify-between border-t-2 border-black pt-2 mt-2 text-xl"><span>TOTAL:</span><span>$${minPrice} - $${maxPrice}</span></div>`;
+            breakdownEl.innerHTML = breakdownHTML;
+        }
+
+        function animatePrice(min, max) {
+            const display = document.getElementById('priceDisplay');
+            const duration = 1500;
+            const startTime = Date.now();
+            
+            const interval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const currentMin = Math.floor(min * progress);
+                const currentMax = Math.floor(max * progress);
+                
+                display.textContent = `$${currentMin} - $${currentMax}`;
+                
+                if (progress === 1) {
+                    clearInterval(interval);
+                }
+            }, 16);
+        }
+    </script>
+
+</body>
+</html>
