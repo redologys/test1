@@ -305,6 +305,7 @@
                 <a href="repairs.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Repairs</a>
                 <a href="inventory.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Inventory</a>
                 <a href="sell.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Sell</a>
+                <a href="phone-services.html" class="block border-[3px] border-black bg-primary p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Phone Services</a>
                 <a href="contact.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Contact</a>
             </nav>
         </div>
@@ -353,6 +354,10 @@
                         <span class="mr-2 hidden material-symbols-outlined md:inline-block">payments</span>
                         Sell
                     </a>
+                    <a href="phone-services.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-primary px-6 py-4 text-lg font-bold uppercase brutalist-nav-link whitespace-nowrap">
+                        <span class="mr-2 hidden material-symbols-outlined md:inline-block">sim_card</span>
+                        Services
+                    </a>
                     <a href="contact.html" class="flex flex-1 items-center justify-center bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link whitespace-nowrap">
                         <span class="mr-2 hidden material-symbols-outlined md:inline-block">mail</span>
                         Contact
@@ -360,167 +365,168 @@
                 </nav>
             </header>
 
-            <!-- Hero Split -->
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-                <!-- Yellow Section -->
-                <div class="reveal-on-scroll relative flex flex-col justify-between border-b-[3px] border-black bg-primary p-8 md:p-12 lg:border-b-0 lg:border-r-[3px] lg:p-16">
-                    <div class="flex flex-col gap-6 relative z-10">
-                        <div class="inline-block w-fit border-[3px] border-black bg-black px-3 py-1 text-xs font-bold uppercase text-white cursor-help">
-                            Priority Service
+            <!-- New Hero Design -->
+            <div class="reveal-on-scroll border-b-[3px] border-black bg-white p-8 md:p-16 text-center">
+                <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 leading-none">Brooklyn's Complete<br>Mobile Solution</h1>
+                <p class="text-xl font-bold uppercase text-gray-600 mb-12">Expert repairs • Device sales • Phone line services</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Service 1: Repair -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-8 text-left hover:bg-gray-50 group transition-all">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="material-symbols-outlined text-5xl group-hover:animate-bounce">build</span>
+                            <span class="bg-black text-white px-2 py-1 text-xs font-black uppercase">Fast</span>
                         </div>
-                        <h2 class="max-w-xl text-5xl font-black uppercase leading-[0.9] tracking-tighter text-black md:text-7xl lg:text-8xl hover:animate-glitch cursor-default">
-                            Same-Day<br>Repairs
-                        </h2>
-                        <p class="max-w-md text-lg font-bold uppercase leading-tight text-black/80 md:text-xl">
-                            Screens, Batteries, & Logic Boards fixed in less than 1 hour.
-                        </p>
+                        <h3 class="text-2xl font-black uppercase mb-4">Repair</h3>
+                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-8">
+                            <li class="flex items-center gap-2 text-black"><span class="w-2 h-2 bg-primary"></span> Screen Replacement</li>
+                            <li>Battery Service</li>
+                            <li>Water Damage</li>
+                            <li>All major brands</li>
+                        </ul>
+                        <button onclick="window.location.href='repairs.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Get Quote</button>
                     </div>
-                    <div class="mt-12 flex flex-col items-start gap-4 sm:flex-row relative z-10">
-                        <button onclick="window.location.href='repairs.html'" class="brutalist-btn flex w-full cursor-pointer items-center justify-center gap-2 border-[3px] border-black bg-black px-8 py-4 text-lg font-bold uppercase text-white shadow-[8px_8px_0px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_0px_black] sm:w-auto">
-                            Book Now
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
+
+                    <!-- Service 2: Buy/Sell -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-8 text-left hover:bg-gray-50 group transform md:-translate-y-4">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="material-symbols-outlined text-5xl group-hover:rotate-12 transition-transform">shopping_bag</span>
+                            <span class="bg-primary text-black border border-black px-2 py-1 text-xs font-black uppercase">Best Prices</span>
+                        </div>
+                        <h3 class="text-2xl font-black uppercase mb-4">Buy / Sell</h3>
+                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-8">
+                            <li class="flex items-center gap-2 text-black"><span class="w-2 h-2 bg-black"></span> Certified Pre-owned</li>
+                            <li>Trade-in Your Device</li>
+                            <li>Fair Market Value</li>
+                            <li>90-Day Warranty</li>
+                        </ul>
+                        <button onclick="window.location.href='inventory.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Shop Now</button>
+                    </div>
+
+                    <!-- Service 3: Lines -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-8 text-left hover:bg-gray-50 group">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="material-symbols-outlined text-5xl group-hover:scale-110 transition-transform">sim_card</span>
+                            <span class="bg-black text-white px-2 py-1 text-xs font-black uppercase">New</span>
+                        </div>
+                        <h3 class="text-2xl font-black uppercase mb-4">Phone Lines</h3>
+                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-8">
+                            <li class="flex items-center gap-2 text-black"><span class="w-2 h-2 bg-primary"></span> New Activations</li>
+                            <li>Bill Payment</li>
+                            <li>Carrier Switch</li>
+                            <li>Prepaid Plans</li>
+                        </ul>
+                        <button onclick="window.location.href='phone-services.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Activate</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Dark Section -->
-                <div class="reveal-on-scroll relative flex min-h-[400px] flex-col justify-end overflow-hidden border-b-[3px] border-black bg-[#1a1a1a] p-8 md:p-12 lg:border-b-0 lg:p-16">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center grayscale filter hover:grayscale-0" 
-                         style='background-image: url("https://lh3.googleusercontent.com/gps-cs-s/AG0ilSx_aOqkut9vq7fL-b46fspPebjSjJNaF2m_T8xuMcRJajGaaGkfv1iPboCPUD_xsHOI1p5MzgonqLZnt5Tv5VmLEiBULgE4f32mIgcCvr6wW2_oecDEwdCOLGErw81DpHAXAm-mmLk13RQ=s680-w680-h510-rw"); background-attachment: fixed;'>
-                    </div>
-                    <div class="absolute inset-0 z-10 bg-black/60 hover:bg-black/40"></div>
+            <!-- Rotating Value Props -->
+            <div class="border-b-[3px] border-black bg-black py-4 overflow-hidden relative">
+                <div id="rotating-props" class="text-center font-black uppercase text-primary text-xl md:text-2xl transition-opacity duration-500">
+                    Same-day repairs in under 1 hour
+                </div>
+            </div>
+
+            <!-- Trust Indicators -->
+            <div class="border-b-[3px] border-black bg-background-light py-4">
+                 <div class="flex flex-wrap justify-center gap-4 md:gap-12 px-4 opacity-70">
+                     <div class="flex items-center gap-2 font-bold uppercase text-xs md:text-sm"><span class="material-symbols-outlined text-sm">star</span> 500+ Reviews</div>
+                     <div class="flex items-center gap-2 font-bold uppercase text-xs md:text-sm"><span class="material-symbols-outlined text-sm">verified</span> Licensed Technicians</div>
+                     <div class="flex items-center gap-2 font-bold uppercase text-xs md:text-sm"><span class="material-symbols-outlined text-sm">trophy</span> 5 Years in Brooklyn</div>
+                     <div class="flex items-center gap-2 font-bold uppercase text-xs md:text-sm"><span class="material-symbols-outlined text-sm">lock</span> Data Protection</div>
+                 </div>
+            </div>
+
+            <!-- Hot Deals Section (Multi-Service) -->
+            <section class="reveal-on-scroll border-b-[3px] border-black bg-white py-24 px-4 md:px-8">
+                <div class="mb-12 text-center">
+                    <h2 class="text-4xl font-black uppercase tracking-tighter md:text-6xl mb-4">This Week's Specials</h2>
+                    <p class="text-xl font-bold uppercase text-gray-500">Limited-time offers on repairs, devices, and services</p>
                     
-                    <div class="relative z-20 flex flex-col gap-6">
-                        <div class="inline-block w-fit border-[3px] border-white bg-white px-3 py-1 text-xs font-bold uppercase text-black">
-                            Clearance
-                        </div>
-                        <h2 class="text-4xl font-black uppercase leading-none tracking-tighter text-white md:text-6xl text-shadow hover:animate-glitch">
-                            Electronics<br>Under $300
-                        </h2>
-                        <div class="mt-4">
-                            <button onclick="window.location.href='inventory.html'" class="brutalist-btn flex w-full cursor-pointer items-center justify-center gap-2 border-[3px] border-primary bg-primary px-8 py-4 text-lg font-bold uppercase text-black shadow-[8px_8px_0px_0px_#ffffff] hover:bg-white hover:shadow-[4px_4px_0px_0px_black] sm:w-auto">
-                                View Inventory
-                                <span class="material-symbols-outlined">inventory_2</span>
-                            </button>
-                        </div>
+                    <div class="mt-8 flex flex-wrap justify-center gap-4">
+                        <button class="bg-black text-white px-4 py-2 border-[2px] border-black font-bold uppercase hover:bg-primary hover:text-black">All Deals</button>
+                        <button class="bg-white text-black px-4 py-2 border-[2px] border-black font-bold uppercase hover:bg-primary">Repairs</button>
+                        <button class="bg-white text-black px-4 py-2 border-[2px] border-black font-bold uppercase hover:bg-primary">Devices</button>
+                        <button class="bg-white text-black px-4 py-2 border-[2px] border-black font-bold uppercase hover:bg-primary">Services</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- Service Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b-[3px] border-black">
-                <!-- Item 1 -->
-                <div class="reveal-on-scroll group flex flex-col items-start gap-4 border-b-[3px] border-black bg-white p-8 hover:bg-primary sm:border-r-[3px] lg:border-b-0">
-                    <div class="flex size-12 items-center justify-center border-[3px] border-black bg-white text-black group-hover:bg-black group-hover:text-primary">
-                        <span class="material-symbols-outlined text-3xl">smartphone</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-black uppercase leading-none">iPhone<br>Repair</h3>
-                        <p class="mt-2 text-sm font-bold uppercase text-black/60 group-hover:text-black">From $49</p>
-                    </div>
-                </div>
-                <!-- Item 2 -->
-                <div class="reveal-on-scroll group flex flex-col items-start gap-4 border-b-[3px] border-black bg-white p-8 hover:bg-primary lg:border-b-0 lg:border-r-[3px]">
-                    <div class="flex size-12 items-center justify-center border-[3px] border-black bg-white text-black group-hover:bg-black group-hover:text-primary">
-                        <span class="material-symbols-outlined text-3xl">android</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-black uppercase leading-none">Samsung<br>Repair</h3>
-                        <p class="mt-2 text-sm font-bold uppercase text-black/60 group-hover:text-black">Original Parts</p>
-                    </div>
-                </div>
-                <!-- Item 3 -->
-                <div class="reveal-on-scroll group flex flex-col items-start gap-4 border-b-[3px] border-black bg-white p-8 hover:bg-primary sm:border-r-[3px] lg:border-b-0">
-                    <div class="flex size-12 items-center justify-center border-[3px] border-black bg-white text-black group-hover:bg-black group-hover:text-primary">
-                        <span class="material-symbols-outlined text-3xl">laptop_mac</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-black uppercase leading-none">MacBook<br>Repair</h3>
-                        <p class="mt-2 text-sm font-bold uppercase text-black/60 group-hover:text-black">Logic Boards</p>
-                    </div>
-                </div>
-                <!-- Item 4 -->
-                <div class="reveal-on-scroll group flex flex-col items-start gap-4 bg-white p-8 hover:bg-primary">
-                    <div class="flex size-12 items-center justify-center border-[3px] border-black bg-white text-black group-hover:bg-black group-hover:text-primary">
-                        <span class="material-symbols-outlined text-3xl">sports_esports</span>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-black uppercase leading-none">Game<br>Consoles</h3>
-                        <p class="mt-2 text-sm font-bold uppercase text-black/60 group-hover:text-black">HDMI & Power</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Featured Products -->
-            <section class="reveal-on-scroll border-b-[3px] border-black bg-white py-24 pl-8">
-                <div class="mb-12 pr-8">
-                    <h2 class="text-4xl font-black uppercase tracking-tighter md:text-6xl hover:animate-glitch w-fit">Hot Deals<br>This Week</h2>
                 </div>
                 
-                <div class="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-12 no-scrollbar pr-8" id="productCarousel">
-                    <!-- Card 1 -->
-                    <div class="snap-start flex-none w-[300px] group cursor-pointer brutalist-card transition-none">
-                        <div class="relative w-full aspect-square border-[3px] border-black bg-white p-6 shadow-[8px_8px_0px_0px_#000000] group-hover:shadow-[none] transition-none mb-4">
-                            <div class="w-full h-full bg-gray-100 flex items-center justify-center border-[3px] border-black overflow-hidden relative group-hover:bg-primary transition-none">
-                                <img src="images/iphone-14-pro.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="iPhone 14 Pro">
-                                <div class="absolute top-2 right-2 bg-primary px-2 py-1 border-[2px] border-black text-xs font-bold uppercase animate-blink">Limited</div>
-                            </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                    <!-- Deal 1: Repair -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 flex flex-col relative group cursor-pointer hover:bg-gray-50">
+                        <div class="bg-gray-100 border-[2px] border-black aspect-video mb-6 flex items-center justify-center relative overflow-hidden">
+                             <span class="material-symbols-outlined text-6xl text-gray-400 group-hover:scale-110 transition-transform">phonelink_erase</span>
+                             <div class="absolute top-2 right-2 bg-primary text-black border border-black px-2 py-1 text-xs font-black uppercase">Expires Jan 15</div>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="text-xl font-bold uppercase leading-none">iPhone 14 Pro</h3>
-                            <div class="text-3xl font-black text-primary text-stroke">$699</div>
-                            <button class="brutalist-btn mt-2 w-full border-[3px] border-black bg-white py-2 font-bold uppercase hover:bg-black hover:text-white">
-                                Add to Cart
-                            </button>
+                        <h3 class="text-xl font-black uppercase mb-2">Screen Repair Special</h3>
+                        <p class="text-sm font-bold uppercase text-gray-600 mb-4">iPhone 13/14 Series</p>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-3xl font-black">$129</span>
+                            <span class="text-sm font-bold text-gray-400 line-through decoration-black">$149</span>
                         </div>
+                         <ul class="text-xs font-bold uppercase text-gray-600 space-y-2 mb-6 flex-1">
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Same-day service</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> 90-day warranty</li>
+                        </ul>
+                        <button onclick="window.location.href='repairs.html'" class="w-full bg-white text-black border-[2px] border-black py-2 font-bold uppercase hover:bg-black hover:text-white">Get Deal</button>
                     </div>
 
-                    <!-- Card 2 -->
-                    <div class="snap-start flex-none w-[300px] group cursor-pointer brutalist-card transition-none">
-                        <div class="relative w-full aspect-square border-[3px] border-black bg-white p-6 shadow-[8px_8px_0px_0px_#000000] group-hover:shadow-[none] transition-none mb-4">
-                            <div class="w-full h-full bg-gray-100 flex items-center justify-center border-[3px] border-black overflow-hidden relative group-hover:bg-primary transition-none">
-                                <img src="images/macbook-air-m2.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="MacBook Air M2">
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="text-xl font-bold uppercase leading-none">MacBook Air M2</h3>
-                            <div class="text-3xl font-black text-primary text-stroke">$899</div>
-                            <button class="brutalist-btn mt-2 w-full border-[3px] border-black bg-white py-2 font-bold uppercase hover:bg-black hover:text-white">
-                                Add to Cart
-                            </button>
-                        </div>
+                    <!-- Deal 2: Device -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 flex flex-col relative group cursor-pointer hover:bg-gray-50">
+                        <div class="bg-gray-100 border-[2px] border-black aspect-video mb-6 flex items-center justify-center relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1678652139633-84a3ad128dc5?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" alt="iPhone 14">
+                            <div class="absolute top-2 right-2 bg-red-500 text-white border border-black px-2 py-1 text-xs font-black uppercase animate-pulse">Only 3 Left</div>
+                       </div>
+                       <h3 class="text-xl font-black uppercase mb-2">Certified iPhone 14</h3>
+                       <p class="text-sm font-bold uppercase text-gray-600 mb-4">128GB • Excellent Cond.</p>
+                       <div class="flex items-center gap-2 mb-6">
+                           <span class="text-3xl font-black">$549</span>
+                           <span class="text-sm font-bold text-gray-400 line-through decoration-black">$629</span>
+                       </div>
+                        <ul class="text-xs font-bold uppercase text-gray-600 space-y-2 mb-6 flex-1">
+                           <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Battery 85%+</li>
+                           <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Fully Unlocked</li>
+                       </ul>
+                       <button onclick="window.location.href='inventory.html'" class="w-full bg-white text-black border-[2px] border-black py-2 font-bold uppercase hover:bg-black hover:text-white">Shop Now</button>
                     </div>
 
-                     <!-- Card 3 -->
-                     <div class="snap-start flex-none w-[300px] group cursor-pointer brutalist-card transition-none">
-                        <div class="relative w-full aspect-square border-[3px] border-black bg-white p-6 shadow-[8px_8px_0px_0px_#000000] group-hover:shadow-[none] transition-none mb-4">
-                            <div class="w-full h-full bg-gray-100 flex items-center justify-center border-[3px] border-black overflow-hidden relative group-hover:bg-primary transition-none">
-                                <img src="images/galaxy-s23.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" alt="Galaxy S23">
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="text-xl font-bold uppercase leading-none">Galaxy S23 Ultra</h3>
-                            <div class="text-3xl font-black text-primary text-stroke">$749</div>
-                            <button class="brutalist-btn mt-2 w-full border-[3px] border-black bg-white py-2 font-bold uppercase hover:bg-black hover:text-white">
-                                Add to Cart
-                            </button>
-                        </div>
+                    <!-- Deal 3: Line Activation -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 flex flex-col relative group cursor-pointer hover:bg-gray-50">
+                        <div class="bg-gray-100 border-[2px] border-black aspect-video mb-6 flex items-center justify-center relative overflow-hidden">
+                            <span class="material-symbols-outlined text-6xl text-gray-400 group-hover:scale-110 transition-transform">add_call</span>
+                            <div class="absolute top-2 right-2 bg-primary text-black border border-black px-2 py-1 text-xs font-black uppercase">Free</div>
+                       </div>
+                       <h3 class="text-xl font-black uppercase mb-2">Free Activation</h3>
+                       <p class="text-sm font-bold uppercase text-gray-600 mb-4">Waived $29 Fee</p>
+                       <div class="flex items-center gap-2 mb-6">
+                           <span class="text-3xl font-black">FREE</span>
+                           <span class="text-sm font-bold text-gray-400 line-through decoration-black">$29</span>
+                       </div>
+                        <ul class="text-xs font-bold uppercase text-gray-600 space-y-2 mb-6 flex-1">
+                           <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Any carrier</li>
+                           <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Number porting included</li>
+                       </ul>
+                       <button onclick="window.location.href='phone-services.html'" class="w-full bg-white text-black border-[2px] border-black py-2 font-bold uppercase hover:bg-black hover:text-white">Activate</button>
                     </div>
-                    
-                    <!-- Card 4 -->
-                    <div class="snap-start flex-none w-[300px] group cursor-pointer brutalist-card transition-none">
-                        <div class="relative w-full aspect-square border-[3px] border-black bg-white p-6 shadow-[8px_8px_0px_0px_#000000] group-hover:shadow-[none] transition-none mb-4">
-                            <div class="w-full h-full bg-gray-100 flex items-center justify-center border-[3px] border-black overflow-hidden relative group-hover:bg-primary transition-none">
-                                <span class="material-symbols-outlined text-6xl text-gray-400 group-hover:text-black">headphones</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="text-xl font-bold uppercase leading-none">AirPods Max</h3>
-                            <div class="text-3xl font-black text-primary text-stroke">$429</div>
-                            <button class="brutalist-btn mt-2 w-full border-[3px] border-black bg-white py-2 font-bold uppercase hover:bg-black hover:text-white">
-                                Add to Cart
-                            </button>
-                        </div>
+
+                    <!-- Deal 4: Protection -->
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 flex flex-col relative group cursor-pointer hover:bg-gray-50">
+                        <div class="bg-gray-100 border-[2px] border-black aspect-video mb-6 flex items-center justify-center relative overflow-hidden">
+                            <span class="material-symbols-outlined text-6xl text-gray-400 group-hover:scale-110 transition-transform">shield</span>
+                            <div class="absolute top-2 right-2 bg-primary text-black border border-black px-2 py-1 text-xs font-black uppercase">50% Off</div>
+                       </div>
+                       <h3 class="text-xl font-black uppercase mb-2">Protection Plan</h3>
+                       <p class="text-sm font-bold uppercase text-gray-600 mb-4">First Month 50% Off</p>
+                       <div class="flex items-center gap-2 mb-6">
+                           <span class="text-3xl font-black">$4.99</span>
+                           <span class="text-sm font-bold text-gray-400">First Mo.</span>
+                       </div>
+                        <ul class="text-xs font-bold uppercase text-gray-600 space-y-2 mb-6 flex-1">
+                           <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Screen coverage</li>
+                           <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm text-green-600">check</span> Theft & Loss</li>
+                       </ul>
+                       <button onclick="window.location.href='device-protection.html'" class="w-full bg-white text-black border-[2px] border-black py-2 font-bold uppercase hover:bg-black hover:text-white">Enroll Now</button>
                     </div>
                 </div>
             </section>

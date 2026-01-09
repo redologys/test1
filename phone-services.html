@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Services - Mobile Experts Inc</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="css/chatbot.css">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FFD600",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#1a1a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0", "lg": "0", "xl": "0", "full": "0" },
+                    animation: {
+                        'marquee': 'marquee 30s linear infinite',
+                        'glitch': 'glitch 0.2s steps(4)',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        glitch: {
+                            '0%, 100%': { transform: 'translate(0)' },
+                            '25%': { transform: 'translate(-3px, 3px)' },
+                            '50%': { transform: 'translate(3px, -3px)' },
+                            '75%': { transform: 'translate(-3px, -3px)' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        /* DESIGN SYSTEM OVERRIDES */
+        *, *::before, *::after { 
+            transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), 
+                        background-color 200ms ease-out, 
+                        color 200ms ease-out, 
+                        border-color 200ms ease-out, 
+                        opacity 200ms ease-out; 
+        }
+        .brutalist-nav-link { position: relative; font-weight: 700; letter-spacing: 0.01em; }
+        .brutalist-nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 3px;
+            background: #ffd400; transition: all 250ms ease; transform: translateX(-50%);
+        }
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; transform: translateY(-2px); }
+        .brutalist-nav-link:hover::after { width: 80%; }
+        
+        .brutalist-btn { font-weight: 800; letter-spacing: 0.02em; cursor: pointer; }
+        .brutalist-btn:hover { transform: translateY(-3px); box-shadow: 4px 4px 0px 0px black; }
+        .brutalist-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px 0px black; }
+
+        .reveal-on-scroll { opacity: 0; transform: translateY(30px); }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); transition: opacity 600ms ease-out, transform 600ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .carrier-logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 2rem; }
+        .carrier-logo { filter: grayscale(100%); opacity: 0.6; transition: all 0.3s ease; }
+        .carrier-logo:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
+    </style>
+</head>
+<body class="bg-background-light font-display text-black antialiased selection:bg-black selection:text-primary relative overflow-x-hidden">
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 z-50 w-80 translate-x-full border-l-[3px] border-black bg-white shadow-[-8px_0px_0px_0px_rgba(0,0,0,0.1)] md:hidden">
+        <div class="flex h-full flex-col">
+            <div class="flex items-center justify-between border-b-[3px] border-black bg-primary p-6">
+                <h2 class="text-xl font-black uppercase">Menu</h2>
+                <button id="close-menu" class="text-black hover:bg-black hover:text-primary p-1 border-[2px] border-transparent hover:border-black"><span class="material-symbols-outlined text-3xl">close</span></button>
+            </div>
+            <nav class="flex flex-col p-6 gap-4">
+                <a href="repairs.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Repairs</a>
+                <a href="inventory.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Inventory</a>
+                <a href="sell.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Sell</a>
+                <a href="phone-services.html" class="block border-[3px] border-black bg-primary p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Phone Services</a>
+                <a href="contact.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Contact</a>
+            </nav>
+        </div>
+    </div>
+    <div id="menu-overlay" class="fixed inset-0 z-40 hidden bg-black/50 backdrop-blur-sm"></div>
+
+    <div class="min-h-screen flex flex-col p-4 md:p-8">
+        <div class="mx-auto flex w-full max-w-[1400px] flex-col border-[3px] border-black bg-white shadow-[8px_8px_0px_0px_black] relative z-10">
+            
+            <!-- Marquee -->
+            <div class="w-full overflow-hidden border-b-[3px] border-black bg-black py-4">
+                <div class="whitespace-nowrap flex animate-marquee w-[200%] text-primary font-bold uppercase tracking-wider text-sm md:text-base">
+                    <span class="w-1/2 flex-shrink-0 text-center px-4">ACTIVATIONS • BILL PAY • UNLOCKS • PREPAID PLANS • ACTIVATIONS • BILL PAY • UNLOCKS • PREPAID PLANS • </span>
+                    <span class="w-1/2 flex-shrink-0 text-center px-4">ACTIVATIONS • BILL PAY • UNLOCKS • PREPAID PLANS • ACTIVATIONS • BILL PAY • UNLOCKS • PREPAID PLANS • </span>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <header class="flex flex-col border-b-[3px] border-black md:flex-row bg-white relative z-40">
+                <div class="flex items-center justify-between border-b-[3px] border-black bg-primary px-6 py-5 md:w-auto md:border-b-0 md:border-r-[3px] md:py-6">
+                    <div class="flex items-center gap-3 cursor-pointer hover:animate-glitch" onclick="window.location.href='index.html'">
+                        <span class="material-symbols-outlined text-4xl font-black">bolt</span>
+                        <h1 class="text-2xl font-black uppercase leading-none tracking-tighter">MOBILE<br>EXPERTS</h1>
+                    </div>
+                    <button id="open-menu" class="md:hidden p-2 hover:bg-black hover:text-white border-[3px] border-transparent hover:border-black rounded-none">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
+                </div>
+                <nav class="hidden md:flex flex-1 flex-row">
+                    <a href="repairs.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Repairs</a>
+                    <a href="inventory.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Inventory</a>
+                    <a href="sell.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Sell</a>
+                    <a href="phone-services.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-primary px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Phone Services</a>
+                    <a href="contact.html" class="flex flex-1 items-center justify-center bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Contact</a>
+                </nav>
+            </header>
+
+            <!-- Hero -->
+            <section class="reveal-on-scroll relative border-b-[3px] border-black bg-white overflow-hidden min-h-[500px] flex items-center">
+                <div class="absolute left-0 top-0 bottom-0 w-[40px] bg-primary border-r-[3px] border-black hidden md:block"></div>
+                <div class="w-full flex flex-col md:flex-row items-center p-8 md:p-16 relative z-10">
+                    <div class="flex-1 mb-8 md:mb-0 md:pl-12">
+                        <div class="inline-block border-[2px] border-black bg-black text-white px-3 py-1 font-black uppercase text-xs mb-6">Mobile Solutions</div>
+                        <h1 class="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter mb-6">Phone Line<br>Services</h1>
+                        <p class="text-xl md:text-2xl font-bold uppercase text-gray-600 mb-8 max-w-xl">Activate new lines • Renew existing plans • Switch carriers hassle-free</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="document.getElementById('service-selector').scrollIntoView({behavior:'smooth'})" class="brutalist-btn bg-primary text-black border-[3px] border-black px-8 py-4 font-black uppercase text-lg shadow-[6px_6px_0px_black] hover:bg-black hover:text-white">Get Started</button>
+                            <a href="tel:7185550123" class="brutalist-btn bg-white text-black border-[3px] border-black px-8 py-4 font-black uppercase text-lg hover:bg-gray-100 flex items-center gap-2">
+                                <span class="material-symbols-outlined">call</span> (929) 789-2786
+                            </a>
+                        </div>
+                    </div>
+                     <div class="flex-1 flex justify-center relative">
+                        <!-- Placeholder illustration -->
+                        <div class="w-full max-w-md aspect-square bg-gray-100 border-[3px] border-black shadow-[12px_12px_0px_black] flex items-center justify-center overflow-hidden relative">
+                             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1596742578443-7682e525c489?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center grayscale mix-blend-multiply opacity-50"></div>
+                             <span class="material-symbols-outlined text-9xl relative z-10 text-black">sim_card</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service Selector -->
+            <section id="service-selector" class="reveal-on-scroll border-b-[3px] border-black bg-gray-50 p-8 md:p-16">
+                 <div class="text-center mb-12">
+                     <span class="bg-black text-white px-4 py-2 font-black uppercase text-sm mb-4 inline-block">Our Services</span>
+                     <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter">What Do You Need?</h2>
+                 </div>
+
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                     <!-- Card 1: New Line -->
+                     <div class="bg-white border-[3px] border-black p-8 shadow-[8px_8px_0px_0px_black] hover:translate-y-[-4px] transition-transform">
+                         <span class="material-symbols-outlined text-6xl mb-6 bg-primary border-[2px] border-black rounded-full p-4">add_call</span>
+                         <h3 class="text-2xl font-black uppercase mb-4">New Line Activation</h3>
+                         <p class="font-bold text-gray-600 mb-6 min-h-[3rem]">Activate prepaid or postpaid service on any carrier with no contracts.</p>
+                         <ul class="text-sm font-bold uppercase space-y-3 mb-8">
+                             <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Bring your own device (BYOD)</li>
+                             <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Purchase new device</li>
+                             <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Same-day activation</li>
+                             <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> All major carriers</li>
+                         </ul>
+                         <div class="border-t-2 border-black pt-4 mb-6">
+                             <span class="block text-xs uppercase font-bold text-gray-500">Starting At</span>
+                             <span class="text-3xl font-black">$29 <span class="text-sm font-bold text-gray-500">Fee</span></span>
+                         </div>
+                         <button class="w-full bg-primary text-black border-[3px] border-black py-4 font-black uppercase hover:bg-black hover:text-white">Activate New Line</button>
+                     </div>
+
+                     <!-- Card 2: Bill Payment -->
+                     <div class="bg-white border-[3px] border-black p-8 shadow-[8px_8px_0px_0px_black] hover:translate-y-[-4px] transition-transform">
+                        <span class="material-symbols-outlined text-6xl mb-6 bg-gray-200 border-[2px] border-black rounded-full p-4">payments</span>
+                        <h3 class="text-2xl font-black uppercase mb-4">Bill Payment & Renewal</h3>
+                        <p class="font-bold text-gray-600 mb-6 min-h-[3rem]">Pay your monthly bill or renew prepaid plans instantly in-store.</p>
+                        <ul class="text-sm font-bold uppercase space-y-3 mb-8">
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> All carriers accepted</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Cash, card, or Apple Pay</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Instant top-ups</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Auto-pay setup help</li>
+                        </ul>
+                        <div class="border-t-2 border-black pt-4 mb-6">
+                            <span class="block text-xs uppercase font-bold text-gray-500">Service Fee</span>
+                            <span class="text-3xl font-black">FREE <span class="text-sm font-bold text-gray-500">Always</span></span>
+                        </div>
+                        <button class="w-full bg-primary text-black border-[3px] border-black py-4 font-black uppercase hover:bg-black hover:text-white">Renew My Plan</button>
+                    </div>
+
+                    <!-- Card 3: Switch -->
+                    <div class="bg-white border-[3px] border-black p-8 shadow-[8px_8px_0px_0px_black] hover:translate-y-[-4px] transition-transform">
+                        <span class="material-symbols-outlined text-6xl mb-6 bg-black text-white border-[2px] border-black rounded-full p-4">swap_horiz</span>
+                        <h3 class="text-2xl font-black uppercase mb-4">Switch Carriers</h3>
+                        <p class="font-bold text-gray-600 mb-6 min-h-[3rem]">Keep your number, switch to better plans, and save money.</p>
+                        <ul class="text-sm font-bold uppercase space-y-3 mb-8">
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Keep your number</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Compare plan options</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> No contract traps</li>
+                            <li class="flex items-center gap-2"><span class="material-symbols-outlined text-green-600">check_circle</span> Transfer contacts & data</li>
+                        </ul>
+                        <div class="border-t-2 border-black pt-4 mb-6">
+                            <span class="block text-xs uppercase font-bold text-gray-500">Consultation</span>
+                            <span class="text-3xl font-black">FREE <span class="text-sm font-bold text-gray-500">+ Plan Cost</span></span>
+                        </div>
+                        <button class="w-full bg-primary text-black border-[3px] border-black py-4 font-black uppercase hover:bg-black hover:text-white">Switch My Carrier</button>
+                    </div>
+                 </div>
+            </section>
+
+             <!-- Supported Carriers -->
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-white p-12 text-center">
+                 <h2 class="text-2xl font-black uppercase mb-8 opacity-50">We Support All Major Carriers</h2>
+                 <div class="flex flex-wrap justify-center gap-8 md:gap-12 opacity-70 grayscale">
+                     <!-- Text placeholders for logos as per request logic -->
+                     <span class="text-2xl font-black uppercase">T-Mobile</span>
+                     <span class="text-2xl font-black uppercase">AT&T</span>
+                     <span class="text-2xl font-black uppercase">Verizon</span>
+                     <span class="text-2xl font-black uppercase">Metro</span>
+                     <span class="text-2xl font-black uppercase">Cricket</span>
+                     <span class="text-2xl font-black uppercase">Boost</span>
+                     <span class="text-2xl font-black uppercase">Mint</span>
+                     <span class="text-2xl font-black uppercase">Simple Mobile</span>
+                     <span class="text-2xl font-black uppercase">Lyca</span>
+                     <span class="text-2xl font-black uppercase">H2O</span>
+                 </div>
+                 <p class="mt-8 font-bold uppercase text-sm">Don't see your carrier? We likely support it - just ask!</p>
+             </section>
+
+             <!-- Plan Comparison Tool -->
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-primary p-8 md:p-16">
+                 <div class="max-w-4xl mx-auto bg-white border-[4px] border-black p-8 md:p-12 shadow-[12px_12px_0px_black]">
+                     <h2 class="text-3xl md:text-5xl font-black uppercase text-center mb-8">Find The Right Plan</h2>
+                     
+                     <!-- Step 1 -->
+                     <div class="mb-8">
+                         <label class="block font-black uppercase text-lg mb-4">1. How much data do you need?</label>
+                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                             <button class="plan-selector-btn active p-4 border-[3px] border-black font-bold uppercase bg-black text-white" onclick="selectPlanOption(this, 'data')">5GB</button>
+                             <button class="plan-selector-btn p-4 border-[3px] border-black font-bold uppercase hover:bg-gray-100" onclick="selectPlanOption(this, 'data')">10GB</button>
+                             <button class="plan-selector-btn p-4 border-[3px] border-black font-bold uppercase hover:bg-gray-100" onclick="selectPlanOption(this, 'data')">Unlimited</button>
+                             <button class="plan-selector-btn p-4 border-[3px] border-black font-bold uppercase hover:bg-gray-100" onclick="selectPlanOption(this, 'data')">Not Sure</button>
+                         </div>
+                     </div>
+
+                     <!-- Step 2 -->
+                     <div class="mb-12">
+                        <label class="block font-black uppercase text-lg mb-4">2. How many lines?</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <button class="plan-selector-btn active p-4 border-[3px] border-black font-bold uppercase bg-black text-white" onclick="selectPlanOption(this, 'lines')">1 Line</button>
+                            <button class="plan-selector-btn p-4 border-[3px] border-black font-bold uppercase hover:bg-gray-100" onclick="selectPlanOption(this, 'lines')">2 Lines</button>
+                            <button class="plan-selector-btn p-4 border-[3px] border-black font-bold uppercase hover:bg-gray-100" onclick="selectPlanOption(this, 'lines')">3-4 Lines</button>
+                            <button class="plan-selector-btn p-4 border-[3px] border-black font-bold uppercase hover:bg-gray-100" onclick="selectPlanOption(this, 'lines')">5+ Lines</button>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Plans -->
+                    <div class="border-[3px] border-black bg-gray-50 p-6">
+                        <h3 class="font-black uppercase text-xl mb-4 text-center">Recommended For You</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b-[3px] border-black">
+                                        <th class="p-4 font-black uppercase">Carrier</th>
+                                        <th class="p-4 font-black uppercase">Plan</th>
+                                        <th class="p-4 font-black uppercase">Data</th>
+                                        <th class="p-4 font-black uppercase">Price</th>
+                                        <th class="p-4 font-black uppercase">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="font-bold uppercase text-sm">
+                                    <tr class="border-b border-black/20 hover:bg-white">
+                                        <td class="p-4">Simple Mobile</td>
+                                        <td class="p-4">Starter</td>
+                                        <td class="p-4">5GB High Speed</td>
+                                        <td class="p-4">$25/mo</td>
+                                        <td class="p-4"><button class="bg-black text-white px-4 py-2 font-bold uppercase hover:bg-primary hover:text-black">Select</button></td>
+                                    </tr>
+                                    <tr class="border-b border-black/20 hover:bg-white">
+                                        <td class="p-4">Lyca Mobile</td>
+                                        <td class="p-4">Value Plus</td>
+                                        <td class="p-4">15GB + Int'l</td>
+                                        <td class="p-4">$39/mo</td>
+                                        <td class="p-4"><button class="bg-black text-white px-4 py-2 font-bold uppercase hover:bg-primary hover:text-black">Select</button></td>
+                                    </tr>
+                                    <tr class="hover:bg-white">
+                                        <td class="p-4">H2O Wireless</td>
+                                        <td class="p-4">Unlimited</td>
+                                        <td class="p-4">Unlimited Data</td>
+                                        <td class="p-4">$50/mo</td>
+                                        <td class="p-4"><button class="bg-black text-white px-4 py-2 font-bold uppercase hover:bg-primary hover:text-black">Select</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                 </div>
+             </section>
+
+             <!-- Pricing Table -->
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-white p-12">
+                 <div class="max-w-4xl mx-auto">
+                     <h2 class="text-3xl font-black uppercase text-center mb-8">Our Service Fees</h2>
+                     <div class="border-[3px] border-black">
+                         <div class="grid grid-cols-3 bg-black text-white font-black uppercase p-4 text-sm md:text-base">
+                             <div>Service Type</div>
+                             <div>Our Fee</div>
+                             <div>What's Included</div>
+                         </div>
+                         <!-- Rows -->
+                         <div class="grid grid-cols-3 font-bold uppercase p-4 border-b border-black bg-gray-50">
+                             <div>New line activation</div>
+                             <div>$29</div>
+                             <div>Setup, SIM, Number Port</div>
+                         </div>
+                         <div class="grid grid-cols-3 font-bold uppercase p-4 border-b border-black bg-white">
+                            <div>Plan renewal/payment</div>
+                            <div>FREE</div>
+                            <div>Payment Processing Only</div>
+                        </div>
+                        <div class="grid grid-cols-3 font-bold uppercase p-4 border-b border-black bg-gray-50">
+                            <div>Carrier switch + port</div>
+                            <div>$39</div>
+                            <div>Port, Setup, Data Transfer</div>
+                        </div>
+                        <div class="grid grid-cols-3 font-bold uppercase p-4 border-b border-black bg-white">
+                            <div>Additional line (family)</div>
+                            <div>$19/line</div>
+                            <div>Each line after first</div>
+                        </div>
+                        <div class="grid grid-cols-3 font-bold uppercase p-4 border-b border-black bg-gray-50">
+                            <div>Phone unlock service</div>
+                            <div>$25</div>
+                            <div>Carrier Unlock Assistance</div>
+                        </div>
+                        <div class="grid grid-cols-3 font-bold uppercase p-4 bg-white">
+                            <div>SIM card replacement</div>
+                            <div>$10</div>
+                            <div>New SIM + Activation</div>
+                        </div>
+                     </div>
+                     <p class="text-center mt-4 text-xs font-bold uppercase text-gray-500">*Plan costs paid directly to carrier - we don't mark up plans</p>
+                 </div>
+             </section>
+
+             <!-- How It Works -->
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-white p-12">
+                 <h2 class="text-4xl font-black uppercase text-center mb-12">How It Works</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                     <div class="text-center">
+                         <div class="w-16 h-16 bg-primary border-[3px] border-black rounded-full flex items-center justify-center text-2xl font-black mx-auto mb-4">1</div>
+                         <h3 class="font-black uppercase mb-2">Choose Service</h3>
+                         <p class="font-bold text-sm text-gray-600">Select activation, renewal, or switch</p>
+                     </div>
+                     <div class="text-center">
+                        <div class="w-16 h-16 bg-white border-[3px] border-black rounded-full flex items-center justify-center text-2xl font-black mx-auto mb-4">2</div>
+                        <h3 class="font-black uppercase mb-2">Bring Info</h3>
+                        <p class="font-bold text-sm text-gray-600">Device IMEI, account details, ID</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-white border-[3px] border-black rounded-full flex items-center justify-center text-2xl font-black mx-auto mb-4">3</div>
+                        <h3 class="font-black uppercase mb-2">We Handle It</h3>
+                        <p class="font-bold text-sm text-gray-600">Setup & port in 15-30 minutes</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-black text-white border-[3px] border-black rounded-full flex items-center justify-center text-2xl font-black mx-auto mb-4">4</div>
+                        <h3 class="font-black uppercase mb-2">You're Done</h3>
+                        <p class="font-bold text-sm text-gray-600">Walk out with active service</p>
+                    </div>
+                 </div>
+             </section>
+
+             <!-- Bundles -->
+             <section class="reveal-on-scroll border-b-[3px] border-black bg-gray-50 p-12">
+                 <div class="text-center mb-12">
+                     <h2 class="text-4xl font-black uppercase mb-2">Bundle & Save</h2>
+                     <p class="text-xl font-bold uppercase text-gray-600">Get a phone + plan activation together</p>
+                 </div>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                     <!-- Bundle 1 -->
+                     <div class="bg-white border-[3px] border-black p-6 hover:shadow-[8px_8px_0px_black] transition-shadow">
+                         <div class="aspect-video bg-gray-100 mb-6 flex items-center justify-center border border-black">
+                             <span class="material-symbols-outlined text-6xl text-gray-400">smartphone</span>
+                         </div>
+                         <h3 class="text-xl font-black uppercase mb-2">Starter Bundle</h3>
+                         <p class="font-bold text-sm text-gray-600 mb-4">Unlocked phone + prepaid plan</p>
+                         <p class="text-2xl font-black mb-6">From $149 <span class="text-sm text-gray-500">+ Plan</span></p>
+                         <button onclick="window.location.href='inventory.html'" class="w-full bg-black text-white border-[2px] border-black py-3 font-black uppercase hover:bg-primary hover:text-black">View Devices</button>
+                     </div>
+                      <!-- Bundle 2 -->
+                      <div class="bg-primary border-[3px] border-black p-6 transform md:-translate-y-4 shadow-[8px_8px_0px_black]">
+                        <div class="aspect-video bg-white mb-6 flex items-center justify-center border border-black">
+                            <span class="material-symbols-outlined text-6xl text-gray-400">check_circle</span>
+                        </div>
+                        <h3 class="text-xl font-black uppercase mb-2">Upgrade Bundle</h3>
+                        <p class="font-bold text-sm text-black mb-4">Certified pre-owned + plan</p>
+                        <p class="text-2xl font-black mb-6">From $299 <span class="text-sm text-black/60">+ Plan</span></p>
+                        <button onclick="window.location.href='inventory.html'" class="w-full bg-white text-black border-[2px] border-black py-3 font-black uppercase hover:bg-black hover:text-white">View Devices</button>
+                    </div>
+                     <!-- Bundle 3 -->
+                     <div class="bg-white border-[3px] border-black p-6 hover:shadow-[8px_8px_0px_black] transition-shadow">
+                        <div class="aspect-video bg-gray-100 mb-6 flex items-center justify-center border border-black">
+                            <span class="material-symbols-outlined text-6xl text-gray-400">diamond</span>
+                        </div>
+                        <h3 class="text-xl font-black uppercase mb-2">Premium Bundle</h3>
+                        <p class="font-bold text-sm text-gray-600 mb-4">Flagship phone + unlimited plan</p>
+                        <p class="text-2xl font-black mb-6">From $699 <span class="text-sm text-gray-500">+ Plan</span></p>
+                        <button onclick="window.location.href='inventory.html'" class="w-full bg-black text-white border-[2px] border-black py-3 font-black uppercase hover:bg-primary hover:text-black">View Devices</button>
+                    </div>
+                 </div>
+             </section>
+
+             <!-- FAQ -->
+             <section class="reveal-on-scroll bg-white p-12 border-b-[3px] border-black">
+                 <h2 class="text-4xl font-black uppercase text-center mb-12">Frequently Asked Questions</h2>
+                 <div class="max-w-3xl mx-auto space-y-4">
+                     <div class="accordion-item border-[3px] border-black">
+                         <button class="w-full text-left p-4 font-black uppercase flex justify-between items-center bg-gray-50 hover:bg-primary" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                             Can I keep my current phone number?
+                             <span class="material-symbols-outlined">expand_more</span>
+                         </button>
+                         <div class="hidden p-4 bg-white border-t-[3px] border-black font-medium">
+                             Yes! We handle number porting for free with any activation.
+                         </div>
+                     </div>
+                     <div class="accordion-item border-[3px] border-black">
+                        <button class="w-full text-left p-4 font-black uppercase flex justify-between items-center bg-gray-50 hover:bg-primary" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                            How long does activation take?
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </button>
+                        <div class="hidden p-4 bg-white border-t-[3px] border-black font-medium">
+                            Most activations complete in 15-30 minutes in-store.
+                        </div>
+                    </div>
+                    <div class="accordion-item border-[3px] border-black">
+                        <button class="w-full text-left p-4 font-black uppercase flex justify-between items-center bg-gray-50 hover:bg-primary" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                            What do I need to bring?
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </button>
+                        <div class="hidden p-4 bg-white border-t-[3px] border-black font-medium">
+                            Your device (or IMEI number), photo ID, and payment method.
+                        </div>
+                    </div>
+                 </div>
+             </section>
+
+             <!-- Footer CTA -->
+             <div class="bg-black text-white p-12 text-center">
+                 <h2 class="text-4xl font-black uppercase mb-4 text-primary">Ready to get connected?</h2>
+                 <p class="text-xl font-bold uppercase mb-8">Visit us today or call to get started</p>
+                 <div class="flex flex-col md:flex-row justify-center gap-4">
+                     <a href="tel:9297892786" class="brutalist-btn bg-white text-black border-[3px] border-white px-8 py-4 font-black uppercase hover:bg-primary hover:text-black">Call (929) 789-2786</a>
+                     <a href="contact.html" class="brutalist-btn bg-transparent text-white border-[3px] border-white px-8 py-4 font-black uppercase hover:bg-white hover:text-black">Get Directions</a>
+                 </div>
+             </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // NAV
+        const openMenuBtn = document.getElementById('open-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function toggleMenu(show) {
+            if (show) {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenu.classList.add('drawer-open');
+                menuOverlay.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenu.classList.remove('drawer-open');
+                menuOverlay.classList.add('hidden');
+            }
+        }
+        openMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+        menuOverlay.addEventListener('click', () => toggleMenu(false));
+
+        // SCROLL REVEAL
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // PLAN SELECTOR LOGIC
+        function selectPlanOption(btn, type) {
+            // Remove active class from siblings
+            btn.parentNode.querySelectorAll('button').forEach(b => {
+                b.classList.remove('bg-black', 'text-white');
+                b.classList.add('hover:bg-gray-100');
+            });
+            // Add active class to clicked
+            btn.classList.remove('hover:bg-gray-100');
+            btn.classList.add('bg-black', 'text-white');
+            
+            // Mock update functionality (in prod: filter table)
+            console.log(`Selected ${type}: ${btn.innerText}`);
+        }
+    </script>
+     <script src="js/chatbot.js"></script>
+</body>
+</html>

@@ -160,6 +160,7 @@
                 <a href="repairs.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Repairs</a>
                 <a href="inventory.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Inventory</a>
                 <a href="sell.html" class="block border-[3px] border-black bg-primary p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Sell</a>
+                <a href="phone-services.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Phone Services</a>
                 <a href="contact.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Contact</a>
             </nav>
         </div>
@@ -195,296 +196,80 @@
                         Inventory
                     </a>
                     <a href="sell.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-primary px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Sell</a>
+                    <a href="phone-services.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Services</a>
                     <a href="contact.html" class="flex flex-1 items-center justify-center bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link">Contact</a>
                 </nav>
             </header>
 
             <!-- Hero -->
-            <section class="reveal-on-scroll bg-hero-gradient border-b-[3px] border-black p-12 min-h-[500px] flex flex-col justify-center text-center relative overflow-hidden">
-                <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter mb-4 text-white hover:animate-glitch drop-shadow-[4px_4px_0px_black]">Turn Your Old Tech<br>Into Cash</h1>
-                <p class="text-xl md:text-2xl font-bold uppercase mb-8 text-white drop-shadow-[2px_2px_0px_black]">Get instant quotes and top dollar for phones, tablets & laptops</p>
-                <div class="flex justify-center mb-8">
-                    <button onclick="document.getElementById('calculator').scrollIntoView()" class="bg-black text-white border-[3px] border-white px-12 py-6 text-xl font-black uppercase hover:bg-white hover:text-black hover:border-black shadow-[8px_8px_0px_0px_black]">Get Instant Quote</button>
+            <section class="reveal-on-scroll bg-white border-b-[3px] border-black p-12 min-h-[400px] flex flex-col justify-center text-center relative overflow-hidden">
+                <div class="absolute top-4 left-0 w-full text-center">
+                     <p class="text-xs font-black uppercase tracking-widest bg-primary text-black inline-block px-3 py-1 border-[2px] border-black">Updated: Today 3:45 PM</p>
                 </div>
-                <p class="text-white font-bold uppercase tracking-widest text-sm drop-shadow-[1px_1px_0px_black]">• Same-Day Payment • Top Prices • No Hidden Fees •</p>
+                <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.9] tracking-tighter mb-4 text-black hover:animate-glitch">Current Stock<br>& Pricing</h1>
+                <p class="text-xl md:text-2xl font-bold uppercase mb-4 text-gray-500">See what's available now • Updated daily</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+                    <button onclick="document.getElementById('inventory-grid').scrollIntoView({behavior:'smooth'})" class="brutalist-btn bg-black text-white border-[3px] border-black px-8 py-4 text-lg font-bold uppercase hover:bg-primary hover:text-black shadow-[8px_8px_0px_0px_gray] flex items-center justify-center gap-2">
+                         View All Devices
+                    </button>
+                </div>
             </section>
-            <!-- Enhanced Device Value Calculator -->
-            <section id="enhanced-calculator" class="reveal-on-scroll p-4 md:p-12 border-b-[3px] border-black bg-gray-50">
-                <div class="max-w-4xl mx-auto border-[4px] border-black bg-white shadow-[16px_16px_0px_0px_black] overflow-hidden">
-                    <div class="bg-primary p-6 text-black text-center border-b-[3px] border-black">
-                        <h2 class="text-3xl font-black uppercase tracking-tighter">GET YOUR INSTANT QUOTE</h2>
-                        <p class="font-bold uppercase tracking-widest text-sm">Sell your device in 3 minutes</p>
-                    </div>
 
-                    <div id="calculator-container" class="p-6 md:p-10">
-                        <form id="calculatorForm">
-                            
-                            <!-- STEP 1: DEVICE TYPE -->
-                            <div class="calc-step active" data-step="1">
-                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-2">
-                                    <span class="bg-black text-white px-3 py-1 text-sm">01</span> Select Device Brand
-                                </h3>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    <button type="button" onclick="selectBrand('apple')" class="device-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-3">
-                                        <span class="material-symbols-outlined text-4xl">phone_iphone</span>
-                                        <div class="text-center">
-                                            <span class="block font-black uppercase">Apple</span>
-                                            <span class="text-xs uppercase font-bold text-gray-500">iPhone / iPad</span>
-                                        </div>
-                                    </button>
-                                    <button type="button" onclick="selectBrand('samsung')" class="device-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-3">
-                                        <span class="material-symbols-outlined text-4xl">smartphone</span>
-                                        <div class="text-center">
-                                            <span class="block font-black uppercase">Samsung</span>
-                                            <span class="text-xs uppercase font-bold text-gray-500">Galaxy S / Z / Note</span>
-                                        </div>
-                                    </button>
-                                    <button type="button" onclick="selectBrand('google')" class="device-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-3">
-                                        <span class="material-symbols-outlined text-4xl">android</span>
-                                        <div class="text-center">
-                                            <span class="block font-black uppercase">Google</span>
-                                            <span class="text-xs uppercase font-bold text-gray-500">Pixel Series</span>
-                                        </div>
-                                    </button>
-                                    <button type="button" onclick="selectBrand('oneplus')" class="device-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-3">
-                                        <span class="material-symbols-outlined text-4xl">bolt</span>
-                                        <div class="text-center">
-                                            <span class="block font-black uppercase">OnePlus</span>
-                                            <span class="text-xs uppercase font-bold text-gray-500">All Models</span>
-                                        </div>
-                                    </button>
-                                    <button type="button" onclick="selectBrand('motorola')" class="device-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-3">
-                                        <span class="material-symbols-outlined text-4xl">radio</span>
-                                        <div class="text-center">
-                                            <span class="block font-black uppercase">Motorola</span>
-                                            <span class="text-xs uppercase font-bold text-gray-500">Razr / Edge</span>
-                                        </div>
-                                    </button>
-                                    <button type="button" onclick="selectBrand('other')" class="device-btn border-[3px] border-black p-6 hover:bg-primary transition-none flex flex-col items-center gap-3">
-                                        <span class="material-symbols-outlined text-4xl">devices_other</span>
-                                        <div class="text-center">
-                                            <span class="block font-black uppercase">Other</span>
-                                            <span class="text-xs uppercase font-bold text-gray-500">LG / Tablet / Laptop</span>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
+             <!-- Stock Status Bar -->
+             <div class="bg-gray-100 border-b-[3px] border-black py-4 px-6 flex flex-wrap justify-center gap-8 text-sm md:text-base font-bold uppercase text-gray-600">
+                 <span class="flex items-center gap-2"><div class="w-3 h-3 bg-green-500 rounded-full border border-black"></div> 47 Devices In Stock</span>
+                 <span class="flex items-center gap-2"><div class="w-3 h-3 bg-primary rounded-full border border-black"></div> 12 New Arrivals</span>
+                 <span class="flex items-center gap-2"><span class="material-symbols-outlined text-lg">verified</span> 90-Day Warranty Included</span>
+             </div>
 
-                            <!-- STEP 2: MODEL SELECTION -->
-                            <div class="calc-step hidden" data-step="2">
-                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-3">
-                                    <button type="button" onclick="setStep(1)" class="hover:text-primary transition-colors text-2xl">←</button>
-                                    <span class="bg-black text-white px-3 py-1 text-sm">02</span> Which Model?
-                                </h3>
-                                
-                                <div class="mb-6 relative">
-                                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-2xl">search</span>
-                                    <input type="text" id="modelSearch" placeholder="Search model (e.g. iPhone 14)" class="w-full border-[3px] border-black p-4 pl-12 font-bold uppercase text-lg focus:shadow-[4px_4px_0px_primary]">
-                                </div>
-
-                                <div id="modelGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[300px] overflow-y-auto no-scrollbar pr-2">
-                                    <!-- Populated by JS -->
-                                </div>
-                            </div>
-
-                            <!-- STEP 3: STORAGE & DETAILS -->
-                            <div class="calc-step hidden" data-step="3">
-                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-3">
-                                    <button type="button" onclick="setStep(2)" class="hover:text-primary transition-colors text-2xl">←</button>
-                                    <span class="bg-black text-white px-3 py-1 text-sm">03</span> Storage & Network
-                                </h3>
-
-                                <div class="mb-8">
-                                    <label class="block font-black uppercase text-sm mb-3">Storage Capacity</label>
-                                    <div class="grid grid-cols-3 gap-3">
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="storage" value="64" class="peer sr-only">
-                                            <div class="border-[3px] border-black p-3 text-center font-bold hover:bg-gray-100 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[4px_4px_0px_#FFD600]">64GB</div>
-                                        </label>
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="storage" value="128" class="peer sr-only" checked>
-                                            <div class="border-[3px] border-black p-3 text-center font-bold hover:bg-gray-100 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[4px_4px_0px_#FFD600]">128GB</div>
-                                        </label>
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="storage" value="256" class="peer sr-only">
-                                            <div class="border-[3px] border-black p-3 text-center font-bold hover:bg-gray-100 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[4px_4px_0px_#FFD600]">256GB</div>
-                                        </label>
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="storage" value="512" class="peer sr-only">
-                                            <div class="border-[3px] border-black p-3 text-center font-bold hover:bg-gray-100 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[4px_4px_0px_#FFD600]">512GB</div>
-                                        </label>
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="storage" value="1024" class="peer sr-only">
-                                            <div class="border-[3px] border-black p-3 text-center font-bold hover:bg-gray-100 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[4px_4px_0px_#FFD600]">1TB</div>
-                                        </label>
-                                    </div>
-                                    <p class="text-xs font-bold mt-2 text-gray-500">Not sure? Check Settings > General > About</p>
-                                </div>
-
-                                <div>
-                                    <label class="block font-black uppercase text-sm mb-3">Network Status</label>
-                                    <div class="flex gap-4">
-                                        <label class="flex-1 cursor-pointer">
-                                            <input type="radio" name="network" value="unlocked" class="peer sr-only" checked>
-                                            <div class="border-[3px] border-black p-4 flex items-center gap-3 hover:bg-gray-50 peer-checked:bg-primary/20 peer-checked:border-black peer-checked:shadow-[4px_4px_0px_black]">
-                                                <span class="material-symbols-outlined">lock_open</span>
-                                                <span class="font-bold uppercase">Unlocked</span>
-                                            </div>
-                                        </label>
-                                        <label class="flex-1 cursor-pointer">
-                                            <input type="radio" name="network" value="locked" class="peer sr-only">
-                                            <div class="border-[3px] border-black p-4 flex items-center gap-3 hover:bg-gray-50 peer-checked:bg-primary/20 peer-checked:border-black peer-checked:shadow-[4px_4px_0px_black]">
-                                                <span class="material-symbols-outlined">lock</span>
-                                                <span class="font-bold uppercase">Carrier Locked</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <button type="button" onclick="setStep(4)" class="mt-8 w-full bg-black text-white p-4 font-black uppercase text-lg hover:bg-primary hover:text-black border-[3px] border-black shadow-[6px_6px_0px_black] transition-transform active:translate-y-1 active:shadow-none">Continue →</button>
-                            </div>
-
-                            <!-- STEP 4: CONDITION -->
-                            <div class="calc-step hidden" data-step="4">
-                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-3">
-                                    <button type="button" onclick="setStep(3)" class="hover:text-primary transition-colors text-2xl">←</button>
-                                    <span class="bg-black text-white px-3 py-1 text-sm">04</span> Cosmetic Condition
-                                </h3>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Excellent -->
-                                    <label class="cursor-pointer group">
-                                        <input type="radio" name="condition" value="excellent" class="peer sr-only" onchange="calcState.conditionIdx=0">
-                                        <div class="border-[3px] border-black p-4 h-full hover:bg-gray-50 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[6px_6px_0px_#FFD600] transition-all">
-                                            <div class="flex justify-between items-start mb-2">
-                                                <span class="font-black uppercase text-lg">Excellent</span>
-                                                <span class="bg-green-400 text-black text-xs font-black px-2 py-1 border border-black">100% VALUE</span>
-                                            </div>
-                                            <p class="text-sm font-medium opacity-80 group-hover:opacity-100">Like new. No scratches. Flawless screen & body.</p>
-                                        </div>
-                                    </label>
-
-                                    <!-- Good -->
-                                    <label class="cursor-pointer group">
-                                        <input type="radio" name="condition" value="good" class="peer sr-only" checked onchange="calcState.conditionIdx=1">
-                                        <div class="border-[3px] border-black p-4 h-full hover:bg-gray-50 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[6px_6px_0px_#FFD600] transition-all">
-                                            <div class="flex justify-between items-start mb-2">
-                                                <span class="font-black uppercase text-lg">Good</span>
-                                                <span class="bg-primary text-black text-xs font-black px-2 py-1 border border-black">85% VALUE</span>
-                                            </div>
-                                            <p class="text-sm font-medium opacity-80 group-hover:opacity-100">Minor scratches/wear. No cracks. 100% functional.</p>
-                                        </div>
-                                    </label>
-
-                                    <!-- Fair -->
-                                    <label class="cursor-pointer group">
-                                        <input type="radio" name="condition" value="fair" class="peer sr-only" onchange="calcState.conditionIdx=2">
-                                        <div class="border-[3px] border-black p-4 h-full hover:bg-gray-50 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[6px_6px_0px_#FFD600] transition-all">
-                                            <div class="flex justify-between items-start mb-2">
-                                                <span class="font-black uppercase text-lg">Fair</span>
-                                                <span class="bg-orange-400 text-black text-xs font-black px-2 py-1 border border-black">60% VALUE</span>
-                                            </div>
-                                            <p class="text-sm font-medium opacity-80 group-hover:opacity-100">Visible scratches/dents. Screen scratched but not cracked.</p>
-                                        </div>
-                                    </label>
-
-                                    <!-- Poor -->
-                                    <label class="cursor-pointer group">
-                                        <input type="radio" name="condition" value="poor" class="peer sr-only" onchange="calcState.conditionIdx=3">
-                                        <div class="border-[3px] border-black p-4 h-full hover:bg-gray-50 peer-checked:bg-black peer-checked:text-white peer-checked:shadow-[6px_6px_0px_#FFD600] transition-all">
-                                            <div class="flex justify-between items-start mb-2">
-                                                <span class="font-black uppercase text-lg">Broken</span>
-                                                <span class="bg-red-500 text-white text-xs font-black px-2 py-1 border border-black">35% VALUE</span>
-                                            </div>
-                                            <p class="text-sm font-medium opacity-80 group-hover:opacity-100">Cracked screen/back. Bad battery. Water damage.</p>
-                                        </div>
-                                    </label>
-                                </div>
-                                
-                                <button type="button" onclick="setStep(5)" class="mt-8 w-full bg-black text-white p-4 font-black uppercase text-lg hover:bg-primary hover:text-black border-[3px] border-black shadow-[6px_6px_0px_black] transition-transform active:translate-y-1 active:shadow-none">Continue →</button>
-                            </div>
-
-                            <!-- STEP 5: FUNCTIONAL CHECKLIST -->
-                            <div class="calc-step hidden" data-step="5">
-                                <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-3">
-                                    <button type="button" onclick="setStep(4)" class="hover:text-primary transition-colors text-2xl">←</button>
-                                    <span class="bg-black text-white px-3 py-1 text-sm">05</span> Functional Test
-                                </h3>
-
-                                <div class="bg-gray-50 border-[3px] border-black p-6 space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-bold uppercase">Screen Touch/Pixels OK?</span>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer" onchange="updateLiveValue()">
-                                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none ring-2 ring-black rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 border-2 border-black"></div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-bold uppercase">Face/Touch ID Works?</span>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer" onchange="updateLiveValue()">
-                                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none ring-2 ring-black rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 border-2 border-black"></div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-bold uppercase">Cameras Functional?</span>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer" onchange="updateLiveValue()">
-                                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none ring-2 ring-black rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 border-2 border-black"></div>
-                                        </label>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-bold uppercase">No Water Damage?</span>
-                                        <label class="relative inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" checked class="sr-only peer" onchange="updateLiveValue()">
-                                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none ring-2 ring-black rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 border-2 border-black"></div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <button type="button" onclick="calculateFinalOffer()" class="mt-8 w-full bg-black text-white p-4 font-black uppercase text-xl hover:bg-primary hover:text-black border-[3px] border-black shadow-[6px_6px_0px_black] transition-transform active:translate-y-1 active:shadow-none animate-pulse">Calculate Value 💰</button>
-                            </div>
-
-                            <!-- STEP 6: RESULT -->
-                            <div class="calc-step hidden" data-step="6">
-                                <div class="text-center mb-8">
-                                    <p class="font-bold uppercase text-gray-500">Your Device is Worth</p>
-                                    <div id="finalQuoteDisplay" class="text-7xl md:text-8xl font-black text-primary text-stroke tracking-tighter my-4">$0</div>
-                                    <p class="text-sm font-bold uppercase" id="quoteDetails">iPhone 14 Pro • 256GB • Good</p>
-                                </div>
-
-                                <div class="grid grid-cols-1 gap-4 mb-8">
-                                    <div class="bg-gray-50 border-[3px] border-black p-4">
-                                        <div class="flex justify-between border-b-2 border-dashed border-gray-300 pb-2 mb-2">
-                                            <span class="uppercase font-bold">Base Value</span>
-                                            <span class="font-bold" id="breakdownBase">$0</span>
-                                        </div>
-                                        <div class="flex justify-between border-b-2 border-dashed border-gray-300 pb-2 mb-2">
-                                            <span class="uppercase font-bold">Condition</span>
-                                            <span class="font-bold text-green-600" id="breakdownCondition">100%</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span class="uppercase font-bold">Market Adjustment</span>
-                                            <span class="font-bold text-primary bg-black px-1" id="breakdownBonus">+5%</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col gap-4">
-                                    <button class="bg-primary text-black border-[3px] border-black p-4 font-black uppercase text-xl shadow-[6px_6px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1">
-                                        Apply to Repair <span class="bg-black text-white text-xs px-2 py-1 ml-2 rounded-full">BONUS +$20</span>
-                                    </button>
-                                    <button class="bg-black text-white border-[3px] border-black p-4 font-black uppercase text-xl shadow-[6px_6px_0px_black] hover:shadow-none hover:translate-x-1 hover:translate-y-1">
-                                        Sell for Cash
-                                    </button>
-                                </div>
-                                <p class="text-xs text-center mt-4 text-gray-400 font-bold uppercase">Quote valid for 7 days • ID: #99281</p>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>      
+            <!-- Sticky Category Filter -->
+            <div class="sticky-filters border-b-[3px] border-black bg-white p-4 flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm z-30 top-0">
+                <div class="flex overflow-x-auto gap-2 w-full md:w-auto no-scrollbar pb-2 md:pb-0">
+                    <button class="filter-btn active whitespace-nowrap px-4 py-2 border-[2px] border-black bg-black text-white font-bold uppercase text-sm flex items-center gap-1">All Items</button>
+                    <button class="filter-btn whitespace-nowrap px-4 py-2 border-[2px] border-black bg-white font-bold uppercase text-sm hover:bg-gray-100 flex items-center gap-1">Smartphones</button>
+                    <button class="filter-btn whitespace-nowrap px-4 py-2 border-[2px] border-black bg-white font-bold uppercase text-sm hover:bg-gray-100 flex items-center gap-1">Tablets</button>
+                    <button class="filter-btn whitespace-nowrap px-4 py-2 border-[2px] border-black bg-white font-bold uppercase text-sm hover:bg-gray-100 flex items-center gap-1">Laptops</button>
                 </div>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <div class="relative w-full md:w-auto">
+                        <select class="w-full md:w-auto border-[2px] border-black bg-white px-4 py-2 font-bold uppercase text-sm focus:ring-0 focus:outline-none appearance-none pr-8 cursor-pointer hover:bg-gray-50">
+                            <option>Sort: Newest First</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                        <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-sm">expand_more</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured / New Arrivals (Subtle) -->
+            <section class="reveal-on-scroll border-b-[3px] border-black bg-gray-50 p-8">
+                <div class="flex items-center gap-4 mb-8">
+                     <div class="w-2 h-12 bg-primary border border-black"></div>
+                     <h2 class="text-3xl font-black uppercase tracking-tighter text-black">New Arrivals This Week</h2>
+                </div>
+               
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Featured Card 1 -->
+                    <div class="brutalist-card p-6 flex flex-col relative group bg-white">
+                        <div class="absolute top-0 right-0 bg-primary border-l-[2px] border-b-[2px] border-black px-3 py-1 font-black uppercase text-xs z-10">New</div>
+                        <div class="w-full aspect-square mb-4 flex items-center justify-center bg-gray-50 border border-gray-200 overflow-hidden group-hover:bg-white transition-colors">
+                             <img src="images/iphone-14-pro.png" class="object-contain w-3/4 h-3/4 group-hover:scale-110 transition-transform duration-300 mix-blend-multiply" alt="iPhone 14 Pro">
+                        </div>
+                        <h3 class="text-xl font-black uppercase mb-1">iPhone 14 Pro Max</h3>
+                        <p class="text-xs font-bold text-gray-500 mb-3">128GB • Deep Purple • Unlocked</p>
+                        <div class="flex items-center justify-between mb-4 border-t border-gray-200 pt-3">
+                            <span class="text-2xl font-black">$799</span>
+                            <span class="text-xs font-bold uppercase text-green-600 bg-green-50 px-2 py-1 border border-green-200 rounded-sm">Excellent</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mt-auto">
+                            <button onclick="window.location.href='contact.html'" class="bg-primary text-black border-[2px] border-black py-2 font-bold uppercase text-xs hover:bg-black hover:text-white transition-colors">Buy Now</button>
+                            <button class="bg-white text-black border-[2px] border-black py-2 font-bold uppercase text-xs hover:bg-gray-50 transition-colors">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </section>            </div>
             </section>
 
             <!-- Price History Script -->
