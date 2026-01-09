@@ -75,59 +75,39 @@
         }
     </script>
     <style>
-        /* CORE BRUTALIST RESETS */
-        * {
-            transition: none !important; /* Force kill default transitions */
+        /* PREMIUM TRANSITIONS */
+        *, *::before, *::after { 
+            transition: transform 200ms ease-out, box-shadow 200ms ease-out, background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out, opacity 200ms ease-out; 
         }
+        html { scroll-behavior: smooth; }
         
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* HARD HOVERS */
-        .brutalist-nav-link:hover {
-            background-color: black;
-            color: #ffd400;
-        }
+        /* NAV LINKS */
+        .brutalist-nav-link { position: relative; }
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; transform: translateY(-2px); }
+        .brutalist-nav-link:active { transform: scale(0.98); }
+        .brutalist-nav-link:focus { outline: 3px solid #ffd400; outline-offset: 2px; }
 
-        .brutalist-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px 0px black;
-        }
+        /* CARDS */
+        .brutalist-card:hover { transform: translate(-6px, -6px); box-shadow: 12px 12px 0px 0px black; }
         
-        /* Instant button press */
-        .brutalist-btn:active {
-            transform: translate(4px, 4px) !important;
-            box-shadow: none !important;
-        }
+        /* BUTTONS */
+        .brutalist-btn:hover { transform: translateY(-3px); box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.2); }
+        .brutalist-btn:active { transform: translate(2px, 2px) scale(0.98) !important; box-shadow: 2px 2px 0px black !important; }
+        .brutalist-btn:focus { outline: 3px solid #ffd400; outline-offset: 2px; }
 
-        /* SCROLL ANIMATION CLASS */
-        .reveal-on-scroll {
-            opacity: 0;
-            /* transform is handled by animation */
-        }
-        .reveal-on-scroll.is-visible {
-            opacity: 1; /* Fallback */
-            animation: hard-slide 0.15s linear forwards;
-        }
+        /* SCROLL ANIMATION */
+        .reveal-on-scroll { opacity: 0; transform: translateY(20px); }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* MENU DRAWER ANIMATION */
-        @keyframes slide-in-from-right {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
-        .drawer-open {
-            animation: slide-in-from-right 0.15s linear forwards;
-        }
+        /* MENU DRAWER */
+        @keyframes slide-in-from-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .drawer-open { animation: slide-in-from-right 0.2s ease-out forwards; }
 
         /* UTILITIES */
-        .text-stroke {
-            -webkit-text-stroke: 1px black;
-        }
+        .text-stroke { -webkit-text-stroke: 1px black; }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-black antialiased selection:bg-black selection:text-primary relative overflow-x-hidden">

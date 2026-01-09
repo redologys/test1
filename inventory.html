@@ -60,26 +60,42 @@
         }
     </script>
     <style>
-        * { transition: none !important; }
+        /* PREMIUM TRANSITIONS */
+        *, *::before, *::after { transition: transform 200ms ease-out, box-shadow 200ms ease-out, background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out, opacity 200ms ease-out; }
+        html { scroll-behavior: smooth; }
+        
+        /* SCROLLBAR */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        .brutalist-nav-link:hover { background-color: black; color: #ffd400; }
+        /* NAV LINKS */
+        .brutalist-nav-link { position: relative; }
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; transform: translateY(-2px); }
+        .brutalist-nav-link:active { transform: scale(0.98); }
+        .brutalist-nav-link:focus { outline: 3px solid #ffd400; outline-offset: 2px; }
+        
+        /* CARDS */
         .brutalist-card { border: 3px solid black; background: white; }
         .brutalist-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px 0px black; }
-        .brutalist-btn:active { transform: translate(4px, 4px) !important; box-shadow: none !important; }
         
-        /* SCROLL ANIMATION CLASS */
-        .reveal-on-scroll { opacity: 0; }
-        .reveal-on-scroll.is-visible { opacity: 1; animation: hard-slide 0.15s linear forwards; }
-        @keyframes hard-slide { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* BUTTONS */
+        .brutalist-btn:hover { transform: translateY(-3px); }
+        .brutalist-btn:active { transform: translate(2px, 2px) scale(0.98) !important; box-shadow: 2px 2px 0px black !important; }
+        .brutalist-btn:focus { outline: 3px solid #ffd400; outline-offset: 2px; }
+        
+        /* SCROLL ANIMATION */
+        .reveal-on-scroll { opacity: 0; transform: translateY(20px); }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* MENU DRAWER ANIMATION */
+        /* MENU DRAWER */
         @keyframes slide-in-from-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        .drawer-open { animation: slide-in-from-right 0.15s linear forwards; }
+        .drawer-open { animation: slide-in-from-right 0.2s ease-out forwards; }
 
-        /* Sticky Filter Bar */
+        /* Sticky Filter */
         .sticky-filters { position: sticky; top: 0; z-index: 30; }
+
+        /* Filter Active State */
+        .filter-btn.active { background-color: black !important; color: #ffd400 !important; }
     </style>
 </head>
 <body class="bg-background-light font-display text-black antialiased selection:bg-black selection:text-primary relative overflow-x-hidden">

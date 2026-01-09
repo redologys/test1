@@ -75,35 +75,29 @@
         }
     </script>
     <style>
-        /* CORE BRUTALIST RESETS */
-        * {
-            transition: none !important;
+        /* PREMIUM TRANSITIONS */
+        *, *::before, *::after { 
+            transition: transform 200ms ease-out, box-shadow 200ms ease-out, background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out, opacity 200ms ease-out; 
         }
+        html { scroll-behavior: smooth; }
         
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        /* SCROLLBAR */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* HARD HOVERS */
-        .brutalist-nav-link:hover {
-            background-color: black;
-            color: #ffd400;
-        }
+        /* NAV LINKS */
+        .brutalist-nav-link { position: relative; }
+        .brutalist-nav-link:hover { background-color: black; color: #ffd400; transform: translateY(-2px); }
+        .brutalist-nav-link:active { transform: scale(0.98); }
+        .brutalist-nav-link:focus { outline: 3px solid #ffd400; outline-offset: 2px; }
 
-        .brutalist-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px 0px black;
-        }
+        /* CARDS */
+        .brutalist-card:hover { transform: translate(-6px, -6px); box-shadow: 12px 12px 0px 0px black; }
         
-        /* Instant button press */
-        .brutalist-btn:active {
-            transform: translate(4px, 4px) !important;
-            box-shadow: none !important;
-        }
+        /* BUTTONS */
+        .brutalist-btn:hover { transform: translateY(-3px); box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.2); }
+        .brutalist-btn:active { transform: translate(2px, 2px) scale(0.98) !important; box-shadow: 2px 2px 0px black !important; }
+        .brutalist-btn:focus { outline: 3px solid #ffd400; outline-offset: 2px; }
 
         /* SCROLL ANIMATION CLASS */
         .reveal-on-scroll {
@@ -150,10 +144,10 @@
                 </button>
             </div>
             <nav class="flex flex-col p-6 gap-4">
-                <a href="#" class="block border-[3px] border-black bg-primary p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Repairs</a>
+                <a href="repairs.html" class="block border-[3px] border-black bg-primary p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Repairs</a>
                 <a href="inventory.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Inventory</a>
-                <a href="#" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Sell</a>
-                <a href="#" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Contact</a>
+                <a href="sell.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Sell</a>
+                <a href="contact.html" class="block border-[3px] border-black bg-white p-4 text-center text-lg font-bold uppercase brutalist-nav-link">Contact</a>
             </nav>
         </div>
     </div>
@@ -200,11 +194,11 @@
                         <span class="mr-2 hidden material-symbols-outlined md:inline-block">inventory_2</span>
                         Inventory
                     </a>
-                    <a href="#" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link whitespace-nowrap">
+                    <a href="sell.html" class="flex flex-1 items-center justify-center border-r-[3px] border-black bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link whitespace-nowrap">
                         <span class="mr-2 hidden material-symbols-outlined md:inline-block">payments</span>
                         Sell
                     </a>
-                    <a href="#" class="flex flex-1 items-center justify-center bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link whitespace-nowrap">
+                    <a href="contact.html" class="flex flex-1 items-center justify-center bg-white px-6 py-4 text-lg font-bold uppercase brutalist-nav-link whitespace-nowrap">
                         <span class="mr-2 hidden material-symbols-outlined md:inline-block">mail</span>
                         Contact
                     </a>
@@ -223,10 +217,10 @@
                 </p>
                 
                 <div class="relative z-10 flex flex-col sm:flex-row gap-6 mb-12 w-full justify-center">
-                    <button class="brutalist-btn bg-black text-white border-[3px] border-black px-8 py-4 text-lg font-bold uppercase hover:bg-white hover:text-black shadow-[8px_8px_0px_0px_#ffffff]">
+                    <button onclick="window.location.href='contact.html'" class="brutalist-btn bg-black text-white border-[3px] border-black px-8 py-4 text-lg font-bold uppercase hover:bg-white hover:text-black shadow-[8px_8px_0px_0px_#ffffff] active:scale-95">
                         Book Appointment
                     </button>
-                    <button class="brutalist-btn bg-transparent text-black border-[3px] border-black px-8 py-4 text-lg font-bold uppercase hover:bg-black hover:text-white">
+                    <button onclick="window.location.href='sell.html'" class="brutalist-btn bg-transparent text-black border-[3px] border-black px-8 py-4 text-lg font-bold uppercase hover:bg-black hover:text-white active:scale-95">
                         Get Instant Quote
                     </button>
                 </div>
