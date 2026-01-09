@@ -272,174 +272,282 @@
             </section>            </div>
             </section>
 
-            <!-- Price History Script -->
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                // CALCULATOR LOGIC
-                let calcState = {
-                    step: 1,
-                    brand: '',
-                    model: '',
-                    storage: '128',
-                    conditionIdx: 1, // 0=Excellent, 1=Good, 2=Fair, 3=Poor
-                    deductions: 0
-                };
+            <!-- TRADE-IN CALCULATOR SECTION -->
+            <section id="calculator" class="reveal-on-scroll border-b-[3px] border-black bg-white p-4 md:p-12">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-12 text-center">
+                        <span class="bg-primary px-3 py-1 text-xs font-black uppercase border-[2px] border-black mb-4 inline-block">Instant Quote</span>
+                        <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4">What's It Worth?</h2>
+                        <p class="text-xl font-bold uppercase text-gray-500">Get a guaranteed offer in 30 seconds</p>
+                    </div>
 
+                    <!-- CALCULATOR CONTAINER -->
+                    <div class="bg-gray-50 border-[4px] border-black shadow-[12px_12px_0px_black] relative overflow-hidden min-h-[500px]">
+                        
+                        <!-- Progress Bar -->
+                        <div class="bg-black text-white p-4 border-b-[3px] border-black flex justify-between items-center">
+                            <span class="font-black uppercase tracking-widest text-sm" id="calcStepTitle">Step 1: Select Device</span>
+                            <div class="flex gap-2">
+                                <div class="w-2 h-2 rounded-full bg-primary" id="dot1"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-600" id="dot2"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-600" id="dot3"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-600" id="dot4"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-600" id="dot5"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-600" id="dot6"></div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 1: DEVICE TYPE -->
+                        <div class="calc-step p-8 md:p-12 text-center" data-step="1">
+                            <h3 class="text-3xl font-black uppercase mb-12">I want to sell my...</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                <button onclick="selectBrand('apple')" class="aspect-square border-[3px] border-black bg-white hover:bg-black hover:text-white transition-all flex flex-col items-center justify-center gap-4 group">
+                                    <span class="material-symbols-outlined text-5xl">phone_iphone</span>
+                                    <span class="font-black uppercase text-xl">iPhone</span>
+                                </button>
+                                <button onclick="selectBrand('samsung')" class="aspect-square border-[3px] border-black bg-white hover:bg-black hover:text-white transition-all flex flex-col items-center justify-center gap-4 group">
+                                    <span class="material-symbols-outlined text-5xl">smartphone</span>
+                                    <span class="font-black uppercase text-xl">Samsung</span>
+                                </button>
+                                <button onclick="selectBrand('google')" class="aspect-square border-[3px] border-black bg-white hover:bg-black hover:text-white transition-all flex flex-col items-center justify-center gap-4 group">
+                                    <span class="material-symbols-outlined text-5xl">android</span>
+                                    <span class="font-black uppercase text-xl">Pixel</span>
+                                </button>
+                                <button onclick="selectBrand('tablet')" class="aspect-square border-[3px] border-black bg-white hover:bg-black hover:text-white transition-all flex flex-col items-center justify-center gap-4 group">
+                                    <span class="material-symbols-outlined text-5xl">tablet_mac</span>
+                                    <span class="font-black uppercase text-xl">iPad</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: MODEL SELECT -->
+                        <div class="calc-step hidden p-8" data-step="2">
+                            <div class="flex justify-between items-center mb-6">
+                                <button onclick="setStep(1)" class="font-bold border-[2px] border-black px-3 py-1 hover:bg-black hover:text-white">← BACK</button>
+                                <input type="text" placeholder="Search Model..." id="modelSearch" class="border-[3px] border-black px-4 py-2 font-bold w-full max-w-xs uppercase">
+                            </div>
+                            <h3 class="text-2xl font-black uppercase mb-8 text-center">Select Model</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[300px] overflow-y-auto p-2" id="modelGrid">
+                                <!-- JS Injected -->
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: STORAGE & COLOR -->
+                        <div class="calc-step hidden p-8 md:p-12 text-center" data-step="3">
+                            <button onclick="setStep(2)" class="absolute top-4 left-4 font-bold border-[2px] border-black px-3 py-1 hover:bg-black hover:text-white">← BACK</button>
+                            <h3 class="text-2xl font-black uppercase mb-8">Storage Capacity</h3>
+                            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                                <button onclick="calcState.storage='64'; setStep(4)" class="border-[3px] border-black px-8 py-4 text-xl font-black hover:bg-primary uppercase bg-white">64GB</button>
+                                <button onclick="calcState.storage='128'; setStep(4)" class="border-[3px] border-black px-8 py-4 text-xl font-black hover:bg-primary uppercase bg-white">128GB</button>
+                                <button onclick="calcState.storage='256'; setStep(4)" class="border-[3px] border-black px-8 py-4 text-xl font-black hover:bg-primary uppercase bg-white">256GB</button>
+                                <button onclick="calcState.storage='512'; setStep(4)" class="border-[3px] border-black px-8 py-4 text-xl font-black hover:bg-primary uppercase bg-white">512GB+</button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 4: CONDITION -->
+                        <div class="calc-step hidden p-8 md:p-12" data-step="4">
+                            <button onclick="setStep(3)" class="absolute top-4 left-4 font-bold border-[2px] border-black px-3 py-1 hover:bg-black hover:text-white">← BACK</button>
+                            <h3 class="text-2xl font-black uppercase mb-8 text-center">Device Condition</h3>
+                            <div class="space-y-4 max-w-xl mx-auto">
+                                <div onclick="selectCondition(0)" class="cursor-pointer border-[3px] border-black p-4 flex items-center justify-between hover:bg-green-100 group transition-all bg-white relative">
+                                    <div>
+                                        <div class="font-black uppercase text-lg group-hover:translate-x-1 transition-transform">Like New 🤩</div>
+                                        <div class="text-xs font-bold text-gray-500 uppercase">Flawless screen & body. 100% Functional.</div>
+                                    </div>
+                                    <div class="w-6 h-6 rounded-full border-[2px] border-black bg-white" id="condRadio0"></div>
+                                </div>
+                                <div onclick="selectCondition(1)" class="cursor-pointer border-[3px] border-black p-4 flex items-center justify-between hover:bg-yellow-100 group transition-all bg-white relative">
+                                    <div>
+                                        <div class="font-black uppercase text-lg group-hover:translate-x-1 transition-transform">Good 🙂</div>
+                                        <div class="text-xs font-bold text-gray-500 uppercase">Light scratches visible. No cracks.</div>
+                                    </div>
+                                    <div class="w-6 h-6 rounded-full border-[2px] border-black bg-white" id="condRadio1"></div>
+                                </div>
+                                <div onclick="selectCondition(2)" class="cursor-pointer border-[3px] border-black p-4 flex items-center justify-between hover:bg-orange-100 group transition-all bg-white relative">
+                                    <div>
+                                        <div class="font-black uppercase text-lg group-hover:translate-x-1 transition-transform">Fair 😐</div>
+                                        <div class="text-xs font-bold text-gray-500 uppercase">Deep scratches or dents. Screen intact.</div>
+                                    </div>
+                                    <div class="w-6 h-6 rounded-full border-[2px] border-black bg-white" id="condRadio2"></div>
+                                </div>
+                                <div onclick="selectCondition(3)" class="cursor-pointer border-[3px] border-black p-4 flex items-center justify-between hover:bg-red-100 group transition-all bg-white relative">
+                                    <div>
+                                        <div class="font-black uppercase text-lg group-hover:translate-x-1 transition-transform">Broken / Poor 🤕</div>
+                                        <div class="text-xs font-bold text-gray-500 uppercase">Cracked screen, bad battery, or buttons.</div>
+                                    </div>
+                                    <div class="w-6 h-6 rounded-full border-[2px] border-black bg-white" id="condRadio3"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 5: FUNCTIONAL TESTS -->
+                        <div class="calc-step hidden p-8 md:p-12 text-center" data-step="5">
+                             <button onclick="setStep(4)" class="absolute top-4 left-4 font-bold border-[2px] border-black px-3 py-1 hover:bg-black hover:text-white">← BACK</button>
+                             <h3 class="text-2xl font-black uppercase mb-2">Final Checks</h3>
+                             <p class="font-bold text-gray-500 mb-8 uppercase">Uncheck any that are BROKEN</p>
+                             
+                             <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto text-left mb-8">
+                                 <label class="flex items-center gap-3 p-4 border-[2px] border-black bg-white cursor-pointer select-none hover:bg-gray-50">
+                                     <input type="checkbox" checked class="w-6 h-6 border-[2px] border-black text-black focus:ring-0" onclick="updateLiveValue()">
+                                     <span class="font-black uppercase text-sm">FaceID / TouchID</span>
+                                 </label>
+                                 <label class="flex items-center gap-3 p-4 border-[2px] border-black bg-white cursor-pointer select-none hover:bg-gray-50">
+                                    <input type="checkbox" checked class="w-6 h-6 border-[2px] border-black text-black focus:ring-0" onclick="updateLiveValue()">
+                                    <span class="font-black uppercase text-sm">Cameras</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-4 border-[2px] border-black bg-white cursor-pointer select-none hover:bg-gray-50">
+                                    <input type="checkbox" checked class="w-6 h-6 border-[2px] border-black text-black focus:ring-0" onclick="updateLiveValue()">
+                                    <span class="font-black uppercase text-sm">Wi-Fi / Signal</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-4 border-[2px] border-black bg-white cursor-pointer select-none hover:bg-gray-50">
+                                    <input type="checkbox" checked class="w-6 h-6 border-[2px] border-black text-black focus:ring-0" onclick="updateLiveValue()">
+                                    <span class="font-black uppercase text-sm">Charging Port</span>
+                                </label>
+                             </div>
+
+                             <button onclick="calculateFinalOffer()" class="bg-primary text-black border-[3px] border-black px-12 py-4 text-2xl font-black uppercase hover:bg-black hover:text-white shadow-[6px_6px_0px_black] hover:shadow-[8px_8px_0px_black] transition-all">
+                                 Get My Offer
+                             </button>
+                        </div>
+
+                        <!-- STEP 6: OFFER -->
+                        <div class="calc-step hidden p-8 md:p-12 text-center" data-step="6">
+                            <div class="confetti absolute top-0 left-0 w-full h-full pointer-events-none"></div>
+                            <h3 class="text-xl font-black uppercase mb-4 text-gray-500">Your Estimated Cash Offer</h3>
+                            
+                            <div class="text-7xl md:text-8xl font-black text-black mb-2 tracking-tighter" id="finalQuoteDisplay">$0</div>
+                            <p class="font-bold uppercase text-xl mb-8" id="quoteDetails">iPhone 14 Pro • 128GB</p>
+
+                            <div class="bg-white border-[3px] border-black p-6 max-w-sm mx-auto mb-8 text-left">
+                                <div class="flex justify-between mb-2 border-b-2 border-dashed border-gray-300 pb-2">
+                                    <span class="font-bold uppercase text-gray-500">Base Price</span>
+                                    <span class="font-black uppercase" id="breakdownBase">$0</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold uppercase text-gray-500">Condition</span>
+                                    <span class="font-black uppercase text-green-600" id="breakdownCondition">100%</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-4 max-w-xs mx-auto">
+                                <button onclick="window.location.href='contact.html'" class="bg-black text-white px-8 py-3 font-black uppercase hover:bg-primary hover:text-black border-[3px] border-black">Lock In This Price</button>
+                                <button onclick="location.reload()" class="bg-transparent text-gray-500 px-8 py-2 font-bold uppercase hover:text-black hover:underline">Start Over</button>
+                            </div>
+                            <p class="mt-6 text-xs font-bold uppercase text-gray-400">Offer valid for 7 days. Subject to in-store verification.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            
+            <script>
+                // CALCULATOR STATE & LOGIC
+                let calcState = { step: 1, brand: '', model: '', storage: '128', conditionIdx: 0, basePrice: 0 };
+                
                 const db = {
                     apple: [
-                        { name: 'iPhone 15 Pro Max', base: 900, img: 'iphone15promax.png' },
-                        { name: 'iPhone 15 Pro', base: 800, img: 'iphone15pro.png' },
-                        { name: 'iPhone 14 Pro Max', base: 700, img: 'iphone14promax.png' },
-                        { name: 'iPhone 14 Pro', base: 600, img: 'iphone14pro.png' },
-                        { name: 'iPhone 13 Pro', base: 450, img: 'iphone13pro.png' },
-                        { name: 'iPad Pro M2 12.9"', base: 800, img: 'ipadprom2.png' }
+                        { name: 'iPhone 15 Pro Max', base: 900 }, { name: 'iPhone 15 Pro', base: 800 },
+                        { name: 'iPhone 14 Pro Max', base: 700 }, { name: 'iPhone 14 Pro', base: 600 },
+                        { name: 'iPhone 13 Pro', base: 450 }, { name: 'iPhone 13', base: 350 },
+                        { name: 'iPhone 12', base: 250 }, { name: 'iPad Pro M2', base: 600 }
                     ],
                     samsung: [
-                        { name: 'Galaxy S24 Ultra', base: 850, img: 's24ultra.png' },
-                        { name: 'Galaxy S23 Ultra', base: 600, img: 's23ultra.png' },
-                        { name: 'Galaxy Z Fold 5', base: 750, img: 'zfold5.png' }
+                        { name: 'Galaxy S24 Ultra', base: 850 }, { name: 'Galaxy S23 Ultra', base: 600 },
+                        { name: 'Galaxy Z Fold 5', base: 750 }, { name: 'Galaxy S22 Ultra', base: 400 }
                     ],
-                    google: [
-                        { name: 'Pixel 8 Pro', base: 550, img: 'pixel8pro.png' },
-                        { name: 'Pixel 7 Pro', base: 350, img: 'pixel7pro.png' }
-                    ],
-                    oneplus: [{ name: 'OnePlus 11', base: 400 }],
-                    motorola: [{ name: 'Razr+ 2023', base: 400 }],
-                    other: []
+                    google: [ { name: 'Pixel 8 Pro', base: 600 }, { name: 'Pixel 7 Pro', base: 350 } ],
+                    tablet: [ { name: 'iPad Pro 12.9', base: 700 }, { name: 'iPad Air 5', base: 400 }, { name: 'iPad 10th Gen', base: 300 } ]
                 };
 
-                // NAVIGATION
                 function setStep(n) {
+                    // Update Progress Dots
+                    for(let i=1; i<=6; i++) {
+                        const dot = document.getElementById(`dot${i}`);
+                        if(i <= n) dot.classList.replace('bg-gray-600','bg-primary');
+                        else dot.classList.replace('bg-primary','bg-gray-600');
+                    }
+                    document.getElementById('calcStepTitle').innerText = `Step ${n}: ${getStepName(n)}`;
+                    
+                    // Hide all steps, show target
                     document.querySelectorAll('.calc-step').forEach(el => el.classList.add('hidden'));
                     document.querySelector(`.calc-step[data-step="${n}"]`).classList.remove('hidden');
                     calcState.step = n;
                 }
 
-                function selectBrand(brand) {
-                    calcState.brand = brand;
-                    renderModels(brand);
-                    setStep(2);
+                function getStepName(n) {
+                    const names = ["", "Device Type", "Select Model", "Storage", "Condition", "Testing", "Your Offer"];
+                    return names[n] || "";
                 }
 
-                function renderModels(brand) {
+                function selectBrand(brand) {
+                    calcState.brand = brand;
                     const grid = document.getElementById('modelGrid');
                     grid.innerHTML = '';
                     const models = db[brand] || [];
                     
-                    if (models.length === 0) {
-                        grid.innerHTML = '<p class="p-4 font-bold text-gray-500">No models found database. Please visit store.</p>';
-                        return;
-                    }
+                    if (models.length === 0) grid.innerHTML = '<p class="p-4 font-bold">No models found.</p>';
 
                     models.forEach(m => {
                         const btn = document.createElement('button');
-                        btn.type = 'button';
-                        btn.className = 'border-[3px] border-black p-4 flex items-center justify-between hover:bg-black hover:text-white group transition-all text-left';
-                        btn.onclick = () => selectModel(m.name, m.base);
-                        btn.innerHTML = `
-                            <span class="font-black uppercase">${m.name}</span>
-                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">chevron_right</span>
-                        `;
+                        btn.className = 'border-[3px] border-black p-4 flex items-center justify-between hover:bg-black hover:text-white group transition-all text-left bg-white';
+                        btn.onclick = () => { calcState.model = m.name; calcState.basePrice = m.base; setStep(3); };
+                        btn.innerHTML = `<span class="font-black uppercase">${m.name}</span><span class="material-symbols-outlined">chevron_right</span>`;
                         grid.appendChild(btn);
                     });
+                    setStep(2);
                 }
 
-                function selectModel(name, price) {
-                    calcState.model = name;
-                    calcState.basePrice = price;
-                    setStep(3);
-                }
-
-                // SEARCH
                 document.getElementById('modelSearch').addEventListener('input', (e) => {
                     const term = e.target.value.toLowerCase();
-                    const buttons = document.querySelectorAll('#modelGrid button');
-                    buttons.forEach(btn => {
-                        const text = btn.innerText.toLowerCase();
-                        btn.style.display = text.includes(term) ? 'flex' : 'none';
+                    document.querySelectorAll('#modelGrid button').forEach(btn => {
+                        btn.style.display = btn.innerText.toLowerCase().includes(term) ? 'flex' : 'none';
                     });
                 });
 
-                // CONDITION & CALCULATIONS
-                function updateConditionUI(val) {
-                    const labels = ["Best 🤩", "Good 🙂", "Fair 😐", "Poor 🤕"];
-                    const styles = [
-                        "bg-green-400 text-black", 
-                        "bg-primary text-black", 
-                        "bg-orange-400 text-black", 
-                        "bg-red-500 text-white"
-                    ];
-                    
-                    // Invert val for array index (Slider 4=Best(0), 0=Poor(3) ?) 
-                    // Let's match: Slider 0=Poor, 4=Best.
-                    // Array Index: 0=Poor, 1=Fair, 2=Good, 3=Best (Excellent is 4th)
-                    // Wait, logic in previous step was: 0=Excellent, 1=Good... ?
-                    // Let's standardise: 
-                    // Input Range: 0 (Poor) -> 3 (Excellent)
-                    
-                    const idx = parseInt(val); 
-                    const statusEl = document.getElementById('conditionStatus');
-                    
-                    // Map 0..3 to labels
-                    const map = {0: "Broken / Poor", 1: "Fair Condition", 2: "Good Condition", 3: "Like New"};
-                    statusEl.textContent = map[idx];
-                    
-                    // Reset classes
-                    statusEl.className = `p-4 text-center font-black uppercase text-xl mb-8 border-[3px] border-black ${styles[3-idx] || 'bg-gray-200'}`;
-                    
-                    // Update state. Reverse logic: ui index 3 is best, but code state 0=Excellent used in form??
-                    // Let's stick to radio buttons logic for state:
-                    // Radios: Excellent (0), Good (1), Fair (2), Poor (3)
-                    calcState.conditionIdx = 3 - idx; 
+                function selectCondition(idx) {
+                    calcState.conditionIdx = idx;
+                    // Visual selection
+                    for(let i=0; i<4; i++) {
+                        const radio = document.getElementById(`condRadio${i}`);
+                        if(i === idx) radio.classList.replace('bg-white', 'bg-black');
+                        else radio.classList.replace('bg-black', 'bg-white');
+                    }
+                    setTimeout(() => setStep(5), 300);
                 }
 
-                // Sync slider with radio buttons if needed, or just rely on radios as primary in step 4?
-                // The UI has BOTH radios and slider? In my HTML replacement I only put Radios in Step 4.
-                // Wait, I put Radios in Step 4 replacement.
-                // Ah, previous file had slider. My *replacement* content for Step 4 uses Radios.
-                // So I should remove `updateConditionUI` slider logic and just use the radio logic.
-                
                 function calculateFinalOffer() {
-                    let price = calcState.basePrice || 100;
-
-                    // Condition Multiplier
-                    const multipliers = [1.0, 0.85, 0.60, 0.35]; // Ex, Gd, Fr, Pr
+                    let price = calcState.basePrice;
+                    
+                    // Condition Multiplier (Excellent=1.0, Good=0.85, Fair=0.6, Poor=0.3)
+                    const multipliers = [1.0, 0.85, 0.60, 0.30];
                     price = price * multipliers[calcState.conditionIdx];
 
                     // Storage Bonus
-                    if (calcState.storage === '256') price += 20;
-                    if (calcState.storage === '512') price += 40;
-                    if (calcState.storage === '1024') price += 60;
-
-                    // Functional Deductions (mock)
-                    // In a real app key off the checkboxes
-                    const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
-                    price = price * Math.pow(0.9, checkboxes.length); // -10% per failed test
+                    if(calcState.storage === '256') price += 20;
+                    if(calcState.storage === '512') price += 40;
+                    
+                    // Functional Tests
+                    const brokenTests = document.querySelectorAll('input[type="checkbox"]:not(:checked)').length;
+                    price = price * Math.pow(0.9, brokenTests);
 
                     price = Math.round(price);
-
-                    // Update UI
+                    
+                    // Render
                     document.getElementById('finalQuoteDisplay').textContent = '$' + price;
                     document.getElementById('quoteDetails').textContent = `${calcState.model} • ${calcState.storage}GB`;
-                    
                     document.getElementById('breakdownBase').textContent = '$' + calcState.basePrice;
-                    document.getElementById('breakdownCondition').textContent = (multipliers[calcState.conditionIdx] * 100) + '%';
+                    document.getElementById('breakdownCondition').textContent = Math.round(multipliers[calcState.conditionIdx] * 100) + '%';
                     
                     setStep(6);
                 }
 
                 function updateLiveValue() {
-                    // Visual feedback only
-                    const btn = document.querySelector('button[onclick="calculateFinalOffer()"]');
-                    btn.classList.add('scale-105');
-                    setTimeout(() => btn.classList.remove('scale-105'), 200);
+                    // Just visual feedback for checkbox
                 }
             </script>
-
             <style>
-                .calc-step { animation: brutalSlide 0.2s linear forwards; }
-                @keyframes brutalSlide { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-                .text-stroke-sm { -webkit-text-stroke: 1.5px black; }
+                .calc-step { animation: activeSlide 0.3s ease-out forwards; }
+                @keyframes activeSlide { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
             </style>
 
             <!-- Trade In Values Table -->

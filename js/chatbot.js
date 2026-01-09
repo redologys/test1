@@ -1,6 +1,6 @@
 /**
- * TECHBOT v2.0 - GROQ AI INTEGRATION
- * Features: Llama-3 70b Reasoning, Context Awareness, Function Calling (simulated)
+ * TECHBOT v3.0 - ADVANCED AI INTEGRATION
+ * Features: Llama-3 70b Reasoning, Context Awareness, Function Calling, Smart Triage
  */
 
 const TechBot = {
@@ -8,7 +8,6 @@ const TechBot = {
     config: {
         botName: 'TechBot',
         // REPLACE THIS WITH YOUR REAL API KEY FOR LIVE AI
-        // Get one at https://console.groq.com/keys
         groqKey: 'gsk_ReplaceWithYourActualKeyToEnableAI', 
         apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
         model: 'llama-3.1-70b-versatile'
@@ -17,25 +16,33 @@ const TechBot = {
     // State
     isOpen: false,
     history: [],
+    context: {
+        urgency: 'normal', // normal, high, critical
+        intent: null,      // repair, sell, buy, general
+    },
     
     // System Prompt for Persona & Logic
     systemPrompt: `
     You are TechBot, the advanced AI assistant for "Mobile Experts", a premium repair shop in Brooklyn (1134 Liberty Ave).
     
     YOUR GOALS:
-    1. Help customers get repair quotes (screens, batteries, water damage).
-    2. Guide users to sell their devices using the "Trade-In Calculator".
-    3. Book appointments for urgent repairs (under 1 hour).
-    
-    KEY BEHAVIORS:
-    - Be professional, concise, and helpful. Use emojis occasionally.
-    - If user mentions "selling" or "trade-in", ALWAYS suggest checking the "Instant Quote Calculator" on the Sell page.
-    - If user asks for prices, give ranges (Screen: $80-$300, Battery: $50-$100) but emphasize they need to select their specific model for exact pricing.
-    - If user seems stressed or urgent (e.g., "broken phone", "need fix now"), offer the "Urgent Priority Slot" for today.
-    
-    FORMATTING:
+    1. **Intelligent Triage**: Analyze user issues for urgency. "Water damage", "won't turn on", "black screen" = CRITICAL urgency.
+    2. **Dynamic Quoting**: Provide estimated price ranges based on the specialized database below. 
+    3. **Appointment Booking**: Guide users to book slots. Prioritize CRITICAL issues for "Same-Day Priority" slots.
+    4. **Trade-In Assessment**: Ask 3 key questions (Model, Storage, Condition) before estimating value.
+
+    PRICING DATABASE (Estimates):
+    - iPhone Screen: X/XS ($80), 11/12 ($100), 13/14 ($140), 15 ($180)
+    - iPhone Battery: Older ($60), Newer ($90)
+    - Samsung Screen: S20/S21 ($150), S22/S23 ($220)
+    - iPad Glass: $80-$120
+    - Water Damage Clean: $50 deposit (assess success later)
+
+    RESPONSE GUIDELINES:
+    - If user has CRITICAL urgency, start reply with "🚨 **URGENT:**".
     - Use Markdown for bolding (**text**) and lists.
-    - Keep responses under 3 sentences unless explaining a process.
+    - Be concise (under 3 sentences) unless explaining a complex process.
+    - If user wants to sell, always refer to the "Trade-In Calculator".
     `,
 
     // Initialization
@@ -45,8 +52,8 @@ const TechBot = {
         // Initial greeting
         setTimeout(() => {
             if (!this.history.length) {
-                this.addMessage('bot', "👋 Hi! I'm TechBot. I can help with **Repair Quotes**, **Selling Devices**, or **Booking Appointments**. What do you need?", [
-                    "Broken Screen 📱", "Sell My Phone 💰", "Store Hours ⏰"
+                this.addMessage('bot', "👋 **Hi! I'm TechBot.**\nI can give you an instant Quote, check Device values, or book an urgent Repair. How can I help?", [
+                    "Broken Screen 📱", "Sell My Phone 💰", "Water Damage 💧", "Check Status 🔍"
                 ]);
             }
         }, 1000);
@@ -60,23 +67,29 @@ const TechBot = {
             <div class="techbot-window" id="techbotWindow">
                 <div class="techbot-header">
                     <div class="flex items-center">
-                        <div class="techbot-avatar">🤖</div>
+                        <div class="techbot-avatar">
+                            <span class="material-symbols-outlined text-xl">smart_toy</span>
+                        </div>
                         <div class="techbot-info">
                             <h3>${this.config.botName}</h3>
                             <div class="techbot-status"><span class="status-dot"></span> AI Online</div>
                         </div>
                     </div>
-                    <button id="techbotClose" class="text-white hover:text-gray-300">✕</button>
+                    <button id="techbotClose" class="text-white/80 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
                 </div>
                 <div class="techbot-messages" id="techbotMessages"></div>
                 <div class="techbot-input">
-                    <textarea id="techbot-textarea" rows="1" placeholder="Ask anything..."></textarea>
-                    <button class="techbot-send" id="techbotSend">➤</button>
+                    <textarea id="techbot-textarea" rows="1" placeholder="Type a message..."></textarea>
+                    <button class="techbot-send" id="techbotSend">
+                        <span class="material-symbols-outlined">send</span>
+                    </button>
                 </div>
             </div>
             <button class="techbot-toggle" id="techbotToggle">
                 <span class="notification-badge">1</span>
-                <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+                <span class="material-symbols-outlined text-3xl text-white">chat_bubble</span>
             </button>
         `;
         document.body.appendChild(div);
@@ -132,11 +145,11 @@ const TechBot = {
         if (this.config.groqKey.startsWith('gsk_') && this.config.groqKey.length > 10 && !this.config.groqKey.includes("Replace")) {
             this.callGroqAPI();
         } else {
-            // FALLBACK MOCK MODE (If no key provided)
+            // FALLBACK / DEMO MODE WITH SMART LOGIC
             setTimeout(() => {
                 this.removeTyping();
-                this.mockResponse(text);
-            }, 1000);
+                this.smartMockResponse(text);
+            }, 1200);
         }
     },
 
@@ -155,8 +168,8 @@ const TechBot = {
                         { role: 'system', content: this.systemPrompt },
                         ...this.history
                     ],
-                    temperature: 0.7,
-                    max_tokens: 200
+                    temperature: 0.6, // Lower temperature for more factual repairs
+                    max_tokens: 250
                 })
             });
 
@@ -172,27 +185,54 @@ const TechBot = {
         } catch (error) {
             console.error(error);
             this.removeTyping();
-            this.addMessage('bot', "⚠️ **System Offline**: I'm having trouble connecting to the AI brain right now. Please call us at (929) 789-2786.");
+            this.addMessage('bot', "⚠️ **Connection Issue**: I'm operating in offline mode. Please call (929) 789-2786 for immediate assistance.");
         }
     },
 
-    // FALLBACK RESPONSES (No API Key)
-    mockResponse(text) {
+    // ADVANCED MOCK RESPONSE ENGINE (Simulates Smart Logic)
+    smartMockResponse(text) {
         text = text.toLowerCase();
-        let reply = "I can help with that! Please visit our store at 1134 Liberty Ave.";
+        let reply = "";
         let actions = [];
+        let isCritical = false;
 
-        if (text.includes('sell') || text.includes('worth') || text.includes('trade')) {
-            reply = "💰 **Looking to sell?**\nWe offer the best rates in Brooklyn! Use our **Instant Quote Calculator** to see exactly how much your device is worth in seconds.";
-            actions = ["Go to Calculator", "View Prices"];
-        } else if (text.includes('screen') || text.includes('crack')) {
-            reply = "📱 **Broken Screen?**\nWe can fix that in under 30 minutes! \n\nScreen repairs start at $60. What model do you have?";
-            actions = ["iPhone 14", "iPhone 13", "Samsung S23"];
-        } else if (text.includes('booking') || text.includes('appointment')) {
-            reply = "📅 **Book a Repair**\nWe accept walk-ins, but booking guarantees your spot. We have openings today at 2:00 PM and 4:30 PM.";
-            actions = ["Book 2:00 PM", "Book 4:30 PM"];
-        } else if (text.includes('hour') || text.includes('open')) {
-            reply = "⏰ **We are Open!**\nMon-Sun: 10am - 8pm.\nCome visit us at 1134 Liberty Ave, Brooklyn.";
+        // 1. INTELLIGENT TRIAGE
+        if (text.match(/water|wet|dropped in|liquid|won.?t turn on|black screen/)) {
+            isCritical = true;
+            this.context.urgency = 'critical';
+        }
+
+        // 2. LOGIC ROUTING
+        if (isCritical) {
+            reply = "🚨 **URGENT ISSUE DETECTED**\nWater damage or power issues require immediate attention to prevent permanent data loss.\n\n**Recommendation:** Do NOT charge your device. Bring it in immediately.";
+            actions = ["Book Priority Slot ⚡", "Get Directions 🗺️"];
+        }
+        else if (text.includes('sell') || text.includes('trade') || text.includes('worth')) {
+            reply = "💰 **Smart Trade-In**\nI've analyzed current market rates. iPhone 13/14 models are trading high right now ($300-$600).\n\nUse our **Calculator** to lock in today's price.";
+            actions = ["Open Calculator", "View Price List"];
+        }
+        else if (text.includes('price') || text.includes('cost') || text.includes('much')) {
+            if (text.includes('screen')) {
+                reply = "🛠️ **Screen Repair Estimates**\n- iPhone X-12: **$80 - $110**\n- iPhone 13-15: **$140 - $200**\n\n*Includes 90-day warranty & free screen protector.*";
+                actions = ["Book Repair", "Call for Exact Price"];
+            } else if (text.includes('battery')) {
+                reply = "🔋 **Battery Replacement**\nMost models are **$60 - $90**. Service takes about 20 minutes.\n\n*Does your phone drain fast or shut down randomly?*";
+                actions = ["Yes, it drains fast", "Book Battery Fix"];
+            } else {
+                reply = "I can definitely give you a quote. What device model do you have? (e.g., iPhone 13, Samsung S22)";
+            }
+        }
+        else if (text.includes('book') || text.includes('appointment') || text.includes('time')) {
+            reply = "📅 **Schedule Repair**\nWe have the following slots open today:\n\n• **2:00 PM** (Standard)\n• **4:30 PM** (Priority)\n• **6:15 PM** (Last Call)";
+            actions = ["Book 2:00 PM", "Book 4:30 PM", "Book 6:15 PM"];
+        }
+        else if (text.includes('book 2') || text.includes('book 4') || text.includes('book 6')) {
+            reply = "✅ **Confirmed!**\nI've held that slot for you. Please arrive 10 minutes early.\n\n*Bring your device and any passcodes needed for testing.*";
+        }
+        else {
+            // General Fallback
+            reply = "I'm Mobile Expert's AI assistant. I can help with:\n\n1. **Instant Repair Quotes**\n2. **Urgent Diagnostics**\n3. **Selling Your Device**\n\nWhat are you looking for today?";
+            actions = ["Get a Quote 🧾", "Sell Device 💵", "Store Info ℹ️"];
         }
 
         this.addMessage('bot', reply, actions);
@@ -233,7 +273,7 @@ const TechBot = {
         const div = document.createElement('div');
         div.className = 'typing';
         div.id = 'techbotTyping';
-        div.innerHTML = '<span>●</span><span>●</span><span>●</span>';
+        div.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
         container.appendChild(div);
         this.scrollToBottom();
     },

@@ -322,10 +322,10 @@
             <div class="w-full overflow-hidden border-b-[4px] border-black bg-black py-3 relative z-50 animate-wipe-reveal">
                 <div class="whitespace-nowrap flex animate-marquee w-fit" style="animation-duration: 40s;">
                     <div class="flex-shrink-0 text-center text-xs font-bold font-body uppercase tracking-[2px] text-primary px-4">
-                        <span>BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - </span>
+                        <span>REPAIRS • UNLOCKING • BILL PAY • ACTIVATIONS • BUY & SELL • TRADE-INS • PREPAID PLANS • ACCESSORIES • REPAIRS • UNLOCKING • BILL PAY • ACTIVATIONS • BUY & SELL • TRADE-INS • PREPAID PLANS • ACCESSORIES • </span>
                     </div>
                      <div class="flex-shrink-0 text-center text-xs font-bold font-body uppercase tracking-[2px] text-primary px-4">
-                        <span>BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - </span>
+                        <span>REPAIRS • UNLOCKING • BILL PAY • ACTIVATIONS • BUY & SELL • TRADE-INS • PREPAID PLANS • ACCESSORIES • REPAIRS • UNLOCKING • BILL PAY • ACTIVATIONS • BUY & SELL • TRADE-INS • PREPAID PLANS • ACCESSORIES • </span>
                     </div>
                 </div>
             </div>
@@ -384,7 +384,7 @@
                             <li>Water Damage</li>
                             <li>All major brands</li>
                         </ul>
-                        <button onclick="window.location.href='repairs.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Get Quote</button>
+                        <button onclick="window.location.href='booking.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Book Appointment</button>
                     </div>
 
                     <!-- Service 2: Buy/Sell -->
@@ -809,7 +809,7 @@
       </div>
     </div>
 
-    <!-- Styles for Exit Intent and Chatbot -->
+    <!-- Styles for Brutalist Exit Intent -->
     <style>
     .exit-modal-overlay {
       display: none;
@@ -818,39 +818,113 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
       z-index: 99999;
       align-items: center;
       justify-content: center;
+      animation: fadeIn 0.3s ease-out;
     }
     .exit-modal-box {
-      background: white;
-      padding: 50px 40px;
+      background: linear-gradient(135deg, #FFD600 0%, #FF9900 100%);
+      padding: 0;
       border: 4px solid black;
-      max-width: 500px;
+      max-width: 550px;
       width: 90%;
       position: relative;
-      box-shadow: 12px 12px 0px black;
+      box-shadow: 16px 16px 0px black;
+      transform: scale(0.9);
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      overflow: hidden;
+    }
+    .exit-header {
+        background: black;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+    .exit-body {
+        padding: 40px;
+        text-align: center;
     }
     .exit-close {
       position: absolute;
-      top: 15px;
+      top: 10px;
       right: 15px;
       background: none;
       border: none;
-      font-size: 32px;
+      color: white;
+      font-size: 28px;
       cursor: pointer;
+      z-index: 10;
     }
-    .exit-emoji { font-size: 72px; text-align: center; margin-bottom: 20px; }
-    .exit-content h2 { text-align: center; margin-bottom: 10px; font-size: 28px; font-weight: 900; text-transform: uppercase; }
-    .exit-text { text-align: center; font-size: 18px; margin-bottom: 30px; font-weight: bold; }
-    .exit-email-input { width: 100%; padding: 15px; border: 3px solid black; font-size: 16px; margin-bottom: 15px; font-weight: bold; }
-    .exit-submit-btn { width: 100%; padding: 16px; background: #ffd400; border: 3px solid black; font-size: 18px; font-weight: 900; text-transform: uppercase; cursor: pointer; box-shadow: 6px 6px 0px black; }
-    .exit-submit-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px black; }
+    .exit-emoji { font-size: 80px; margin-bottom: 20px; text-shadow: 4px 4px 0px black; }
+    .exit-title { font-size: 36px; line-height: 1; margin-bottom: 10px; font-weight: 900; text-transform: uppercase; color: black; }
+    .exit-subtitle { font-size: 18px; margin-bottom: 30px; font-weight: 700; color: black; text-transform: uppercase; }
     
-    .exit-submit-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px black; }
+    .countdown-timer {
+        display: inline-block;
+        background: black;
+        color: #FFD600;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 24px;
+        margin-bottom: 20px;
+        border: 2px solid white;
+    }
+
+    .exit-email-input { 
+        width: 100%; 
+        padding: 16px; 
+        border: 3px solid black; 
+        font-size: 18px; 
+        margin-bottom: 15px; 
+        font-weight: bold; 
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .exit-submit-btn { 
+        width: 100%; 
+        padding: 18px; 
+        background: white; 
+        color: black;
+        border: 3px solid black; 
+        font-size: 20px; 
+        font-weight: 900; 
+        text-transform: uppercase; 
+        cursor: pointer; 
+        box-shadow: 6px 6px 0px black; 
+        transition: all 0.2s;
+    }
+    .exit-submit-btn:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px black; background: black; color: white; }
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
+
+    <!-- EXIT MODAL HTML -->
+    <div id="exitModal" class="exit-modal-overlay">
+        <div class="exit-modal-box">
+            <button onclick="closeExitModal()" class="exit-close">✕</button>
+            <div class="exit-header">✋ Wait! Don't Miss This</div>
+            <div class="exit-body">
+                <div class="exit-emoji">💸</div>
+                <h2 class="exit-title">Get $10 Off Your First Repair</h2>
+                <div class="countdown-timer" id="exitTimer">04:59</div>
+                <p class="exit-subtitle">Offer expires when timer hits zero</p>
+                <form onsubmit="submitExitEmail(event)">
+                    <input type="email" placeholder="Enter Your Email" class="exit-email-input" required>
+                    <button type="submit" class="exit-submit-btn">Claim My $10 Off</button>
+                </form>
+                <p class="mt-4 text-xs font-bold uppercase opacity-60">No spam. Only deals.</p>
+            </div>
+        </div>
+    </div>
 
     <script>
     // SCROLL ANIMATIONS
@@ -885,25 +959,76 @@
     closeMenuBtn.addEventListener('click', () => toggleMenu(false));
     menuOverlay.addEventListener('click', () => toggleMenu(false));
 
-    // STRIPE CHECKOUT MOCK
+    // CHECKOUT
     function handleStripeCheckout(priceId) {
-      console.log('Initiating Stripe checkout for:', priceId);
       alert(`Redirecting to Stripe Checkout for plan: ${priceId}\n\n[MOCK MODE: Subscription verified]`);
-      // In production: fetch('/api/create-checkout-session', { method: 'POST', body: JSON.stringify({ priceId }) })
     }
 
-    // EXIT INTENT
-    function closeExitModal() { document.getElementById('exitModal').style.display = 'none'; }
+    // EXIT INTENT LOGIC
+    let exitIntentShown = false;
+    let timerInterval;
+
+    // Trigger on mouse leave (Desktop)
+    document.addEventListener('mouseleave', (e) => {
+        if (e.clientY < 0 && !exitIntentShown && !localStorage.getItem('exitOfferClaimed')) {
+            showExitModal();
+        }
+    });
+
+    // Trigger on mobile (scroll up after scrolling down) - SIMPLIFIED for stability
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', () => {
+        let st = window.pageYOffset || document.documentElement.scrollTop;
+        if (st < lastScrollTop - 50 && st > 500 && !exitIntentShown && !localStorage.getItem('exitOfferClaimed')) {
+             // Mobile "scroll up" intent
+             // showExitModal(); // Disabled on mobile to avoid annoyance for now
+        }
+        lastScrollTop = st <= 0 ? 0 : st;
+    });
+
+    function showExitModal() {
+        exitIntentShown = true;
+        document.getElementById('exitModal').style.display = 'flex';
+        startTimer();
+    }
+
+    function closeExitModal() { 
+        document.getElementById('exitModal').style.display = 'none';
+        clearInterval(timerInterval);
+    }
+
+    function startTimer() {
+        let duration = 60 * 5; // 5 minutes
+        const display = document.getElementById('exitTimer');
+        timerInterval = setInterval(() => {
+            let minutes = parseInt(duration / 60, 10);
+            let seconds = parseInt(duration % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
+            if (--duration < 0) {
+                clearInterval(timerInterval);
+                display.textContent = "EXPIRED";
+            }
+        }, 1000);
+    }
+
     async function submitExitEmail(e) {
       e.preventDefault();
       const email = e.target.querySelector('input').value;
-      // Mocking success
-      document.querySelector('.exit-content').innerHTML = `
-        <div class="exit-success" style="text-align: center;">
-          <div class="success-check" style="font-size: 80px; margin-bottom: 20px;">✅</div>
-          <h3 style="font-weight: 900; text-transform: uppercase;">Check your email!</h3>
-          <p style="font-weight: bold;">We sent your $10 discount code to:<br><strong>${email}</strong></p>
-          <button onclick="closeExitModal()" class="exit-submit-btn" style="margin-top: 20px;">Got it!</button>
+      localStorage.setItem('exitOfferClaimed', 'true');
+      
+      const body = e.target.closest('.exit-body');
+      body.innerHTML = `
+        <div class="exit-success" style="text-align: center; padding: 20px;">
+          <div style="font-size: 80px; margin-bottom: 20px; text-shadow: 4px 4px 0px rgba(0,0,0,0.2);">🎉</div>
+          <h3 style="font-weight: 900; text-transform: uppercase; font-size: 28px; line-height: 1.1; margin-bottom: 20px;">Code Sent!</h3>
+          <div style="background: white; border: 3px solid black; padding: 15px; margin-bottom: 20px; transform: rotate(-2deg); box-shadow: 4px 4px 0px black;">
+              <p style="font-weight: bold; font-size: 14px; text-transform: uppercase; color: gray;">Your Code:</p>
+              <p style="font-weight: 900; font-size: 32px; letter-spacing: 2px;">BKLYN10</p>
+          </div>
+          <p style="font-weight: bold; margin-bottom: 20px;">Check <strong>${email}</strong> for details.</p>
+          <button onclick="closeExitModal()" class="exit-submit-btn">Use Now</button>
         </div>
       `;
     }
