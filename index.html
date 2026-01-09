@@ -320,7 +320,7 @@
         <div class="mx-auto flex w-full max-w-[1400px] flex-col border-[3px] border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10">
             
             <!-- Marquee (Cyber-Industrial) -->
-            <div class="w-full overflow-hidden border-b-[4px] border-black bg-black py-3 relative z-50 animate-wipe-reveal">
+            <div class="w-full overflow-hidden border-b-[4px] border-black bg-black py-1 relative z-50 animate-wipe-reveal">
                 <div class="whitespace-nowrap flex animate-marquee w-fit" style="animation-duration: 40s;">
                     <div class="flex-shrink-0 text-center text-xs font-bold font-body uppercase tracking-[2px] text-primary px-4">
                         <span>REPAIRS • UNLOCKING • BILL PAY • ACTIVATIONS • BUY & SELL • TRADE-INS • PREPAID PLANS • ACCESSORIES • REPAIRS • UNLOCKING • BILL PAY • ACTIVATIONS • BUY & SELL • TRADE-INS • PREPAID PLANS • ACCESSORIES • </span>
@@ -367,57 +367,81 @@
             </header>
 
             <!-- New Hero Design -->
-            <div class="reveal-on-scroll border-b-[3px] border-black bg-white p-8 md:p-16 text-center">
+            <div class="reveal-on-scroll border-b-[3px] border-black bg-white p-6 md:p-12 text-center">
                 <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 leading-none">Brooklyn's Complete<br>Mobile Solution</h1>
-                <p class="text-xl font-bold uppercase text-gray-600 mb-12">Expert repairs • Device sales • Phone line services</p>
+                <p class="text-xl font-bold uppercase text-gray-600 mb-8">Expert repairs • Device sales • Phone line services</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
                     <!-- Service 1: Repair -->
-                    <div class="brutalist-card bg-white border-[3px] border-black p-8 text-left hover:bg-gray-50 group transition-all">
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="material-symbols-outlined text-5xl group-hover:animate-bounce">build</span>
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 text-left hover:bg-gray-50 group transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-4xl group-hover:animate-bounce">build</span>
                             <span class="bg-black text-white px-2 py-1 text-xs font-black uppercase">Fast</span>
                         </div>
-                        <h3 class="text-2xl font-black uppercase mb-4">Repair</h3>
-                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-8">
+                        <h3 class="text-xl font-black uppercase mb-3">Repair</h3>
+                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-6">
                             <li class="flex items-center gap-2 text-black"><span class="w-2 h-2 bg-primary"></span> Screen Replacement</li>
                             <li>Battery Service</li>
                             <li>Water Damage</li>
                             <li>All major brands</li>
                         </ul>
-                        <button onclick="window.location.href='booking.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Book Appointment</button>
+                        <button onclick="window.location.href='booking.html'" class="w-full bg-primary text-black border-[3px] border-black py-2 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Book Appointment</button>
                     </div>
 
                     <!-- Service 2: Buy/Sell -->
-                    <div class="brutalist-card bg-white border-[3px] border-black p-8 text-left hover:bg-gray-50 group transform md:-translate-y-4">
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="material-symbols-outlined text-5xl group-hover:rotate-12 transition-transform">shopping_bag</span>
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 text-left hover:bg-gray-50 group transform md:-translate-y-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-4xl group-hover:rotate-12 transition-transform">shopping_bag</span>
                             <span class="bg-primary text-black border border-black px-2 py-1 text-xs font-black uppercase">Best Prices</span>
                         </div>
-                        <h3 class="text-2xl font-black uppercase mb-4">Buy / Sell</h3>
-                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-8">
+                        <h3 class="text-xl font-black uppercase mb-3">Buy / Sell</h3>
+                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-6">
                             <li class="flex items-center gap-2 text-black"><span class="w-2 h-2 bg-black"></span> Certified Pre-owned</li>
                             <li>Trade-in Your Device</li>
                             <li>Fair Market Value</li>
                             <li>90-Day Warranty</li>
                         </ul>
-                        <button onclick="window.location.href='inventory.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Shop Now</button>
+                        <button onclick="window.location.href='inventory.html'" class="w-full bg-primary text-black border-[3px] border-black py-2 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Shop Now</button>
                     </div>
 
                     <!-- Service 3: Lines -->
-                    <div class="brutalist-card bg-white border-[3px] border-black p-8 text-left hover:bg-gray-50 group">
-                        <div class="flex items-center justify-between mb-6">
-                            <span class="material-symbols-outlined text-5xl group-hover:scale-110 transition-transform">sim_card</span>
+                    <div class="brutalist-card bg-white border-[3px] border-black p-6 text-left hover:bg-gray-50 group">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="material-symbols-outlined text-4xl group-hover:scale-110 transition-transform">sim_card</span>
                             <span class="bg-black text-white px-2 py-1 text-xs font-black uppercase">New</span>
                         </div>
-                        <h3 class="text-2xl font-black uppercase mb-4">Phone Lines</h3>
-                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-8">
+                        <h3 class="text-xl font-black uppercase mb-3">Phone Lines</h3>
+                        <ul class="text-sm font-bold uppercase text-gray-500 space-y-2 mb-6">
                             <li class="flex items-center gap-2 text-black"><span class="w-2 h-2 bg-primary"></span> New Activations</li>
                             <li>Bill Payment</li>
                             <li>Carrier Switch</li>
                             <li>Prepaid Plans</li>
                         </ul>
-                        <button onclick="window.location.href='phone-services.html'" class="w-full bg-primary text-black border-[3px] border-black py-3 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Activate</button>
+                        <button onclick="window.location.href='phone-services.html'" class="w-full bg-primary text-black border-[3px] border-black py-2 font-black uppercase hover:bg-black hover:text-white shadow-[4px_4px_0px_black] group-hover:shadow-[6px_6px_0px_black]">Activate</button>
+                    </div>
+                </div>
+
+                <!-- Services Strip (User Requested) -->
+                <div class="border-[3px] border-black bg-white grid grid-cols-2 md:grid-cols-4 mx-auto max-w-6xl">
+                    <div class="p-4 border-b-[3px] border-r-[3px] md:border-b-0 border-black text-left flex flex-col justify-center hover:bg-gray-50">
+                        <span class="material-symbols-outlined text-3xl mb-2">smartphone</span>
+                        <h4 class="font-black uppercase text-lg leading-tight">iPhone<br>Repair</h4>
+                        <p class="text-xs font-bold text-gray-500 uppercase mt-1">From $49</p>
+                    </div>
+                    <div class="p-4 border-b-[3px] md:border-b-0 md:border-r-[3px] border-black text-left flex flex-col justify-center hover:bg-gray-50">
+                        <span class="material-symbols-outlined text-3xl mb-2">android</span>
+                        <h4 class="font-black uppercase text-lg leading-tight">Samsung<br>Repair</h4>
+                        <p class="text-xs font-bold text-gray-500 uppercase mt-1">Original Parts</p>
+                    </div>
+                    <div class="p-4 border-r-[3px] border-black text-left flex flex-col justify-center hover:bg-gray-50">
+                        <span class="material-symbols-outlined text-3xl mb-2">laptop_mac</span>
+                        <h4 class="font-black uppercase text-lg leading-tight">Macbook<br>Repair</h4>
+                        <p class="text-xs font-bold text-gray-500 uppercase mt-1">Logic Boards</p>
+                    </div>
+                    <div class="p-4 text-left flex flex-col justify-center hover:bg-gray-50">
+                         <span class="material-symbols-outlined text-3xl mb-2">sports_esports</span>
+                        <h4 class="font-black uppercase text-lg leading-tight">Game<br>Consoles</h4>
+                         <p class="text-xs font-bold text-gray-500 uppercase mt-1">HDMI & Power</p>
                     </div>
                 </div>
             </div>
@@ -755,7 +779,7 @@
                         </p>
                         <p class="contact-item mb-2 text-sm text-gray-600">
                           <strong>📞 Phone</strong><br>
-                          <a href="tel:347-555-0199">(347) 555-0199</a>
+                          <a href="tel:347-555-0199" class="underline">(347) 555-0199</a>
                         </p>
                         <p class="contact-item mb-2 text-sm text-gray-600">
                           <strong>✉️ Email</strong><br>
