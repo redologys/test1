@@ -38,6 +38,7 @@
                         'shake': 'shake 0.2s linear 3',
                         'blink': 'blink-border 0.6s steps(4) infinite',
                         'loading': 'loading-steps 1s steps(3) infinite',
+                        'wipe-reveal': 'wipe-reveal 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
                     },
                     keyframes: {
                         marquee: {
@@ -68,6 +69,10 @@
                             '33%': { transform: 'scaleX(0.33)' },
                             '66%': { transform: 'scaleX(0.66)' },
                             '100%': { transform: 'scaleX(1)' },
+                        },
+                        'wipe-reveal': {
+                            '0%': { clipPath: 'inset(0 100% 0 0)' },
+                            '100%': { clipPath: 'inset(0 0 0 0)' },
                         }
                     }
                 },
@@ -282,14 +287,14 @@
         <!-- Main Container -->
         <div class="mx-auto flex w-full max-w-[1400px] flex-col border-[3px] border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10">
             
-            <!-- Marquee -->
-            <div class="w-full overflow-hidden border-b-[3px] border-black bg-black py-4 relative z-50">
-                <div class="whitespace-nowrap flex animate-marquee w-[200%]" style="animation-duration: 40s;">
-                    <div class="flex-shrink-0 w-[50%] text-center text-sm font-bold uppercase tracking-wider text-primary md:text-base px-8">
-                        <span>MOBILE EXPERTS INC • BROOKLYN, NY • OPEN 7 DAYS • (929) 789-2786 • WALK-INS WELCOME • INSTANT QUOTES • </span>
+            <!-- Marquee (Cyber-Industrial) -->
+            <div class="w-full overflow-hidden border-b-[4px] border-black bg-black py-3 relative z-50 animate-wipe-reveal">
+                <div class="whitespace-nowrap flex animate-marquee w-fit" style="animation-duration: 40s;">
+                    <div class="flex-shrink-0 text-center text-xs font-bold font-body uppercase tracking-[2px] text-primary px-4">
+                        <span>BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - </span>
                     </div>
-                    <div class="flex-shrink-0 w-[50%] text-center text-sm font-bold uppercase tracking-wider text-primary md:text-base px-8">
-                        <span>MOBILE EXPERTS INC • BROOKLYN, NY • OPEN 7 DAYS • (929) 789-2786 • WALK-INS WELCOME • INSTANT QUOTES • </span>
+                     <div class="flex-shrink-0 text-center text-xs font-bold font-body uppercase tracking-[2px] text-primary px-4">
+                        <span>BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - BROOKLYN - OPEN 7 DAYS A WEEK - 347-555-0199 - MOBILE EXPERTS INC - SAME-DAY REPAIRS - 90-DAY WARRANTY - </span>
                     </div>
                 </div>
             </div>

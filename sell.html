@@ -854,8 +854,8 @@
         '💰 Get a sell quote': '💰 Great! To get an instant quote, use our calculator above. Select your device type, brand, model, and condition. We pay top dollar and offer same-day payment!',
         '🔧 Repair pricing': '🔧 Our repair prices:\n• Screen repair: $49-$299\n• Battery: $39-$99\n• Charging port: $49-$99\n• Water damage: $79-$199\n\nMost repairs done in under an hour!',
         '📦 Check inventory': '📦 We have a fresh selection of certified pre-owned phones, tablets, and laptops. Visit our Inventory page to see what\'s in stock. New arrivals daily!',
-        '⏰ Store hours': '⏰ We\'re open 7 days a week!\n• Mon-Sat: 10AM - 8PM\n• Sunday: 11AM - 6PM\n\n📍 123 Bedford Ave, Brooklyn',
-        '📍 Get directions': '📍 We\'re at 123 Bedford Ave, Brooklyn NY 11211.\n\n🚗 Street parking available\n🚇 L train to Bedford Ave\n\n<a href="https://www.google.com/maps/dir/?api=1&destination=123+Bedford+Ave+Brooklyn+NY+11211" target="_blank" class="underline font-black">→ Open in Google Maps</a>'
+        '⏰ Store hours': '⏰ We\'re open 7 days a week!\n• Mon-Sat: 10AM - 8PM\n• Sunday: 11AM - 6PM\n\n📍 1134 Liberty Ave, Brooklyn',
+        '📍 Get directions': '📍 We\'re at 1134 Liberty Ave, Brooklyn NY 11208.\n\n🚗 Street parking available\n🚇 A Train to Grant Ave\n\n<a href="https://www.google.com/maps/dir/?api=1&destination=1134+Liberty+Ave+Brooklyn+NY+11208" target="_blank" class="underline font-black">→ Open in Google Maps</a>'
       };
       
       // Bot response
@@ -891,7 +891,7 @@
           headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_KEY}` },
           body: JSON.stringify({
             messages: [
-              { role: "system", content: "You are TechBot, a helpful assistant for Mobile Experts Brooklyn (phone repair & buyback store). Be brief, helpful, and use the brutalist style. Store hours: Mon-Sat 10AM-8PM, Sun 11AM-6PM. Phone: (929) 789-2786. Address: 123 Bedford Ave, Brooklyn NY 11211." },
+              { role: "system", content: "You are TechBot, a helpful assistant for Mobile Experts Brooklyn (phone repair & buyback store). Be brief, helpful, and use the brutalist style. Store hours: Mon-Sat 10AM-8PM, Sun 11AM-6PM. Phone: (929) 789-2786. Address: 1134 Liberty Ave, Brooklyn NY 11208." },
               { role: "user", content: text }
             ],
             model: "llama3-8b-8192"
@@ -910,7 +910,7 @@
 
     // NAVIGATE TO GOOGLE MAPS
     function navigateToMaps() {
-      window.open('https://www.google.com/maps/dir/?api=1&destination=123+Bedford+Ave+Brooklyn+NY+11211', '_blank');
+      window.open('https://www.google.com/maps/dir/?api=1&destination=1134+Liberty+Ave+Brooklyn+NY+11208', '_blank');
     }
     </script>
 </body>
